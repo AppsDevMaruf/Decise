@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="178dp"
+        android:background="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_logo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/userProfilePicHeader"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:padding="1dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/maruf"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.Image.PILL"
+            app:strokeColor="@color/white"
+            app:strokeWidth="1.5dp"
+            tools:ignore="MissingConstraints" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/uploadProfilePicBtn"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="2dp"
+            android:layout_marginBottom="2dp"
+            android:background="@color/white"
+            android:padding="2dp"
+            android:src="@drawable/round_cloud_upload_24"
+            app:contentPadding="5dp"
+            app:layout_constraintBottom_toBottomOf="@id/userProfilePicHeader"
+            app:layout_constraintEnd_toEndOf="@id/userProfilePicHeader"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.Image.PILL"
+            app:strokeColor="@color/black"
+            app:strokeWidth="1dp" />
+
+        <TextView
+            android:id="@+id/profilePicABHeader"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/cta_circle"
+            android:fontFamily="@font/gotham_medium"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:padding="1dp"
+            android:text="AB"
+            android:textAllCaps="false"
+            android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.Image.PILL"
+            app:strokeColor="@color/white"
+            app:strokeWidth="1.5dp"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/userName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="82dp"
+            android:includeFontPadding="false"
+            android:textAlignment="center"
+            android:fontFamily="@font/gotham_bold"
+            android:paddingTop="4dp"
+            android:text="Maruf Alam"
+            android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="@+id/imageView"
+            app:layout_constraintStart_toStartOf="@+id/imageView"
+            app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        <TextView
+            android:id="@+id/userTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/gotham_medium"
+            android:paddingTop="4dp"
+            android:includeFontPadding="false"
+            android:textAlignment="center"
+            android:text="Android Developer"
+            android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+            android:textColor="@color/yellow"
+            app:layout_constraintEnd_toEndOf="@+id/imageView"
+            app:layout_constraintStart_toStartOf="@+id/imageView"
+            app:layout_constraintTop_toBottomOf="@+id/userName" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

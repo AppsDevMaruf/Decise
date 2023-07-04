@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#000000</color>
+    <color name="black_light">#112447</color>
+    <color name="blue">#304FFE</color>
+    <color name="purple">#62038E</color>
+    <color name="purple_light">#AA00FF</color>
+    <color name="orange">#FF3D00</color>
+    <color name="orange_light">#FF6D00</color>
+    <color name="yellow">#FFD600</color>
+    <color name="pink">#ED1459</color>
+    <color name="pink_light">#FF2767</color>
+    <color name="white">#FFFFFF</color>
+    <color name="gray">#b0b0b0</color>
+    <color name="bg_danger">#DC3545</color>
+    <color name="text_hint">#AAA</color>
+    <color name="google_account_text">#919191</color>
+
+
+</resources>

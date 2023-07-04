@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/homeFragment"
+            android:icon="@drawable/ic_home"
+            android:title="Home"
+            app:iconTint="@drawable/selector"
+            app:itemIconTint="@null" />
+
+        <item
+            android:id="@+id/decisionsFragment"
+            android:icon="@drawable/ic_decision"
+            android:title="Decisions"
+            app:iconTint="@drawable/selector"
+            app:itemIconTint="@android:color/transparent" />
+        <item
+            android:id="@+id/organizationFragment"
+            android:icon="@drawable/ic_organization"
+            android:title="Organization"
+            app:iconTint="@drawable/selector"/>
+        <item
+            android:id="@+id/dashboardFragment"
+            android:icon="@drawable/ic_dashboard"
+            app:iconTint="@drawable/selector"
+            android:title="Dashboard"
+            app:itemIconTint="@null" />
+
+        <item
+            android:id="@+id/settingsFragment"
+            android:icon="@drawable/ic_setting"
+            app:iconTint="@drawable/selector"
+            android:title="Settings" />
+        <item
+            android:id="@+id/docsFragment"
+            android:icon="@drawable/ic_docs"
+            app:iconTint="@drawable/selector"
+            android:title="Docs" />
+        <item
+            android:id="@+id/logoutFragment"
+            android:icon="@drawable/ic_logout"
+            app:iconTint="@drawable/selector"
+            android:title="Logout" />
+    </group>
+
+</menu>
