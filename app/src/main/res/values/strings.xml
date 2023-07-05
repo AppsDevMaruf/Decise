@@ -3,4 +3,25 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="todo">TODO</string>
+    <string name="password_required">Password<font color="#FF3D00">*</font></string>
+    <string name="last_name_is_required">Last name is required</string>
+    <string name="enter_last_name">Enter last name</string>
+    <string name="last_name_required">Last Name<font color="#FF3D00">*</font></string>
+    <string name="first_name_is_required">First name is required</string>
+    <string name="enter_first_name">Enter first name</string>
+    <string name="first_name_required">First Name<font color="#FF3D00">*</font></string>
+    <string name="email">Email</string>
+    <string name="email_is_required">Email is required</string>
+    <string name="password">Password</string>
+    <string name="password_is_required">Password is required</string>
+    <string name="forget_password">Forget Password?</string>
+    <string name="log_in">Log In</string>
+    <string name="or_login_with_google_account">or login with Google Account</string>
+    <string name="enter_password">Enter password</string>
+    <string name="password_is_required_warning">Password is required</string>
+    <string name="confirm_password_star">Confirm Password<font color="#FF3D00">*</font></string>
+    <string name="enter_repeat_password">Enter repeat password</string>
+    <string name="complete">Complete</string>
+    <string name="one_lowercase_character">One lowercase character</string>
+    <string name="sign_me_up">Sign Me Up</string>
 </resources>

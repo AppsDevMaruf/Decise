@@ -31,11 +31,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="400dp"
                 android:background="@drawable/login_reg_bg"
+                android:contentDescription="@string/todo"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:contentDescription="@string/todo" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -57,92 +57,92 @@
                     android:orientation="vertical">
 
                     <TextView
+                        style="@style/titleText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/gotham_bold"
-                        android:text="Email"
                         android:layout_marginBottom="6dp"
-                        android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
-                        android:textColor="@color/white" />
+                        android:text="@string/email" />
 
                     <EditText
+                        style="@style/editTextStyle"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
+                        android:layout_height="38dp"
                         android:background="@drawable/background_edit_text"
-                        android:hint="Email"
-                        android:padding="4dp"
                         android:drawableStart="@drawable/baseline_email_24"
                         android:drawablePadding="4dp"
-                        android:textColor="@color/white" />
+                        android:hint="@string/email"
+                        android:padding="4dp" />
 
                     <TextView
+                        style="@style/warningText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/gotham_bold"
-                        android:text="Email is required"
-                        android:paddingTop="4dp"
-                        android:textAppearance="@style/TextAppearance.Material3.BodySmall"
-                        android:textColor="@color/bg_danger" />
+                        android:text="@string/email_is_required" />
 
                     <TextView
+                        style="@style/titleText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/gotham_bold"
-                        android:text="Password"
-                        android:layout_marginTop="4dp"
-                        android:paddingVertical="6dp"
-                        android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
-                        android:textColor="@color/white" />
+                        android:paddingVertical="4dp"
+                        android:text="@string/password" />
 
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:backgroundTint="@color/white"
-                        android:padding="4dp"
-                        android:hint="Password"
-                        android:drawablePadding="4dp"
-                        android:drawableStart="@drawable/baseline_lock_24"
-                        android:background="@drawable/background_edit_text"
-                        android:textColor="@color/white" />
-
-                    <TextView
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/gotham_bold"
-                        android:text="Password is required"
-                        android:paddingTop="4dp"
-                        android:textAppearance="@style/TextAppearance.Material3.BodySmall"
-                        android:textColor="@color/bg_danger" />
+                        android:padding="0dp"
+                        app:boxStrokeWidth="0dp"
+                        app:boxStrokeWidthFocused="0dp"
+                        app:endIconDrawable="@drawable/custom_eye"
+                        app:endIconMode="password_toggle"
+                        app:hintEnabled="false">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/password_input"
+                            style="@style/editTextStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="38dp"
+                            android:layout_gravity="center"
+                            android:background="@drawable/background_edit_text"
+                            android:drawableStart="@drawable/baseline_lock_24"
+                            android:hint="@string/password"
+                            android:inputType="textPassword"
+                            android:padding="4dp" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
 
                     <TextView
+                        style="@style/warningText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/password_is_required" />
+
+                    <TextView
+                        style="@style/titleText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
                         android:layout_marginVertical="8dp"
-                        android:fontFamily="@font/gotham_medium"
                         android:gravity="end"
-                        android:text="Forget Password?"
-                        android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                        android:text="@string/forget_password"
                         android:textColor="@color/blue" />
 
                     <androidx.appcompat.widget.AppCompatButton
+                        style="@style/primaryButtonText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
                         android:layout_marginHorizontal="4dp"
                         android:layout_marginTop="35dp"
                         android:background="@drawable/button_login_bg_orange"
-                        android:fontFamily="@font/gotham_bold"
-                        android:text="Log In"
-                        android:textAllCaps="false" />
+                        android:text="@string/log_in" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:fontFamily="@font/gotham_medium"
+                        android:fontFamily="@font/gotham_light"
                         android:gravity="center"
-                        android:text="or login with Google Account"
+                        android:text="@string/or_login_with_google_account"
                         android:textAppearance="@style/TextAppearance.Material3.BodySmall"
                         android:textColor="@color/google_account_text" />
 
