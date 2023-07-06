@@ -18,7 +18,10 @@ import com.example.decise.R
 import com.example.decise.databinding.ActivityMainBinding
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.navigation.NavigationView
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.HiltAndroidApp
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     private lateinit var userProfilePicHeader: ShapeableImageView

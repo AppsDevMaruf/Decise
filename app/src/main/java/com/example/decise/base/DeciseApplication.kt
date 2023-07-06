@@ -29,7 +29,6 @@ class DeciseApplication : Application() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
 
 
-
     }
 
 
