@@ -15,6 +15,7 @@
     <color name="bg_danger">#DC3545</color>
     <color name="text_hint">#AAA</color>
     <color name="google_account_text">#919191</color>
+    <color name="bg_item_dashboard">#1e2634</color>
 
 
 </resources>

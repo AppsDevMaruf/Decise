@@ -33,7 +33,7 @@
                     android:contentDescription="@string/todo"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/include" />
+                    app:layout_constraintTop_toBottomOf="@+id/toolbarLogin" />
 
                 <FrameLayout
 
@@ -47,7 +47,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/include">
+                    app:layout_constraintTop_toBottomOf="@+id/toolbarLogin">
 
 
                     <LinearLayout

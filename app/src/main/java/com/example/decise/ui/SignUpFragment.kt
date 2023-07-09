@@ -19,10 +19,7 @@ import com.example.decise.utils.show
 import com.example.decise.utils.toast
 
 class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
-    var hasFirstName = false
-    var hasLastName = false
-    var hasPassword = false
-    var hasConfirmPassword = false
+
 
     override fun getFragmentView(): Int {
         return R.layout.fragment_sign_up
