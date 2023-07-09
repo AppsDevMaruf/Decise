@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="or_login_with_google_account">or login with Google Account</string>
+    <string name="confirm_password_is_required">Confirm Password is Required</string>
 </resources>

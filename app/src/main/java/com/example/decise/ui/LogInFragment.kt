@@ -1,13 +1,11 @@
 package com.example.decise.ui
 
-import android.content.Intent
-import android.media.session.MediaSession.Token
 import android.util.Log
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.example.decise.R
 import com.example.decise.base.BaseFragment
 import com.example.decise.data.models.login.RequestLogin
@@ -41,7 +39,10 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>() {
     }
 
     override fun setupNavigation() {
-        binding.loginBtn.setOnClickListener {
+        binding.toolbarLogin.button.setOnClickListener {
+            findNavController().navigate(R.id.action_logInFragment_to_signUpFragment)
+        }
+        binding.loginBtn.setOnClickListener{
 
 
             if (!isValidEmail(binding.email.text.toString().trim())) {

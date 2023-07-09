@@ -26,6 +26,12 @@
         <item name="android:textColorHint">@color/gray</item>
         <item name="editTextColor">@color/black</item>
 
+    <!--        android:indeterminate="true"
+            android:indeterminateTintMode="src_atop"
+            android:indeterminateTint="@color/secondary-->"
+
+
+
     </style>
 
     <style name="ShapeAppearance.Image.PILL" parent="">

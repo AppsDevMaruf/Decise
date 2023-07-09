@@ -6,170 +6,174 @@
     <data>
 
     </data>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/black"
         tools:context=".ui.LogInFragment">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <include
-                layout="@layout/toolbar_log_reg"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="400dp"
-                android:background="@drawable/login_reg_bg"
-                android:contentDescription="@string/todo"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <FrameLayout
-                android:layout_width="0dp"
-                android:layout_height="380dp"
-                android:layout_marginHorizontal="32dp"
-                android:background="@drawable/card_view_shape"
-                android:padding="16dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
 
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="16dp"
-                    android:backgroundTint="@color/black"
-                    android:orientation="vertical">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-                    <TextView
-                        style="@style/titleText"
+                <include
+                    android:id="@+id/toolbarLogin"
+                    layout="@layout/toolbar_log_reg"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="400dp"
+                    android:layout_marginTop="120dp"
+                    android:background="@drawable/login_reg_bg"
+                    android:contentDescription="@string/todo"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/include" />
+
+                <FrameLayout
+
+                    android:id="@+id/frameLayout"
+                    android:layout_width="0dp"
+                    android:layout_marginTop="120dp"
+                    android:layout_height="350dp"
+                    android:layout_marginHorizontal="32dp"
+                    android:background="@drawable/card_view_shape"
+                    android:padding="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/include">
+
+
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="6dp"
-                        android:text="@string/email_require_star" />
+                        android:layout_height="match_parent"
+                        android:layout_margin="16dp"
+                        android:backgroundTint="@color/black"
+                        android:orientation="vertical">
 
-                    <EditText
-                        android:id="@+id/email"
-                        style="@style/editTextStyle"
-                        android:inputType="textEmailAddress"
-                        android:layout_width="match_parent"
-                        android:layout_height="38dp"
-                        android:background="@drawable/background_edit_text"
-                        android:drawableStart="@drawable/baseline_email_24"
-                        android:drawablePadding="4dp"
-                        android:hint="@string/email" />
+                        <TextView
+                            style="@style/titleText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="6dp"
+                            android:text="@string/email_require_star" />
 
-                    <TextView
-                        android:id="@+id/emailWarning"
-                        style="@style/warningText"
-                        android:visibility="gone"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/email_is_required" />
-
-                    <TextView
-                        style="@style/titleText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingVertical="4dp"
-                        android:text="@string/password_require_star" />
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="0dp"
-                        app:boxStrokeWidth="0dp"
-                        app:boxStrokeWidthFocused="0dp"
-                        app:endIconDrawable="@drawable/custom_eye"
-                        app:endIconMode="password_toggle"
-                        app:hintEnabled="false">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/password"
+                        <EditText
+                            android:id="@+id/email"
                             style="@style/editTextStyle"
                             android:layout_width="match_parent"
                             android:layout_height="38dp"
-                            android:layout_gravity="center"
                             android:background="@drawable/background_edit_text"
-                            android:drawableStart="@drawable/baseline_lock_24"
-                            android:hint="@string/password"
-                            android:minWidth="48dp"
-                            android:inputType="textPassword"
-                            android:padding="4dp" />
+                            android:drawableStart="@drawable/baseline_email_24"
+                            android:drawablePadding="4dp"
+                            android:hint="@string/email"
+                            android:inputType="textEmailAddress" />
 
-                    </com.google.android.material.textfield.TextInputLayout>
+                        <TextView
+                            android:id="@+id/emailWarning"
+                            style="@style/warningText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/email_is_required"
+                            android:visibility="gone" />
 
+                        <TextView
+                            style="@style/titleText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingVertical="4dp"
+                            android:text="@string/password_require_star" />
 
-                    <TextView
-                        android:id="@+id/passwordWarning"
-                        android:visibility="gone"
-                        style="@style/warningText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/password_is_required" />
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="0dp"
+                            app:boxStrokeWidth="0dp"
+                            app:boxStrokeWidthFocused="0dp"
+                            app:endIconDrawable="@drawable/custom_eye"
+                            app:endIconMode="password_toggle"
+                            app:hintEnabled="false">
 
-                    <TextView
-                        style="@style/titleText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="end"
-                        android:layout_marginVertical="8dp"
-                        android:gravity="end"
-                        android:text="@string/forget_password"
-                        android:textColor="@color/blue" />
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/password"
+                                style="@style/editTextStyle"
+                                android:layout_width="match_parent"
+                                android:layout_height="38dp"
+                                android:layout_gravity="center"
+                                android:background="@drawable/background_edit_text"
+                                android:drawableStart="@drawable/baseline_lock_24"
+                                android:hint="@string/password"
+                                android:inputType="textPassword"
+                                android:minWidth="48dp"
+                                android:padding="4dp" />
 
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/loginBtn"
-                        style="@style/primaryButtonText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="4dp"
-                        android:layout_marginTop="35dp"
-                        android:background="@drawable/button_primary_bg_orange_disable"
-                        android:text="@string/log_in" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:fontFamily="@font/gotham_light"
-                        android:gravity="center"
-                        android:text="@string/or_login_with_google_account"
-                        android:textAppearance="@style/TextAppearance.Material3.BodySmall"
-                        android:textColor="@color/google_account_text" />
-
-                </LinearLayout>
+                        </com.google.android.material.textfield.TextInputLayout>
 
 
-            </FrameLayout>
+                        <TextView
+                            android:id="@+id/passwordWarning"
+                            style="@style/warningText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/password_is_required"
+                            android:visibility="gone" />
 
-            <ProgressBar
-                android:id="@+id/progressBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                        <TextView
+                            style="@style/titleText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_marginVertical="8dp"
+                            android:gravity="end"
+                            android:text="@string/forget_password"
+                            android:textColor="@color/blue" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/loginBtn"
+                            style="@style/primaryButtonText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="4dp"
+                            android:layout_marginTop="35dp"
+                            android:background="@drawable/button_primary_bg_orange_disable"
+                            android:text="@string/log_in" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="@font/gotham_light"
+                            android:gravity="center"
+                            android:text="@string/or_login_with_google_account"
+                            android:textAppearance="@style/TextAppearance.Material3.BodySmall"
+                            android:textColor="@color/google_account_text" />
+
+                    </LinearLayout>
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                </FrameLayout>
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:indeterminateTint="@color/orange"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+    </ScrollView>
+
 </layout>
