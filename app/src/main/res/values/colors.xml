@@ -16,6 +16,7 @@
     <color name="text_hint">#AAA</color>
     <color name="google_account_text">#919191</color>
     <color name="bg_item_dashboard">#1e2634</color>
+    <color name="bg_blue_gray_light">#1f4050</color>
 
 
 </resources>

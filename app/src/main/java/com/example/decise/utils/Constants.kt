@@ -3,6 +3,7 @@ package com.example.decise.utils
 object Constants {
     const val TAG = "DuFaAppTAG"
     const val BASE_URL = "http://170.64.137.92:7777/"
+    //const val BASE_URL = "http://192.168.50.25:7777/"
     const val TEST_BASE_URL = "https://mocki.io/v1/"
 
 

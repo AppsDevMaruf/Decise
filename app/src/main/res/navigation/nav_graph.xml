@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/signUpFragment">
+    app:startDestination="@id/sendEmailFragment">
 
     <fragment
         android:id="@+id/homeFragment"
@@ -23,9 +23,33 @@
         android:id="@+id/signUpFragment"
         android:name="com.example.decise.ui.SignUpFragment"
         android:label="fragment_sign_up"
-        tools:layout="@layout/fragment_sign_up" >
+        tools:layout="@layout/fragment_sign_up">
         <action
             android:id="@+id/action_signUpFragment_to_logInFragment"
             app:destination="@id/logInFragment" />
+        <argument
+            android:name="email"
+            app:argType="string" />
+        <argument
+            android:name="evc"
+            app:argType="integer" />
+        <argument
+            android:name="signupType"
+            app:argType="string" />
+        <argument
+            android:name="subscriptionType"
+            app:argType="string" />
+        <deepLink
+            android:id="@+id/deepLink"
+            app:uri="decise.info://signup/verify-email?subscriptionType={subscriptionType}&amp;signupType={signupType}&amp;email={email}&amp;evc={evc}" />
+    </fragment>
+    <fragment
+        android:id="@+id/sendEmailFragment"
+        android:name="com.example.decise.SendEmailFragment"
+        android:label="fragment_send_email"
+        tools:layout="@layout/fragment_send_email" >
+        <action
+            android:id="@+id/action_sendEmailFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
     </fragment>
 </navigation>

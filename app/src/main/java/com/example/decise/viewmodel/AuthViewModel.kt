@@ -6,9 +6,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.decise.data.models.login.RequestLogin
-import com.example.decise.data.models.login.RequestSignUp
+import com.example.decise.data.models.signUp.RequestSignUp
 import com.example.decise.data.models.login.ResponseLogin
-import com.example.decise.data.models.login.ResponseSignUp
+import com.example.decise.data.models.sendEmail.RequestSendEmail
+import com.example.decise.data.models.sendEmail.ResponseSendEmail
+import com.example.decise.data.models.signUp.ResponseSignUp
 import com.example.decise.repos.PublicRepository
 import com.example.decise.utils.NetworkResult
 import com.example.decise.utils.NoInternetException
@@ -19,7 +21,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AuthViewModel @Inject constructor(
-    private val userRepository: PublicRepository
+    private val publicRepository: PublicRepository
 ) : ViewModel() {
 
     //  login  start
@@ -35,7 +37,7 @@ class AuthViewModel @Inject constructor(
 
         viewModelScope.launch {
             try {
-                val response = userRepository.loginRepo(requestLogin)
+                val response = publicRepository.loginRepo(requestLogin)
 
                 if (response.isSuccessful && response.body() != null) {
 
@@ -58,7 +60,10 @@ class AuthViewModel @Inject constructor(
 
     }
 
-    //  login  signUp
+    //  login  end
+
+    //signup start
+
 
     private var _responseSignUp =
         MutableLiveData<NetworkResult<ResponseSignUp>>()
@@ -71,7 +76,7 @@ class AuthViewModel @Inject constructor(
 
         viewModelScope.launch {
             try {
-                val response = userRepository.signUpRepo(requestSignUp)
+                val response = publicRepository.signUpRepo(requestSignUp)
 
                 if (response.isSuccessful && response.body() != null) {
 
@@ -94,6 +99,47 @@ class AuthViewModel @Inject constructor(
 
     }
 
+    //  sendEmail
+
+
+    //signup start
+
+
+    private var _responseSendEmail =
+        MutableLiveData<NetworkResult<ResponseSendEmail>>()
+    val sendEmailVMLD: LiveData<NetworkResult<ResponseSendEmail>>
+        get() = _responseSendEmail
+
+    @SuppressLint("SuspiciousIndentation")
+    suspend fun sendEmailVM(email: String) {
+        _responseSendEmail.postValue(NetworkResult.Loading())
+
+        viewModelScope.launch {
+            try {
+                val response = publicRepository.sendEmailRepo(email)
+
+                if (response.isSuccessful && response.body() != null) {
+
+                    _responseSendEmail.postValue(NetworkResult.Success(response.body()!!))
+
+                } else if (response.errorBody() != null) {
+
+                    val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+                    _responseSendEmail.postValue(NetworkResult.Error(errorObj.getString("message")))
+
+                }
+            } catch (noInternetException: NoInternetException) {
+                _responseSendEmail.postValue(noInternetException.localizedMessage?.let {
+                    NetworkResult.Error(
+                        it
+                    )
+                })
+            }
+        }
+
+    }
+
+    //  sendEmail
 
 
 }

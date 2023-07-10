@@ -3,6 +3,7 @@ package com.example.decise.ui
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.decise.R
 import com.example.decise.base.BaseFragment
 import com.example.decise.databinding.FragmentSignUpBinding
@@ -19,6 +20,8 @@ import com.example.decise.utils.show
 import com.example.decise.utils.toast
 
 class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
+    private val arg: SignUpFragmentArgs by navArgs()
+    var result = ""
 
 
     override fun getFragmentView(): Int {
@@ -26,7 +29,9 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
     }
 
     override fun configUi() {
-        binding.toolbarSignUp.toolbarTitle.text = "Have an account?"
+        result = arg.email
+        binding.toolbarSignUp.toolbarTitle.text = result
+        //binding.toolbarSignUp.toolbarTitle.text = "Have an account?"
         binding.toolbarSignUp.button.text = "Log In"
         buttonEnableAfterTextFillUp()
 
@@ -94,26 +99,12 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
         }
 
         binding.password.onTextChanged {
+
+            val confirmPassword = binding.confirmPassword.text.toString()
             if (!it.trim().isNullOrBlank()) {
                 binding.passwordWarning.gone()
                 hasPassword = !it.trim().isNullOrBlank()
-                validatePassWord(it.trim())
-                if (isPasswordMatch(
-                        binding.password.text.toString().trim(),
-                        binding.confirmPassword.text.toString().trim()
-                    )
-                ) {
-                    enableBtn(
-                        hasFirstName && hasLastName && hasPassword && hasConfirmPassword,
-                        binding.signUpCompleteBtn
-                    )
-                } else {
-                    hasPassword = false
-                    enableBtn(
-                        hasFirstName && hasLastName && hasPassword && hasConfirmPassword,
-                        binding.signUpCompleteBtn
-                    )
-                }
+                validatePassWord(it.trim(), confirmPassword)
 
             } else {
                 hasPassword = false
@@ -125,25 +116,13 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
             }
         }
         binding.confirmPassword.onTextChanged {
+            val password = binding.password.text.toString()
+
             if (!it.trim().isNullOrBlank()) {
                 binding.confirmPasswordWarning.gone()
                 hasConfirmPassword = !it.trim().isNullOrBlank()
-                if (isPasswordMatch(
-                        binding.password.text.toString().trim(),
-                        binding.confirmPassword.text.toString().trim()
-                    )
-                ) {
-                    enableBtn(
-                        hasFirstName && hasLastName && hasPassword && hasConfirmPassword,
-                        binding.signUpCompleteBtn
-                    )
-                } else {
-                    hasConfirmPassword = false
-                    enableBtn(
-                        hasFirstName && hasLastName && hasPassword && hasConfirmPassword,
-                        binding.signUpCompleteBtn
-                    )
-                }
+                validatePassWord(password, it.trim())
+
             } else {
                 hasConfirmPassword = false
                 binding.confirmPasswordWarning.show()
@@ -156,13 +135,14 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
 
     }
 
-    private fun validatePassWord(password: String) {
+    private fun validatePassWord(password: String, confirmPassword: String) {
 
         val upperCase: Boolean = hasUpperCase(password)
         val lowerCase: Boolean = hasLowerCase(password)
         val hasDigit: Boolean = hasDigit(password)
         val isLength: Boolean = isLength8(password)
         val hasSpecialChar: Boolean = hasSpecailChar(password)
+        val hasPasswordMatch: Boolean = isPasswordMatch(password, confirmPassword)
 
 
         if (upperCase) {
@@ -220,14 +200,25 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
             binding.specialCharacters.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
             binding.specialCharacters.setTextColor(resources.getColor(R.color.gray))
         }
+        if (hasPasswordMatch) {
+            binding.passwordMatching.setCompoundDrawablesWithIntrinsicBounds(
+                R.drawable.ic_check, 0, 0, 0
+            )
+            binding.passwordMatching.setTextColor(resources.getColor(R.color.orange_light))
+
+        } else {
+            binding.passwordMatching.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
+            binding.passwordMatching.setTextColor(resources.getColor(R.color.gray))
+        }
 
 
 
 
-        if (hasDigit && lowerCase && upperCase && isLength && hasSpecialChar) {
-            enableBtn(true,binding.signUpCompleteBtn)
+        if (hasDigit && lowerCase && upperCase && isLength && hasSpecialChar && hasPasswordMatch) {
+            enableBtn(true, binding.signUpCompleteBtn)
 
-
+        } else {
+            enableBtn(false, binding.signUpCompleteBtn)
         }
 
 

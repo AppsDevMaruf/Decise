@@ -33,10 +33,11 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/login_reg_bg"
                 android:contentDescription="@string/todo"
+                app:layout_constraintVertical_bias="0"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="parent" />
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -44,10 +45,12 @@
                 android:layout_marginHorizontal="32dp"
                 android:background="@drawable/card_view_shape"
                 android:padding="16dp"
+                android:layout_marginTop="32dp"
+                app:layout_constraintVertical_bias="0"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toBottomOf="@id/toolbarSignUp">
 
 
                 <LinearLayout
@@ -83,6 +86,7 @@
                         style="@style/editTextStyle"
                         android:layout_width="match_parent"
                         android:layout_height="38dp"
+                        android:drawablePadding="4dp"
                         android:background="@drawable/background_edit_text"
                         android:drawableStart="@drawable/ic_person"
                         android:hint="@string/enter_first_name"
@@ -109,7 +113,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="38dp"
                         android:background="@drawable/background_edit_text"
-                        android:drawableStart="@drawable/baseline_email_24"
+                        android:drawableStart="@drawable/ic_person"
                         android:drawablePadding="4dp"
                         android:hint="@string/enter_last_name"
                         android:importantForAutofill="no"
@@ -146,6 +150,7 @@
                             style="@style/editTextStyle"
                             android:layout_width="match_parent"
                             android:layout_height="38dp"
+                            android:drawablePadding="4dp"
                             android:background="@drawable/background_edit_text"
                             android:drawableStart="@drawable/baseline_lock_24"
                             android:hint="@string/enter_password"
@@ -187,6 +192,7 @@
                             style="@style/editTextStyle"
                             android:layout_width="match_parent"
                             android:layout_height="38dp"
+                            android:drawablePadding="4dp"
                             android:background="@drawable/background_edit_text"
                             android:drawableStart="@drawable/baseline_lock_24"
                             android:hint="@string/enter_repeat_password"
@@ -247,6 +253,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/special_characters" />
+                    <!--            Password Matched-->
+                    <TextView
+                        android:id="@+id/passwordMatching"
+                        style="@style/passwordValidateText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Password matched" />
 
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/signUpCompleteBtn"
