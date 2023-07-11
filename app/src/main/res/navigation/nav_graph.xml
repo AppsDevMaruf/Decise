@@ -9,12 +9,16 @@
         android:id="@+id/homeFragment"
         android:name="com.example.decise.ui.HomeFragment"
         android:label="Home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homeFragment_to_verifyEmailFragment"
+            app:destination="@id/verifyEmailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/logInFragment"
         android:name="com.example.decise.ui.LogInFragment"
         android:label="fragment_log_in"
-        tools:layout="@layout/fragment_log_in" >
+        tools:layout="@layout/fragment_log_in">
         <action
             android:id="@+id/action_logInFragment_to_signUpFragment"
             app:destination="@id/signUpFragment" />
@@ -23,33 +27,33 @@
         android:id="@+id/signUpFragment"
         android:name="com.example.decise.ui.SignUpFragment"
         android:label="fragment_sign_up"
-        tools:layout="@layout/fragment_sign_up">
-        <action
-            android:id="@+id/action_signUpFragment_to_logInFragment"
-            app:destination="@id/logInFragment" />
-        <argument
-            android:name="email"
-            app:argType="string" />
-        <argument
-            android:name="evc"
-            app:argType="integer" />
-        <argument
-            android:name="signupType"
-            app:argType="string" />
-        <argument
-            android:name="subscriptionType"
-            app:argType="string" />
-        <deepLink
-            android:id="@+id/deepLink"
-            app:uri="decise.info://signup/verify-email?subscriptionType={subscriptionType}&amp;signupType={signupType}&amp;email={email}&amp;evc={evc}" />
-    </fragment>
+        tools:layout="@layout/fragment_sign_up" />
     <fragment
         android:id="@+id/sendEmailFragment"
         android:name="com.example.decise.SendEmailFragment"
         android:label="fragment_send_email"
-        tools:layout="@layout/fragment_send_email" >
+        tools:layout="@layout/fragment_send_email">
         <action
-            android:id="@+id/action_sendEmailFragment_to_signUpFragment"
-            app:destination="@id/signUpFragment" />
+            android:id="@+id/action_sendEmailFragment_to_openEmailAppFragment"
+            app:destination="@id/openEmailAppFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/verifyEmailFragment"
+        android:name="com.example.decise.VerifyEmailFragment"
+        android:label="fragment_verify_email"
+        tools:layout="@layout/fragment_verify_email">
+
+        <deepLink
+            android:id="@+id/deepLink"
+            app:uri="170.64.137.92/signup/verify-email?subscriptionType={subscriptionType}&amp;signupType={signupType}&amp;email={email}&amp;evc={evc}" />
+        <argument android:name="subscriptionType" />
+        <argument android:name="signupType" />
+        <argument android:name="email" />
+        <argument android:name="evc" />
+    </fragment>
+    <fragment
+        android:id="@+id/openEmailAppFragment"
+        android:name="com.example.decise.OpenEmailAppFragment"
+        android:label="fragment_open_email_app"
+        tools:layout="@layout/fragment_open_email_app" />
 </navigation>

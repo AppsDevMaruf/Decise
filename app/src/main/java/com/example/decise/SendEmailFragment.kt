@@ -80,7 +80,7 @@ class SendEmailFragment : BaseFragment<FragmentSendEmailBinding>() {
                     Log.e("TAG", "binObserver: ${it.data}")
                     toast("Send Email  Success")
 
-                    //findNavController().navigate(R.id.action_sendEmailFragment_to_signUpFragment)
+                    findNavController().navigate(R.id.action_sendEmailFragment_to_openEmailAppFragment)
 
 
                 }

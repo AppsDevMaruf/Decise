@@ -1,5 +1,6 @@
 package com.example.decise.ui
 
+import android.net.Uri
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
@@ -20,8 +21,7 @@ import com.example.decise.utils.show
 import com.example.decise.utils.toast
 
 class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
-    private val arg: SignUpFragmentArgs by navArgs()
-    var result = ""
+
 
 
     override fun getFragmentView(): Int {
@@ -29,18 +29,17 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
     }
 
     override fun configUi() {
-        result = arg.email
-        binding.toolbarSignUp.toolbarTitle.text = result
-        //binding.toolbarSignUp.toolbarTitle.text = "Have an account?"
-        binding.toolbarSignUp.button.text = "Log In"
-        buttonEnableAfterTextFillUp()
 
-    }
+
+        binding.toolbarSignUp.toolbarTitle.text = "Have an account?"
+            binding.toolbarSignUp.button.text = "Log In"
+            buttonEnableAfterTextFillUp()
+
+        }
+
 
     override fun setupNavigation() {
-        binding.toolbarSignUp.button.setOnClickListener {
-            findNavController().navigate(R.id.action_signUpFragment_to_logInFragment)
-        }
+
         binding.signUpCompleteBtn.setOnClickListener {
             if (isPasswordMatch(
                     binding.password.text.toString().trim(),
