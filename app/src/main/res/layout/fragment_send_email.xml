@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/black"
-        tools:context=".SendEmailFragment">
+        tools:context=".ui.SendEmailFragment">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -20,7 +20,7 @@
 
             <include
                 android:id="@+id/toolbarLogin"
-                layout="@layout/toolbar_log_reg"
+                layout="@layout/toolbar_sign_up"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -90,7 +90,6 @@
                         style="@style/primaryButtonText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="32dp"
                         android:layout_marginTop="16dp"
                         android:background="@drawable/button_primary_bg_orange_disable"
                         android:text="Verify" />

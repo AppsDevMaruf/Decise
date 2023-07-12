@@ -20,7 +20,7 @@
 
                 <include
                     android:id="@+id/toolbarLogin"
-                    layout="@layout/toolbar_log_reg"
+                    layout="@layout/toolbar_log"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />

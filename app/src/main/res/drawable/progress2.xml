@@ -20,8 +20,8 @@
   <path
       android:pathData="M121.5,2.5L153.5,2.5"
       android:strokeWidth="3"
-      android:fillColor="@color/orange"
-      android:strokeColor="@color/orange"
+      android:fillColor="@color/orange_light"
+      android:strokeColor="@color/orange_light"
       android:strokeLineCap="round"/>
 
 

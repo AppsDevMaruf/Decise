@@ -39,8 +39,8 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>() {
     }
 
     override fun setupNavigation() {
-        binding.toolbarLogin.button.setOnClickListener {
-            findNavController().navigate(R.id.action_logInFragment_to_signUpFragment)
+        binding.toolbarLogin.signUpBtn.setOnClickListener {
+            findNavController().navigate(R.id.action_logInFragment_to_sendEmailFragment)
         }
         binding.loginBtn.setOnClickListener{
 

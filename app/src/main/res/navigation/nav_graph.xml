@@ -3,43 +3,45 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/sendEmailFragment">
+    app:startDestination="@id/logInFragment">
 
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.decise.ui.HomeFragment"
         android:label="Home"
-        tools:layout="@layout/fragment_home">
-        <action
-            android:id="@+id/action_homeFragment_to_verifyEmailFragment"
-            app:destination="@id/verifyEmailFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_home"/>
     <fragment
         android:id="@+id/logInFragment"
         android:name="com.example.decise.ui.LogInFragment"
         android:label="fragment_log_in"
         tools:layout="@layout/fragment_log_in">
         <action
-            android:id="@+id/action_logInFragment_to_signUpFragment"
-            app:destination="@id/signUpFragment" />
+            android:id="@+id/action_logInFragment_to_sendEmailFragment"
+            app:destination="@id/sendEmailFragment" />
+        <action
+            android:id="@+id/action_logInFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
         android:name="com.example.decise.ui.SignUpFragment"
         android:label="fragment_sign_up"
-        tools:layout="@layout/fragment_sign_up" />
-    <fragment
-        android:id="@+id/sendEmailFragment"
-        android:name="com.example.decise.SendEmailFragment"
-        android:label="fragment_send_email"
-        tools:layout="@layout/fragment_send_email">
+        tools:layout="@layout/fragment_sign_up" >
+        <argument
+            android:name="responseVerifyEmail"
+            app:argType="com.example.decise.data.models.verifyEmail.ResponseVerifyEmail" />
         <action
-            android:id="@+id/action_sendEmailFragment_to_openEmailAppFragment"
-            app:destination="@id/openEmailAppFragment" />
+            android:id="@+id/action_signUpFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
     <fragment
+        android:id="@+id/sendEmailFragment"
+        android:name="com.example.decise.ui.SendEmailFragment"
+        android:label="fragment_send_email"
+        tools:layout="@layout/fragment_send_email"/>
+    <fragment
         android:id="@+id/verifyEmailFragment"
-        android:name="com.example.decise.VerifyEmailFragment"
+        android:name="com.example.decise.ui.VerifyEmailFragment"
         android:label="fragment_verify_email"
         tools:layout="@layout/fragment_verify_email">
 
@@ -50,10 +52,8 @@
         <argument android:name="signupType" />
         <argument android:name="email" />
         <argument android:name="evc" />
+        <action
+            android:id="@+id/action_verifyEmailFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/openEmailAppFragment"
-        android:name="com.example.decise.OpenEmailAppFragment"
-        android:label="fragment_open_email_app"
-        tools:layout="@layout/fragment_open_email_app" />
 </navigation>

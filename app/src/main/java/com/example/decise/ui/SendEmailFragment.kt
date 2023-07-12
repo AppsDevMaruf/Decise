@@ -1,4 +1,4 @@
-package com.example.decise
+package com.example.decise.ui
 
 import android.annotation.SuppressLint
 import android.util.Log
@@ -6,15 +6,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.example.decise.R
 import com.example.decise.base.BaseFragment
-import com.example.decise.data.models.login.RequestLogin
-import com.example.decise.data.models.sendEmail.RequestSendEmail
 import com.example.decise.databinding.FragmentSendEmailBinding
-import com.example.decise.utils.Constants
 import com.example.decise.utils.NetworkResult
 import com.example.decise.utils.enableBtn
 import com.example.decise.utils.gone
-import com.example.decise.utils.hide
 import com.example.decise.utils.isValidEmail
 import com.example.decise.utils.onTextChanged
 import com.example.decise.utils.show
@@ -52,6 +49,9 @@ class SendEmailFragment : BaseFragment<FragmentSendEmailBinding>() {
                 }
             }
         }
+        binding.toolbarLogin.loginBtn.setOnClickListener {
+            findNavController().navigate(R.id.logInFragment)
+        }
     }
 
     private fun buttonEnableAfterTextFillUp() {
@@ -80,8 +80,6 @@ class SendEmailFragment : BaseFragment<FragmentSendEmailBinding>() {
                     Log.e("TAG", "binObserver: ${it.data}")
                     toast("Send Email  Success")
 
-                    findNavController().navigate(R.id.action_sendEmailFragment_to_openEmailAppFragment)
-
 
                 }
 
@@ -98,6 +96,7 @@ class SendEmailFragment : BaseFragment<FragmentSendEmailBinding>() {
 
 
     }
+
     override fun onResume() {
         super.onResume()
         (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
@@ -107,7 +106,6 @@ class SendEmailFragment : BaseFragment<FragmentSendEmailBinding>() {
         super.onStop()
         (activity as AppCompatActivity?)!!.supportActionBar!!.show()
     }
-
 
 
 }

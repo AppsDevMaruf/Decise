@@ -7,6 +7,7 @@
     <color name="purple_light">#AA00FF</color>
     <color name="orange">#FF3D00</color>
     <color name="orange_light">#FF6D00</color>
+    <color name="orange_light_disable">#F2A063</color>
     <color name="yellow">#FFD600</color>
     <color name="pink">#ED1459</color>
     <color name="pink_light">#FF2767</color>
@@ -17,6 +18,7 @@
     <color name="google_account_text">#919191</color>
     <color name="bg_item_dashboard">#1e2634</color>
     <color name="bg_blue_gray_light">#1f4050</color>
-
+    <color name="line_selected">#F2A063</color>
+    <color name="line_focused">#FF3D00</color>
 
 </resources>

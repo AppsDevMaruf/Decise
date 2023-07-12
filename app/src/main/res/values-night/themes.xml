@@ -2,12 +2,12 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.Decise" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- This is used for statusbar color. -->
-        <item name="colorPrimaryDark">@color/purple_light</item>
+        <item name="colorPrimaryDark">@color/purple</item>
         <!-- This is used for status bar content color. If status bar Color is light, use "true" otherwise use "false"-->
-        <item name="android:windowLightStatusBar">false</item>
+      <!--  <item name="android:windowLightStatusBar">false</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowFullscreen">true</item>-->
         <!-- Primary brand color. -->
         <item name="colorControlNormal">@color/white</item>
         <item name="android:actionMenuTextColor">@color/white</item>

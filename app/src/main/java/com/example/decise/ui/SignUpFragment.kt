@@ -1,13 +1,15 @@
 package com.example.decise.ui
 
-import android.net.Uri
-import android.widget.Toast
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.decise.R
 import com.example.decise.base.BaseFragment
+import com.example.decise.data.models.signUp.RequestSignUp
 import com.example.decise.databinding.FragmentSignUpBinding
+import com.example.decise.utils.NetworkResult
 import com.example.decise.utils.enableBtn
 import com.example.decise.utils.gone
 import com.example.decise.utils.hasDigit
@@ -19,9 +21,13 @@ import com.example.decise.utils.isPasswordMatch
 import com.example.decise.utils.onTextChanged
 import com.example.decise.utils.show
 import com.example.decise.utils.toast
+import com.example.decise.viewmodel.AuthViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
-
+    private val authViewModel by viewModels<AuthViewModel>()
+    private val arg: SignUpFragmentArgs by navArgs()
 
 
     override fun getFragmentView(): Int {
@@ -29,30 +35,39 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
     }
 
     override fun configUi() {
+        val responseVerifyEmail = arg.responseVerifyEmail
+        val email = responseVerifyEmail.email
+        val subscriptionType = responseVerifyEmail.subscriptionType
+        val signupType: String? = responseVerifyEmail.signupType
 
+        binding.signUpCompleteBtn.setOnClickListener {
+            val firstName = binding.firstName.text.trim().toString()
+            val lastName = binding.lastName.text.trim().toString()
+            val password = binding.password.text?.trim().toString()
+            val request = RequestSignUp(
+                email = email,
+                firstName = firstName,
+                lastName = lastName,
+                password = password,
+                subscriptionType = subscriptionType,
+                signUpType = signupType
+            )
 
-        binding.toolbarSignUp.toolbarTitle.text = "Have an account?"
-            binding.toolbarSignUp.button.text = "Log In"
-            buttonEnableAfterTextFillUp()
+            authViewModel.completeSignUpVM(request)
+
 
         }
+        buttonEnableAfterTextFillUp()
+
+    }
 
 
     override fun setupNavigation() {
-
-        binding.signUpCompleteBtn.setOnClickListener {
-            if (isPasswordMatch(
-                    binding.password.text.toString().trim(),
-                    binding.confirmPassword.text.toString().trim()
-                )
-            ) {
-
-            } else {
-                toast("Password not match")
-            }
-
-
+        binding.toolbarSignUp.loginBtn.setOnClickListener {
+            findNavController().navigate(R.id.logInFragment)
         }
+
+
     }
 
     private fun buttonEnableAfterTextFillUp() {
@@ -218,6 +233,29 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
 
         } else {
             enableBtn(false, binding.signUpCompleteBtn)
+        }
+
+
+    }
+
+    override fun binObserver() {
+        authViewModel.completeSignUpVMLD.observe(this) {
+            binding.progressBar.gone()
+            when (it) {
+                is NetworkResult.Success -> {
+                    findNavController().navigate(R.id.action_signUpFragment_to_homeFragment)
+
+                }
+
+                is NetworkResult.Error -> {
+                    Log.e("TAG", "binObserver: ${it.data}")
+                    toast("${it.message}")
+                }
+
+                is NetworkResult.Loading -> {
+                    binding.progressBar.show()
+                }
+            }
         }
 
 
