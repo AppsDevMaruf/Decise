@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black"
+        tools:context=".CardInfoFragment">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <include
+                android:id="@+id/toolbarSignUp"
+                layout="@layout/toolbar_sign_up"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/signupTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Card information"
+                android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/toolbarSignUp" />
+
+
+            <FrameLayout
+                android:id="@+id/frameLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="32dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/card_view_shape"
+                android:padding="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/signupTitle">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="16dp"
+                    android:backgroundTint="@color/black"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/titleText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Card Number*" />
+
+                    <EditText
+                        android:id="@+id/firstName"
+                        style="@style/editTextStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="38dp"
+                        android:background="@drawable/background_edit_text"
+                        android:drawableStart="@drawable/ic_person"
+                        android:drawablePadding="4dp"
+                        android:hint="@string/enter_first_name"
+                        android:inputType="text" />
+
+                    <TextView
+                        android:id="@+id/firstNameWarning"
+                        style="@style/warningText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/first_name_is_required"
+                        android:visibility="gone" />
+
+                    <TextView
+                        style="@style/titleText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="6dp"
+                        android:text="Card Holder's Name" />
+
+                    <EditText
+                        android:id="@+id/lastName"
+                        style="@style/editTextStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="38dp"
+                        android:background="@drawable/background_edit_text"
+                        android:drawableStart="@drawable/ic_person"
+                        android:drawablePadding="4dp"
+                        android:hint="@string/enter_last_name"
+                        android:importantForAutofill="no"
+                        android:inputType="text" />
+
+                    <TextView
+                        android:id="@+id/lastNameWarning"
+                        style="@style/warningText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/last_name_is_required"
+                        android:visibility="gone" />
+
+
+                    <TextView
+                        style="@style/titleText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingVertical="6dp"
+                        android:text="Expiry*" />
+
+                    <EditText
+
+                        style="@style/editTextStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="38dp"
+                        android:background="@drawable/background_edit_text"
+                        android:drawableStart="@drawable/ic_person"
+                        android:drawablePadding="4dp"
+                        android:hint="@string/enter_last_name"
+                        android:importantForAutofill="no"
+                        android:inputType="text" />
+
+                    <TextView
+                        android:id="@+id/passwordWarning"
+                        style="@style/warningText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/password_is_required_warning"
+                        android:visibility="gone" />
+
+
+                    <TextView
+
+                        style="@style/titleText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingVertical="6dp"
+                        android:text="CVV*" />
+
+                    <EditText
+
+                        style="@style/editTextStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="38dp"
+                        android:background="@drawable/background_edit_text"
+                        android:drawableStart="@drawable/ic_person"
+                        android:drawablePadding="4dp"
+                        android:hint="@string/enter_last_name"
+                        android:importantForAutofill="no"
+                        android:inputType="text" />
+
+                    <TextView
+                        android:id="@+id/confirmPasswordWarning"
+                        style="@style/warningText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/confirm_password_is_required"
+                        android:visibility="gone" />
+
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/signUpCompleteBtn"
+                        style="@style/primaryButtonText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/button_primary_bg_orange_disable"
+                        android:text="@string/complete" />
+
+
+                </LinearLayout>
+
+
+            </FrameLayout>
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminateTint="@color/orange"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                style="@style/titleText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="48dp"
+                android:layout_marginTop="10dp"
+                android:lineSpacingExtra="8dp"
+                android:text="@string/you_have_selected_the_entrepreneur_subscription_nyou_will_be_charged_39_per_month_per_user_after_your_free_trial_ends"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:letterSpacing="0.0001"
+                android:includeFontPadding="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </ScrollView>
+</layout>

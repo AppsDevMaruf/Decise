@@ -1,6 +1,7 @@
 package com.example.decise.api
 
 import android.content.Context
+import android.util.Log
 import com.example.decise.utils.Constants
 import com.example.decise.utils.NoInternetException
 import com.example.decise.utils.TokenManager
@@ -23,7 +24,7 @@ class AuthInterceptor @Inject constructor(@ApplicationContext var appContext: Co
         } else {
             val request = chain.request().newBuilder()
             val token = tokenManager.getToken(Constants.TOKEN)
-            request.addHeader("token", token)
+            request.addHeader("Authorization", token)
             return chain.proceed(request.build())
         }
 

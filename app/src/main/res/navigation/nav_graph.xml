@@ -9,7 +9,7 @@
         android:id="@+id/homeFragment"
         android:name="com.example.decise.ui.HomeFragment"
         android:label="Home"
-        tools:layout="@layout/fragment_home"/>
+        tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/logInFragment"
         android:name="com.example.decise.ui.LogInFragment"
@@ -36,7 +36,7 @@
         android:id="@+id/signUpFragment"
         android:name="com.example.decise.ui.SignUpFragment"
         android:label="fragment_sign_up"
-        tools:layout="@layout/fragment_sign_up" >
+        tools:layout="@layout/fragment_sign_up">
         <action
             android:id="@+id/action_signUpFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
@@ -48,7 +48,7 @@
         android:id="@+id/sendEmailFragment"
         android:name="com.example.decise.ui.SendEmailFragment"
         android:label="fragment_send_email"
-        tools:layout="@layout/fragment_send_email"/>
+        tools:layout="@layout/fragment_send_email" />
     <fragment
         android:id="@+id/verifyEmailFragment"
         android:name="com.example.decise.ui.VerifyEmailFragment"
@@ -73,7 +73,16 @@
         tools:layout="@layout/fragment_forget_password" />
     <fragment
         android:id="@+id/chooseSubscriptionFragment"
-        android:name="com.example.decise.ChooseSubscriptionFragment"
+        android:name="com.example.decise.ui.ChooseSubscriptionFragment"
         android:label="fragment_choose_subscription"
-        tools:layout="@layout/fragment_choose_subscription" />
+        tools:layout="@layout/fragment_choose_subscription" >
+        <action
+            android:id="@+id/action_chooseSubscriptionFragment_to_cardInfoFragment"
+            app:destination="@id/cardInfoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cardInfoFragment"
+        android:name="com.example.decise.CardInfoFragment"
+        android:label="fragment_card_info"
+        tools:layout="@layout/fragment_card_info" />
 </navigation>

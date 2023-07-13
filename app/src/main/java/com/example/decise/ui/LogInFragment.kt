@@ -79,11 +79,13 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>() {
             binding.progressBar.gone()
             when (it) {
                 is NetworkResult.Success -> {
+
                     tokenManager.saveToken(Constants.TOKEN, "${it.data?.type} ${it.data?.token}")
-                    if (it.data?.firstLogin == true){
+                    if (it.data?.firstLogin == true) {
                         findNavController().navigate(R.id.action_logInFragment_to_chooseSubscriptionFragment)
 
-                    }else{
+                    } else {
+
                         findNavController().navigate(R.id.action_logInFragment_to_homeFragment)
                     }
 

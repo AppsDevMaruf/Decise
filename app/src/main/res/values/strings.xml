@@ -32,6 +32,7 @@
     <string name="special_characters">Special characters</string>
     <string name="confirm_password_is_required">Confirm Password is Required</string>
     <string name="personal_sub_type_details_text">5 Decisions\n1 User\n2 Guests\n6 Decision SubTypes\nTechnical Support - Knowledge Base Access\n2GB Storage\nMachine Learning</string>
-    <string name="entrepreneur_sub_type_details_text">20 Decisions\<n></n>Up to 2 Users\n10 Guests\n6 Decision SubTypes\nTechnical Support - Knowledge Base Access\n2GB Storage\nMachine Learning</string>
+    <string name="entrepreneur_sub_type_details_text">20 Decisions\<n />Up to 2 Users\n10 Guests\n6 Decision SubTypes\nTechnical Support - Knowledge Base Access\n2GB Storage\nMachine Learning</string>
     <string name="see_details">See Details</string>
+    <string name="you_have_selected_the_entrepreneur_subscription_nyou_will_be_charged_39_per_month_per_user_after_your_free_trial_ends">You have selected the <font color="#FF6D00">Entrepreneur</font> subscription\nYou will be charged <font color="#FF6D00">$39 per month</font> per User after your free trial ends</string>
 </resources>
