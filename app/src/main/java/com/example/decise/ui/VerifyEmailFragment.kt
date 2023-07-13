@@ -47,10 +47,10 @@ class VerifyEmailFragment : BaseFragment<FragmentVerifyEmailBinding>() {
                     val responseVerifyEmail = ResponseVerifyEmail(
                         subscriptionType = subscriptionType,
                         signupType = signupType,
-                        email = email,)
+                        email = email,
+                    )
 
-                    val action =
-                        VerifyEmailFragmentDirections.actionVerifyEmailFragmentToSignUpFragment(
+                    val action =VerifyEmailFragmentDirections.actionVerifyEmailFragmentToSignUpFragment(
                             responseVerifyEmail
                         )
                     findNavController().navigate(action)

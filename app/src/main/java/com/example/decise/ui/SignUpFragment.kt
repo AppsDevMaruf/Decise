@@ -34,7 +34,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
     }
 
     override fun configUi() {
-        val responseVerifyEmail = arg.responseVerifyEmail
+        val responseVerifyEmail = arg.response
         val email = responseVerifyEmail.email
         val subscriptionType = responseVerifyEmail.subscriptionType
         val signupType: String? = responseVerifyEmail.signupType
