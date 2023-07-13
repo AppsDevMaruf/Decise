@@ -1,15 +1,17 @@
 package com.example.decise.api
 
 
-import com.example.decise.data.models.login.RequestLogin
-import com.example.decise.data.models.verifyEmail.ResponseVerifyEmail
-import com.example.decise.data.models.login.ResponseLogin
-import com.example.decise.data.models.sendEmail.ResponseSendEmail
-import com.example.decise.data.models.signUp.RequestSignUp
-import com.example.decise.data.models.signUp.ResponseSignUp
+import com.example.decise.data.models.auth.forgetPassword.ResponseForgetPassword
+import com.example.decise.data.models.auth.login.RequestLogin
+import com.example.decise.data.models.auth.verifyEmail.ResponseVerifyEmail
+import com.example.decise.data.models.auth.login.ResponseLogin
+import com.example.decise.data.models.auth.sendEmail.ResponseSendEmail
+import com.example.decise.data.models.auth.signUp.RequestSignUp
+import com.example.decise.data.models.auth.signUp.ResponseSignUp
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Query
 
 interface PublicApi {
@@ -31,7 +33,9 @@ interface PublicApi {
 
     @POST("signin/")
     suspend fun login(@Body requestLogin: RequestLogin): Response<ResponseLogin>
+    @PUT("profile/forgot-password")
+    suspend fun forgotPassword(@Query("email") email: String): Response<ResponseForgetPassword>
 
-   /* @POST("api/logout/")
-    fun logOutUser(@Query("token") token: String?): Call<>*/
+    //subscription-controller
+
 }

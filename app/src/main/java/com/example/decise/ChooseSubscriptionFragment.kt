@@ -1,60 +1,52 @@
-package com.example.decise.ui
+package com.example.decise
 
+import android.annotation.SuppressLint
+import android.os.Bundle
+import android.util.Log
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
-import com.example.decise.R
 import com.example.decise.base.BaseFragment
-import com.example.decise.data.models.auth.verifyEmail.ResponseVerifyEmail
-import com.example.decise.databinding.FragmentVerifyEmailBinding
+import com.example.decise.databinding.FragmentChooseSubscriptionBinding
 import com.example.decise.utils.NetworkResult
+import com.example.decise.utils.enableBtn
 import com.example.decise.utils.gone
+import com.example.decise.utils.isValidEmail
+import com.example.decise.utils.onTextChanged
 import com.example.decise.utils.show
 import com.example.decise.utils.showDialog
 import com.example.decise.utils.toast
-import com.example.decise.viewmodel.AuthViewModel
+import com.example.decise.viewmodel.SubscriptionViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class VerifyEmailFragment : BaseFragment<FragmentVerifyEmailBinding>() {
-    private val authViewModel by viewModels<AuthViewModel>()
-    private val arg: VerifyEmailFragmentArgs by navArgs()
-    var subscriptionType = ""
-    var signupType = ""
-    var email = ""
-
+class ChooseSubscriptionFragment : BaseFragment<FragmentChooseSubscriptionBinding>() {
+    private val subscriptionViewModel by viewModels<SubscriptionViewModel>()
     override fun getFragmentView(): Int {
-        return R.layout.fragment_verify_email
+        return R.layout.fragment_choose_subscription
     }
-
     override fun configUi() {
-        subscriptionType = arg.subscriptionType
-        signupType = arg.signupType
-        email = arg.email
-        val evc = arg.evc
-
-        authViewModel.verifyEmailVM(subscriptionType, signupType, email, evc)
+        subscriptionViewModel.getSubscriptionListVM()
 
     }
+
+
+    override fun setupNavigation() {
+
+    }
+
 
     override fun binObserver() {
-        authViewModel.verifyEmailVMLD.observe(this) {
+        subscriptionViewModel.getSubscriptionListVMLD.observe(this) {
             binding.progressBar.gone()
             when (it) {
                 is NetworkResult.Success -> {
-                    toast("verifyEmail Successful")
-                    val responseVerifyEmail = ResponseVerifyEmail(
-                        subscriptionType = subscriptionType,
-                        signupType = signupType,
-                        email = email,)
-
-                    val action =
-                        VerifyEmailFragmentDirections.actionVerifyEmailFragmentToSignUpFragment(
-                            responseVerifyEmail
-                        )
-                    findNavController().navigate(action)
-
+                    //token
+                    Log.i("TAG", "binObserver: ${it.data?.total}")
                 }
 
                 is NetworkResult.Error -> {
@@ -89,6 +81,7 @@ class VerifyEmailFragment : BaseFragment<FragmentVerifyEmailBinding>() {
         super.onStop()
         (activity as AppCompatActivity?)!!.supportActionBar!!.show()
     }
+
 
 
 }

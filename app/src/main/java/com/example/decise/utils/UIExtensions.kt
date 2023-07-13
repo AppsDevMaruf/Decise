@@ -2,17 +2,23 @@ package com.example.decise.utils
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
 import android.content.pm.PackageManager
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -187,6 +193,67 @@ fun TextView.setTextNonNull(str: String?) {
     str?.let {
         this.text = it
     }
+}
+fun Fragment.showDialog(
+    context: Context,
+
+    title: String,
+    details: String,
+    resId: Int,
+    yesContent: String,
+    noContent: String,
+    showNoBtn: Boolean,
+    positiveFun: () -> Unit,
+    negativeFun: () -> Unit,
+
+    ) {
+
+    val deleteDialogView: View = LayoutInflater.from(context)
+        .inflate(R.layout.item_dialog, null)
+    val deleteDialog: AlertDialog = AlertDialog.Builder(context).setCancelable(false).create()
+    deleteDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+    deleteDialog.setView(deleteDialogView)
+
+    val titleTv =
+        deleteDialogView.findViewById<TextView>(R.id.titleTv)
+
+    val detailsTv =
+        deleteDialogView.findViewById<TextView>(R.id.detailsTv)
+    val yesButton =
+        deleteDialogView.findViewById<Button>(R.id.yesBtn)
+    val noButton =
+        deleteDialogView.findViewById<Button>(R.id.noBtn)
+    val logoIcon =
+        deleteDialogView.findViewById<ImageView>(R.id.topIcon)
+    titleTv.text = title
+    detailsTv.text = details
+    yesButton.text = yesContent
+
+    if (showNoBtn) {
+        noButton.show()
+        noButton.text = noContent
+    } else {
+        noButton.gone()
+    }
+
+
+    logoIcon.setImageResource(resId)
+
+
+    yesButton.setOnClickListener {
+        positiveFun.invoke()
+        deleteDialog.dismiss()
+    }
+    noButton.setOnClickListener {
+        negativeFun.invoke()
+        deleteDialog.dismiss()
+    }
+
+
+
+    deleteDialog.show()
+
+
 }
 
 fun String.titleCaseFirstChar() = replaceFirstChar(Char::titlecase)

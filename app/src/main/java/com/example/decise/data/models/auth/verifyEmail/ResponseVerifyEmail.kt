@@ -1,4 +1,4 @@
-package com.example.decise.data.models.verifyEmail
+package com.example.decise.data.models.auth.verifyEmail
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

@@ -1,24 +1,25 @@
 package com.example.decise.repos
 
 import com.example.decise.api.PublicApi
-import com.example.decise.data.models.login.RequestLogin
-import com.example.decise.data.models.signUp.RequestSignUp
+import com.example.decise.data.models.auth.login.RequestLogin
+import com.example.decise.data.models.auth.signUp.RequestSignUp
 import javax.inject.Inject
 
-class PublicRepository @Inject constructor(private val userApi: PublicApi) {
+class PublicRepository @Inject constructor(private val publicApi: PublicApi) {
 
 
-    suspend fun loginRepo(requestLogin: RequestLogin) = userApi.login(requestLogin)
+    suspend fun loginRepo(requestLogin: RequestLogin) = publicApi.login(requestLogin)
 
     suspend fun verifyEmailRepo(
         subscriptionType: String,
         signupType: String,
         email: String,
         evc: String
-    ) = userApi.verifyEmail(subscriptionType, signupType, email, evc)
+    ) = publicApi.verifyEmail(subscriptionType, signupType, email, evc)
 
-    suspend fun sendEmailRepo(email: String) = userApi.sendEmail(email)
-    suspend fun completeSignUpRepo(requestSignUp: RequestSignUp) = userApi.completeSignup(requestSignUp)
+    suspend fun sendEmailRepo(email: String) = publicApi.sendEmail(email)
+    suspend fun forgotPasswordRepo(email: String) = publicApi.forgotPassword(email)
+    suspend fun completeSignUpRepo(requestSignUp: RequestSignUp) = publicApi.completeSignup(requestSignUp)
 
 
 }

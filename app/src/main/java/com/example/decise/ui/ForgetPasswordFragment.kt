@@ -1,15 +1,17 @@
 package com.example.decise.ui
 
+import android.annotation.SuppressLint
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.example.decise.R
 import com.example.decise.base.BaseFragment
-import com.example.decise.data.models.auth.verifyEmail.ResponseVerifyEmail
-import com.example.decise.databinding.FragmentVerifyEmailBinding
+import com.example.decise.databinding.FragmentForgetPasswordBinding
 import com.example.decise.utils.NetworkResult
+import com.example.decise.utils.enableBtn
 import com.example.decise.utils.gone
+import com.example.decise.utils.isValidEmail
+import com.example.decise.utils.onTextChanged
 import com.example.decise.utils.show
 import com.example.decise.utils.showDialog
 import com.example.decise.utils.toast
@@ -17,43 +19,61 @@ import com.example.decise.viewmodel.AuthViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class VerifyEmailFragment : BaseFragment<FragmentVerifyEmailBinding>() {
+class ForgetPasswordFragment : BaseFragment<FragmentForgetPasswordBinding>() {
     private val authViewModel by viewModels<AuthViewModel>()
-    private val arg: VerifyEmailFragmentArgs by navArgs()
-    var subscriptionType = ""
-    var signupType = ""
-    var email = ""
 
     override fun getFragmentView(): Int {
-        return R.layout.fragment_verify_email
+        return R.layout.fragment_forget_password
     }
 
     override fun configUi() {
-        subscriptionType = arg.subscriptionType
-        signupType = arg.signupType
-        email = arg.email
-        val evc = arg.evc
+        buttonEnableAfterTextFillUp()
 
-        authViewModel.verifyEmailVM(subscriptionType, signupType, email, evc)
+    }
+
+    @SuppressLint("SetTextI18n")
+    override fun setupNavigation() {
+        binding.forgetPasswordBtn.setOnClickListener {
+
+            if (!isValidEmail(binding.email.text.toString().trim())) {
+                binding.emailWarning.show()
+                binding.emailWarning.text = "Enter a valid email"
+
+            } else {
+                val email = binding.email.text.toString().trim()
+                authViewModel.forgetPasswordVM(email)
+
+            }
+        }
+
+    }
+
+    private fun buttonEnableAfterTextFillUp() {
+        var emailGiven = false
+        binding.email.onTextChanged {
+            if (!it.trim().isNullOrBlank()) {
+                emailGiven = !it.trim().isNullOrBlank()
+                binding.emailWarning.gone()
+                enableBtn(emailGiven, binding.forgetPasswordBtn)
+            } else {
+                emailGiven = false
+                binding.emailWarning.show()
+                enableBtn(emailGiven, binding.forgetPasswordBtn)
+            }
+        }
+
 
     }
 
     override fun binObserver() {
-        authViewModel.verifyEmailVMLD.observe(this) {
+        authViewModel.responseForgetPassword.observe(this) {
             binding.progressBar.gone()
             when (it) {
                 is NetworkResult.Success -> {
-                    toast("verifyEmail Successful")
-                    val responseVerifyEmail = ResponseVerifyEmail(
-                        subscriptionType = subscriptionType,
-                        signupType = signupType,
-                        email = email,)
+                    //token
+                    Log.e("TAG", "binObserver: ${it.data}")
+                    toast("Send Email  Success")
 
-                    val action =
-                        VerifyEmailFragmentDirections.actionVerifyEmailFragmentToSignUpFragment(
-                            responseVerifyEmail
-                        )
-                    findNavController().navigate(action)
 
                 }
 

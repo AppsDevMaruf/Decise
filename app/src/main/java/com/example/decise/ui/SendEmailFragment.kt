@@ -15,6 +15,7 @@ import com.example.decise.utils.gone
 import com.example.decise.utils.isValidEmail
 import com.example.decise.utils.onTextChanged
 import com.example.decise.utils.show
+import com.example.decise.utils.showDialog
 import com.example.decise.utils.toast
 import com.example.decise.viewmodel.AuthViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -44,9 +45,7 @@ class SendEmailFragment : BaseFragment<FragmentSendEmailBinding>() {
             } else {
                 val email = binding.email.text.toString().trim()
 
-                lifecycleScope.launch {
-                    authViewModel.sendEmailVM(email)
-                }
+                authViewModel.sendEmailVM(email)
             }
         }
         binding.toolbarLogin.loginBtn.setOnClickListener {
@@ -72,7 +71,7 @@ class SendEmailFragment : BaseFragment<FragmentSendEmailBinding>() {
     }
 
     override fun binObserver() {
-        authViewModel.sendEmailVMLD.observe(this) {
+        authViewModel.responseSendEmail.observe(this) {
             binding.progressBar.gone()
             when (it) {
                 is NetworkResult.Success -> {
@@ -84,8 +83,17 @@ class SendEmailFragment : BaseFragment<FragmentSendEmailBinding>() {
                 }
 
                 is NetworkResult.Error -> {
-                    Log.e("TAG", "Error: ${it.message}")
-                    toast("${it.message}")
+                    showDialog(
+                        context = requireActivity(),
+                        title = "",
+                        details = "${it.message}",
+                        resId = R.drawable.ic_round_warning,
+                        yesContent = "Okay",
+                        noContent = "Cancel",
+                        showNoBtn = false,
+                        positiveFun = {
+                        }, {}
+                    )
                 }
 
                 is NetworkResult.Loading -> {

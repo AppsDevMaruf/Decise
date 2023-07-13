@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black"
+        tools:context=".ChooseSubscriptionFragment">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <include
+                android:id="@+id/toolbarLogin"
+                layout="@layout/toolbar_forget_password"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/titleText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/gotham_bold"
+                android:text="Choose Plan"
+                android:textAppearance="@style/TextAppearance.Material3.HeadlineLarge"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/toolbarLogin" />
+
+
+            <LinearLayout
+                android:id="@+id/subTypePersonal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:background="@drawable/stock_gray_corner"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/titleText">
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginVertical="8dp"
+                    android:src="@drawable/ic_sub_type_business"
+                    android:text="@string/email_require_star" />
+
+                <TextView
+                    style="@style/titleText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/gotham_medium"
+                    android:gravity="center"
+                    android:text="Personal"
+                    android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+                    android:textColor="@color/orange_light" />
+
+                <TextView
+                    style="@style/titleText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="8dp"
+                    android:fontFamily="@font/gotham_medium"
+                    android:gravity="center"
+                    android:text="For personal use"
+                    android:textColor="@color/gray" />
+
+                <TextView
+                    style="@style/titleText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="8dp"
+                    android:fontFamily="@font/gotham_medium"
+                    android:gravity="center"
+                    android:text="Free"
+                    android:textColor="@color/gray" />
+
+                <TextView
+
+                    style="@style/titleText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="8dp"
+                    android:drawableEnd="@drawable/ic_arrow_down"
+                    android:fontFamily="@font/gotham_medium"
+                    android:gravity="center"
+                    android:text="@string/see_details"
+                    android:textColor="@color/gray" />
+
+                <TextView
+                    android:id="@+id/subTypePersonalDetailsText"
+                    style="@style/titleText"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="8dp"
+                    android:fontFamily="@font/gotham_medium"
+                    android:gravity="center"
+                    android:lineSpacingExtra="10dp"
+                    android:text="@string/personal_sub_type_details_text"
+                    android:textColor="@color/gray" />
+
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/select_personal_Btn"
+                    style="@style/primaryButtonText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/button_login_bg_orange_enable"
+                    android:text="Select" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/subTypeEntrepreneur"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:background="@drawable/stock_gray_corner"
+                android:gravity="center"
+                android:orientation="vertical"
+               app:layout_constraintVertical_bias="0"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/subTypePersonal">
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginVertical="8dp"
+                    android:src="@drawable/ic_sub_type_enterprise"
+                    android:text="@string/email_require_star" />
+
+                <TextView
+                    style="@style/titleText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/gotham_medium"
+                    android:gravity="center"
+                    android:text="Entrepreneur"
+                    android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+                    android:textColor="@color/orange_light" />
+
+                <TextView
+                    style="@style/titleText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="8dp"
+                    android:fontFamily="@font/gotham_medium"
+                    android:gravity="center"
+                    android:text="For startup teams"
+                    android:textColor="@color/gray" />
+
+                <TextView
+                    style="@style/titleText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="8dp"
+                    android:fontFamily="@font/gotham_medium"
+                    android:gravity="center"
+                    android:text="Free"
+                    android:textColor="@color/gray" />
+
+                <LinearLayout
+                   android:layout_width="wrap_content"
+                   android:orientation="horizontal"
+                   android:gravity="center"
+                   android:layout_height="wrap_content">
+                   <TextView
+                       style="@style/titleText"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:layout_marginVertical="8dp"
+                       android:fontFamily="@font/gotham_medium"
+                       android:gravity="center"
+                       android:text="$39.00/monthly"
+                       android:textColor="@color/gray" />
+                   <androidx.appcompat.widget.SwitchCompat
+                       android:layout_marginStart="10dp"
+                       android:gravity="center"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"/>
+               </LinearLayout>
+
+                <TextView
+                    style="@style/titleText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="8dp"
+                    android:fontFamily="@font/gotham_medium"
+                    android:gravity="center"
+                    android:text="@string/see_details"
+                    android:textColor="@color/gray"
+                    app:drawableEndCompat="@drawable/ic_arrow_down" />
+
+                <TextView
+                    android:id="@+id/subTypeEntrepreneurDetailsText"
+                    style="@style/titleText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="8dp"
+                    android:fontFamily="@font/gotham_medium"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    android:lineSpacingExtra="10dp"
+                    android:text="@string/personal_sub_type_details_text"
+                    android:textColor="@color/gray" />
+
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/subTypeEntrepreneurBtn"
+                    style="@style/primaryButtonText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/button_login_bg_orange_enable"
+                    android:text="Select" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/subTypeBusiness"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:background="@drawable/stock_gray_corner"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintVertical_bias="0"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/subTypeEntrepreneur">
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginVertical="8dp"
+                    android:src="@drawable/ic_sub_type_business"
+                    android:text="@string/email_require_star" />
+
+                <TextView
+                    style="@style/titleText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/gotham_medium"
+                    android:gravity="center"
+                    android:text="Personal"
+                    android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+                    android:textColor="@color/orange_light" />
+
+                <TextView
+                    style="@style/titleText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="8dp"
+                    android:fontFamily="@font/gotham_medium"
+                    android:gravity="center"
+                    android:text="For personal use"
+                    android:textColor="@color/gray" />
+
+                <TextView
+                    style="@style/titleText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="8dp"
+                    android:fontFamily="@font/gotham_medium"
+                    android:gravity="center"
+                    android:text="Free"
+                    android:textColor="@color/gray" />
+
+                <TextView
+                    style="@style/titleText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="8dp"
+                    android:drawableEnd="@drawable/ic_arrow_down"
+                    android:fontFamily="@font/gotham_medium"
+                    android:gravity="center"
+                    android:text="See Details"
+                    android:textColor="@color/gray" />
+
+                <TextView
+                    style="@style/titleText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="8dp"
+                    android:fontFamily="@font/gotham_medium"
+                    android:gravity="center"
+                    android:lineSpacingExtra="10dp"
+                    android:text="@string/personal_sub_type_details_text"
+                    android:textColor="@color/gray" />
+
+
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/subTypeBusinessBtn"
+                    style="@style/primaryButtonText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/button_login_bg_orange_enable"
+                    android:text="Select" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/subTypeEnterprise"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:background="@drawable/stock_gray_corner"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/subTypeBusiness">
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginVertical="8dp"
+                    android:src="@drawable/ic_sub_type_business"
+                    android:text="@string/email_require_star" />
+
+                <TextView
+                    style="@style/titleText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/gotham_medium"
+                    android:gravity="center"
+                    android:text="Personal"
+                    android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+                    android:textColor="@color/orange_light" />
+
+                <TextView
+                    style="@style/titleText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="8dp"
+                    android:fontFamily="@font/gotham_medium"
+                    android:gravity="center"
+                    android:text="For personal use"
+                    android:textColor="@color/gray" />
+
+                <TextView
+                    style="@style/titleText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="8dp"
+                    android:fontFamily="@font/gotham_medium"
+                    android:gravity="center"
+                    android:text="Free"
+                    android:textColor="@color/gray" />
+
+                <TextView
+                    style="@style/titleText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="8dp"
+                    android:drawableEnd="@drawable/ic_arrow_down"
+                    android:fontFamily="@font/gotham_medium"
+                    android:gravity="center"
+                    android:text="See Details"
+                    android:textColor="@color/gray" />
+
+                <TextView
+                    style="@style/titleText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="8dp"
+                    android:fontFamily="@font/gotham_medium"
+                    android:gravity="center"
+                    android:lineSpacingExtra="10dp"
+                    android:text="@string/personal_sub_type_details_text"
+                    android:textColor="@color/gray" />
+
+
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/subTypeEnterpriseBtn"
+                    style="@style/primaryButtonText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/button_login_bg_orange_enable"
+                    android:text="Select" />
+
+            </LinearLayout>
+
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminateTint="@color/orange"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </ScrollView>
+
+</layout>

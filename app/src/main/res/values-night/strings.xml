@@ -2,4 +2,5 @@
 <resources>
     <string name="or_login_with_google_account">or login with Google Account</string>
     <string name="confirm_password_is_required">Confirm Password is Required</string>
+    <string name="personal_sub_type_details_text">5 Decisions\n1 User\n2 Guests\n6 Decision SubTypes\nTechnical Support - Knowledge Base Access\n2GB Storage\nMachine Learning</string>
 </resources>

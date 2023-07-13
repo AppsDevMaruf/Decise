@@ -1,13 +1,12 @@
 package com.example.decise.ui
 
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.decise.R
 import com.example.decise.base.BaseFragment
-import com.example.decise.data.models.signUp.RequestSignUp
+import com.example.decise.data.models.auth.signUp.RequestSignUp
 import com.example.decise.databinding.FragmentSignUpBinding
 import com.example.decise.utils.NetworkResult
 import com.example.decise.utils.enableBtn
@@ -20,7 +19,7 @@ import com.example.decise.utils.isLength8
 import com.example.decise.utils.isPasswordMatch
 import com.example.decise.utils.onTextChanged
 import com.example.decise.utils.show
-import com.example.decise.utils.toast
+import com.example.decise.utils.showDialog
 import com.example.decise.viewmodel.AuthViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -248,8 +247,17 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
                 }
 
                 is NetworkResult.Error -> {
-                    Log.e("TAG", "binObserver: ${it.data}")
-                    toast("${it.message}")
+                    showDialog(
+                        context = requireActivity(),
+                        title = "",
+                        details = "${it.message}",
+                        resId = R.drawable.ic_round_warning,
+                        yesContent = "Okay",
+                        noContent = "Cancel",
+                        showNoBtn = false,
+                        positiveFun = {
+                        }, {}
+                    )
                 }
 
                 is NetworkResult.Loading -> {

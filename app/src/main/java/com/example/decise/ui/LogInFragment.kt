@@ -8,7 +8,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.decise.R
 import com.example.decise.base.BaseFragment
-import com.example.decise.data.models.login.RequestLogin
+import com.example.decise.data.models.auth.login.RequestLogin
 import com.example.decise.databinding.FragmentLogInBinding
 import com.example.decise.utils.Constants
 import com.example.decise.utils.NetworkResult
@@ -17,6 +17,7 @@ import com.example.decise.utils.gone
 import com.example.decise.utils.isValidEmail
 import com.example.decise.utils.onTextChanged
 import com.example.decise.utils.show
+import com.example.decise.utils.showDialog
 import com.example.decise.utils.toast
 import com.example.decise.viewmodel.AuthViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -42,7 +43,10 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>() {
         binding.toolbarLogin.signUpBtn.setOnClickListener {
             findNavController().navigate(R.id.action_logInFragment_to_sendEmailFragment)
         }
-        binding.loginBtn.setOnClickListener{
+        binding.forgetPasswordBtn.setOnClickListener {
+            findNavController().navigate(R.id.action_logInFragment_to_forgetPasswordFragment)
+        }
+        binding.loginBtn.setOnClickListener {
 
 
             if (!isValidEmail(binding.email.text.toString().trim())) {
@@ -75,18 +79,29 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>() {
             binding.progressBar.gone()
             when (it) {
                 is NetworkResult.Success -> {
-                    //token
-                    Log.e("TAG", "binObserver: ${it.data}")
-                    toast("Login Success")
-
                     tokenManager.saveToken(Constants.TOKEN, "${it.data?.type} ${it.data?.token}")
+                    if (it.data?.firstLogin == true){
+                        findNavController().navigate(R.id.action_logInFragment_to_chooseSubscriptionFragment)
 
+                    }else{
+                        findNavController().navigate(R.id.action_logInFragment_to_homeFragment)
+                    }
 
                 }
 
                 is NetworkResult.Error -> {
-                    Log.e("TAG", "binObserver: ${it.data}")
-                    toast("${it.message}")
+                    showDialog(
+                        context = requireActivity(),
+                        title = "",
+                        details = "${it.message}",
+                        resId = R.drawable.ic_round_warning,
+                        yesContent = "Okay",
+                        noContent = "Cancel",
+                        showNoBtn = false,
+                        positiveFun = {
+                        }, {}
+                    )
+
                 }
 
                 is NetworkResult.Loading -> {
@@ -118,7 +133,7 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>() {
         binding.password.onTextChanged {
             if (!it.trim().isNullOrBlank()) {
                 binding.passwordWarning.gone()
-                passwordGiven =!it.trim().isNullOrBlank()
+                passwordGiven = !it.trim().isNullOrBlank()
                 enableBtn(emailGiven, passwordGiven)
             } else {
                 passwordGiven = false

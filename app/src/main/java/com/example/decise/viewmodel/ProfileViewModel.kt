@@ -21,7 +21,7 @@ import org.json.JSONObject
 import javax.inject.Inject
 
 @HiltViewModel
-class AuthViewModel @Inject constructor(
+class ProfileViewModel @Inject constructor(
     private val publicRepository: PublicRepository
 ) : ViewModel() {
 
@@ -96,8 +96,8 @@ class AuthViewModel @Inject constructor(
 
     //sendEmail start
 
-    private val _responseSendEmail = MutableLiveData<NetworkResult<ResponseSendEmail>>()
-    val responseSendEmail: LiveData<NetworkResult<ResponseSendEmail>> = _responseSendEmail
+    private val _responseSendEmail = MutableLiveData<NetworkResult<ResponseForgetPassword>>()
+    val responseSendEmail: LiveData<NetworkResult<ResponseForgetPassword>> = _responseSendEmail
 
     @SuppressLint("SuspiciousIndentation")
     fun sendEmailVM(email: String) {
@@ -105,7 +105,7 @@ class AuthViewModel @Inject constructor(
 
         viewModelScope.launch {
             try {
-                val response = publicRepository.sendEmailRepo(email)
+                val response = publicRepository.forgotPasswordRepo(email)
 
                 if (response.isSuccessful && response.body() != null) {
 

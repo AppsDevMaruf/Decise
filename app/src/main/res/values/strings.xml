@@ -26,8 +26,12 @@
     <string name="complete">Complete</string>
     <string name="one_lowercase_character">One lowercase character</string>
     <string name="sign_me_up">Sign Me Up</string>
+    <string name="sign_up">Sign Up</string>
     <string name="one_number">One number</string>
     <string name="_8_characters_minimum">8 characters minimum</string>
     <string name="special_characters">Special characters</string>
     <string name="confirm_password_is_required">Confirm Password is Required</string>
+    <string name="personal_sub_type_details_text">5 Decisions\n1 User\n2 Guests\n6 Decision SubTypes\nTechnical Support - Knowledge Base Access\n2GB Storage\nMachine Learning</string>
+    <string name="entrepreneur_sub_type_details_text">20 Decisions\<n></n>Up to 2 Users\n10 Guests\n6 Decision SubTypes\nTechnical Support - Knowledge Base Access\n2GB Storage\nMachine Learning</string>
+    <string name="see_details">See Details</string>
 </resources>

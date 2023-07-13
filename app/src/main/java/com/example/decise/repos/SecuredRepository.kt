@@ -7,5 +7,5 @@ class SecuredRepository @Inject constructor(private val securedApi: SecuredApi) 
 /*
     suspend fun logout() = securedApi.logout()
     suspend fun getTransactionHistory() = securedApi.getTransactionHistory()*/
-
+suspend fun getSubscriptionListRepo() = securedApi.getSubscriptionList()
 }

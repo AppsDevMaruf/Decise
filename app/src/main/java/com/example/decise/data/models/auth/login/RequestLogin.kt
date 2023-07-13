@@ -1,4 +1,4 @@
-package com.example.decise.data.models.login
+package com.example.decise.data.models.auth.login
 
 
 import com.google.gson.annotations.SerializedName

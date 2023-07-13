@@ -1,11 +1,11 @@
-package com.example.decise.data.models.sendEmail
+package com.example.decise.data.models.auth.signUp
 
 
 import com.google.gson.annotations.SerializedName
 
-data class ResponseSendEmail(
+data class ResponseSignUp(
     @SerializedName("errorMessage")
-    val errorMessage: String?,
+    val errorMessage: Any?,
     @SerializedName("hasError")
     val hasError: Boolean?,
     @SerializedName("message")
