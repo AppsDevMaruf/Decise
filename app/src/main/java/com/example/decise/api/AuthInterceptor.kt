@@ -18,7 +18,10 @@ class AuthInterceptor @Inject constructor(@ApplicationContext var appContext: Co
     lateinit var tokenManager: TokenManager
 
 
+
     override fun intercept(chain: Interceptor.Chain): Response {
+
+
         if (!appContext.isConnected) {
             throw NoInternetException("Make sure You have an active internet connection !")
         } else {
