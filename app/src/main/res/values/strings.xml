@@ -37,6 +37,7 @@
     <string name="you_have_selected_the_entrepreneur_subscription_nyou_will_be_charged_39_per_month_per_user_after_your_free_trial_ends">You have selected the <font color="#FF6D00">Entrepreneur</font> subscription\nYou will be charged <font color="#FF6D00">$39 per month</font> per User after your free trial ends</string>
     <string name="cvv">CVV<font color="#FF3D00">*</font></string>
     <string name="expiry">Expiry<font color="#FF3D00">*</font></string>
-    <string name="card_holder_s_name">Card Holder\'s Name<font color="#FF3D00">*</font></string>
+    <string name="card_holder_s_name">Card Holder\'s Name</string>
     <string name="card_number">Card Number<font color="#FF3D00">*</font></string>
+    <string name="this_field_is_required">This field is required</string>
 </resources>

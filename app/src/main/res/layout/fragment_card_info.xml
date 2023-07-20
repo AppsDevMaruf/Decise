@@ -48,10 +48,10 @@
                 android:layout_marginTop="12dp"
                 android:background="@drawable/card_view_shape"
                 android:padding="16dp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/signupTitle">
+                app:layout_constraintTop_toBottomOf="@+id/signupTitle"
+                app:layout_constraintVertical_bias="0">
 
 
                 <LinearLayout
@@ -68,22 +68,22 @@
                         android:text="@string/card_number" />
 
                     <EditText
-                        android:id="@+id/firstName"
+                        android:id="@+id/cardNumberEt"
                         style="@style/editTextStyle"
                         android:layout_width="match_parent"
                         android:layout_height="38dp"
                         android:background="@drawable/background_edit_text"
                         android:drawableStart="@drawable/baseline_credit_card_24"
                         android:drawablePadding="4dp"
-                        android:hint=""
-                        android:inputType="text" />
+                        android:hint="Enter Card Number"
+                        android:inputType="number" />
 
                     <TextView
-                        android:id="@+id/firstNameWarning"
+                        android:id="@+id/cardNumberWarning"
                         style="@style/warningText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/first_name_is_required"
+                        android:text="@string/this_field_is_required"
                         android:visibility="gone" />
 
                     <TextView
@@ -94,23 +94,23 @@
                         android:text="@string/card_holder_s_name" />
 
                     <EditText
-                        android:id="@+id/lastName"
+                        android:id="@+id/cardHolderNameEt"
                         style="@style/editTextStyle"
                         android:layout_width="match_parent"
                         android:layout_height="38dp"
                         android:background="@drawable/background_edit_text"
                         android:drawableStart="@drawable/ic_person"
                         android:drawablePadding="4dp"
-                        android:hint="@string/enter_last_name"
+                        android:hint="Enter Card Holder's Name"
                         android:importantForAutofill="no"
                         android:inputType="text" />
 
                     <TextView
-                        android:id="@+id/lastNameWarning"
+                        android:id="@+id/cardHolderNameWarning"
                         style="@style/warningText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/last_name_is_required"
+                        android:text="@string/this_field_is_required"
                         android:visibility="gone" />
 
 
@@ -122,23 +122,24 @@
                         android:text="@string/expiry" />
 
                     <EditText
-
+                        android:id="@+id/expiryEt"
                         style="@style/editTextStyle"
                         android:layout_width="match_parent"
                         android:layout_height="38dp"
                         android:background="@drawable/background_edit_text"
-                        android:drawableStart="@drawable/ic_person"
+                        android:drawableStart="@drawable/ic_date"
                         android:drawablePadding="4dp"
-                        android:hint="@string/enter_last_name"
+                        android:hint="06/25"
                         android:importantForAutofill="no"
-                        android:inputType="text" />
+                        android:inputType="phone"
+                        android:maxLength="5" />
 
                     <TextView
-                        android:id="@+id/passwordWarning"
+                        android:id="@+id/expiryWarning"
                         style="@style/warningText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/password_is_required_warning"
+                        android:text="@string/this_field_is_required"
                         android:visibility="gone" />
 
 
@@ -151,34 +152,34 @@
                         android:text="@string/cvv" />
 
                     <EditText
-
+                        android:id="@+id/cvvEt"
                         style="@style/editTextStyle"
                         android:layout_width="match_parent"
                         android:layout_height="38dp"
                         android:background="@drawable/background_edit_text"
-                        android:drawableStart="@drawable/ic_person"
+                        android:drawableStart="@drawable/ic_numbers"
                         android:drawablePadding="4dp"
-                        android:hint="@string/enter_last_name"
+                        android:hint="774"
                         android:importantForAutofill="no"
-                        android:inputType="text" />
+                        android:inputType="number" />
 
                     <TextView
-                        android:id="@+id/confirmPasswordWarning"
+                        android:id="@+id/cvvWarning"
                         style="@style/warningText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/confirm_password_is_required"
+                        android:text="@string/this_field_is_required"
                         android:visibility="gone" />
 
 
                     <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/signUpCompleteBtn"
+                        android:id="@+id/continueBtn"
                         style="@style/primaryButtonText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
                         android:background="@drawable/button_primary_bg_orange_disable"
-                        android:text="@string/complete" />
+                        android:text="Continue" />
 
 
                 </LinearLayout>
@@ -198,20 +199,80 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                android:id="@+id/note"
+                style="@style/titleText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="36dp"
+                android:layout_marginTop="10dp"
+                android:includeFontPadding="false"
+                android:letterSpacing="0.0001"
+                android:lineSpacingExtra="6dp"
+                android:text="@string/you_have_selected_the_entrepreneur_subscription_nyou_will_be_charged_39_per_month_per_user_after_your_free_trial_ends"
+                android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/frameLayout"
+                app:layout_constraintVertical_bias="0" />
+
+            <TextView
+                android:id="@+id/paymentMethodText"
                 style="@style/titleText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="48dp"
                 android:layout_marginTop="10dp"
-                android:lineSpacingExtra="8dp"
-                android:text="@string/you_have_selected_the_entrepreneur_subscription_nyou_will_be_charged_39_per_month_per_user_after_your_free_trial_ends"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:letterSpacing="0.0001"
                 android:includeFontPadding="false"
+                android:letterSpacing="0.0001"
+                android:lineSpacingExtra="8dp"
+                android:text="We accept the following payment methods"
+                android:textAppearance="@style/TextAppearance.Material3.BodySmall"
+                android:textColor="@color/gray"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
+                app:layout_constraintTop_toBottomOf="@+id/note" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="32dp"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="4dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/paymentMethodText">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="36dp"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/todo"
+                    android:src="@drawable/ic_visa_card" />
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="36dp"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/todo"
+                    android:src="@drawable/ic_master_card" />
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="36dp"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/todo"
+                    android:src="@drawable/ic_amex_card" />
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="36dp"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/todo"
+                    android:src="@drawable/ic_paypal_card" />
+
+            </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 

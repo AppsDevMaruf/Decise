@@ -1,59 +1,131 @@
 package com.example.decise
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.annotation.SuppressLint
+import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.viewModels
+import com.example.decise.base.BaseFragment
+import com.example.decise.databinding.FragmentCardInfoBinding
+import com.example.decise.utils.NetworkResult
+import com.example.decise.utils.enableBtn
+import com.example.decise.utils.gone
+import com.example.decise.utils.onTextChanged
+import com.example.decise.utils.show
+import com.example.decise.utils.showDialog
+import com.example.decise.utils.toast
+import com.example.decise.viewmodel.AuthViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [CardInfoFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class CardInfoFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+@AndroidEntryPoint
+class CardInfoFragment : BaseFragment<FragmentCardInfoBinding>() {
+    private val authViewModel by viewModels<AuthViewModel>()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    override fun getFragmentView(): Int {
+        return R.layout.fragment_card_info
+    }
+
+    override fun configUi() {
+        buttonEnableAfterTextFillUp()
+
+    }
+
+    @SuppressLint("SetTextI18n")
+    override fun setupNavigation() {
+
+    }
+
+    private fun buttonEnableAfterTextFillUp() {
+        var hasCardNumber = false
+        var hasExpiry = false
+        var hasCvv = false
+
+        binding.cardNumberEt.onTextChanged {
+            if (!it.trim().isNullOrBlank()) {
+                hasCardNumber = !it.trim().isNullOrBlank()
+                binding.cardNumberWarning.gone()
+
+                enableBtn(hasCardNumber && hasExpiry && hasCvv, binding.continueBtn)
+            } else {
+                hasCardNumber = false
+                binding.cardNumberWarning.show()
+                enableBtn(hasCardNumber && hasExpiry && hasCvv, binding.continueBtn)
+            }
         }
+
+
+        binding.expiryEt.onTextChanged {
+            if (!it.trim().isNullOrBlank()) {
+                hasExpiry = !it.trim().isNullOrBlank()
+                binding.expiryWarning.gone()
+                enableBtn(hasCardNumber && hasExpiry && hasCvv, binding.continueBtn)
+            } else {
+                hasExpiry = false
+                binding.expiryWarning.show()
+                enableBtn(hasCardNumber && hasExpiry && hasCvv, binding.continueBtn)
+            }
+        }
+        binding.cvvEt.onTextChanged {
+            if (!it.trim().isNullOrBlank()) {
+                hasCvv = !it.trim().isNullOrBlank()
+                binding.cvvWarning.gone()
+                enableBtn(hasCardNumber && hasExpiry && hasCvv, binding.continueBtn)
+            } else {
+                hasCvv = false
+                binding.cvvWarning.show()
+                enableBtn(hasCardNumber && hasExpiry && hasCvv, binding.continueBtn)
+            }
+        }
+
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_card_info, container, false)
-    }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment CardInfoFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            CardInfoFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun binObserver() {
+        authViewModel.responseSendEmail.observe(this) {
+            binding.progressBar.gone()
+            when (it) {
+                is NetworkResult.Success -> {
+                    //token
+                    Log.e("TAG", "binObserver: ${it.data}")
+                    toast("Send Email  Success")
+
+
+                }
+
+                is NetworkResult.Error -> {
+                    showDialog(
+                        context = requireActivity(),
+                        title = "",
+                        details = "${it.message}",
+                        resId = R.drawable.ic_round_warning,
+                        yesContent = "Okay",
+                        noContent = "Cancel",
+                        showNoBtn = false,
+                        positiveFun = {
+                        }, {}
+                    )
+                }
+
+                is NetworkResult.Loading -> {
+                    binding.progressBar.show()
                 }
             }
+        }
+
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        (activity as AppCompatActivity?)!!.supportActionBar!!.show()
     }
 }
+
+
+
+

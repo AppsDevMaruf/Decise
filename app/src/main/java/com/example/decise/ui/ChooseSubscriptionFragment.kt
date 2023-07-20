@@ -3,8 +3,10 @@ package com.example.decise.ui
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.decise.R
 import com.example.decise.base.BaseFragment
+import com.example.decise.data.models.profile.chooseSubscriptionType.RequestChooseSubscriptionType
 import com.example.decise.data.models.subscription.subscriptionList.ResponseSubscriptionsList
 import com.example.decise.databinding.FragmentChooseSubscriptionBinding
 import com.example.decise.utils.NetworkResult
@@ -30,6 +32,71 @@ class ChooseSubscriptionFragment : BaseFragment<FragmentChooseSubscriptionBindin
         binding.showHidePersonalBtn.setOnClickListener {
             binding.featuresPersonal.show()
         }
+        binding.selectPersonalBtn.setOnClickListener {
+            subscriptionViewModel.setChooseSubscriptionResponse(
+                RequestChooseSubscriptionType(
+                    cardHolderName = null,
+                    cardNumber = null,
+                    cvvNumber = null,
+                    durationType = "MONTHLY",//YEARLY
+                    expiryDate = null,
+                    subscriptionPeriodInDays = 30,
+                    subscriptionType = null
+                )
+
+            )
+            findNavController().navigate(R.id.action_chooseSubscriptionFragment_to_cardInfoFragment)
+
+        }
+        binding.subTypeBusinessBtn.setOnClickListener {
+            subscriptionViewModel.setChooseSubscriptionResponse(
+                RequestChooseSubscriptionType(
+                    cardHolderName = null,
+                    cardNumber = null,
+                    cvvNumber = null,
+                    durationType = "MONTHLY",//YEARLY
+                    expiryDate = null,
+                    subscriptionPeriodInDays = 30,
+                    subscriptionType = "BUSINESS"
+                )
+
+            )
+            findNavController().navigate(R.id.action_chooseSubscriptionFragment_to_cardInfoFragment)
+
+        }
+        binding.subTypeEnterpriseBtn.setOnClickListener {
+            subscriptionViewModel.setChooseSubscriptionResponse(
+                RequestChooseSubscriptionType(
+                    cardHolderName = null,
+                    cardNumber = null,
+                    cvvNumber = null,
+                    durationType = "MONTHLY",//YEARLY
+                    expiryDate = null,
+                    subscriptionPeriodInDays = 30,
+                    subscriptionType = "ENTERPRISE"
+                )
+
+            )
+            findNavController().navigate(R.id.action_chooseSubscriptionFragment_to_cardInfoFragment)
+
+        }
+        binding.subTypeEntrepreneurBtn.setOnClickListener {
+            subscriptionViewModel.setChooseSubscriptionResponse(
+                RequestChooseSubscriptionType(
+                    cardHolderName = null,
+                    cardNumber = null,
+                    cvvNumber = null,
+                    durationType = "MONTHLY",//YEARLY
+                    expiryDate = null,
+                    subscriptionPeriodInDays = 30,
+                    subscriptionType = "ENTREPRENEUR"
+                )
+
+            )
+            findNavController().navigate(R.id.action_chooseSubscriptionFragment_to_cardInfoFragment)
+
+        }
+
 
     }
 
