@@ -18,6 +18,8 @@
     <color name="google_account_text">#919191</color>
     <color name="bg_item_dashboard">#1e2634</color>
     <color name="bg_blue_gray_light">#1f4050</color>
+    <color name="green_lemon_light">#8bc34a</color>
+    <color name="green_light">#009688</color>
     <color name="line_selected">#F2A063</color>
     <color name="line_focused">#FF3D00</color>
 

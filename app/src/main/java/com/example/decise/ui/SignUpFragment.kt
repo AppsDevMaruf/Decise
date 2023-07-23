@@ -242,7 +242,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
             binding.progressBar.gone()
             when (it) {
                 is NetworkResult.Success -> {
-                    findNavController().navigate(R.id.action_signUpFragment_to_homeFragment)
+                    findNavController().navigate(R.id.action_signUpFragment_to_logInFragment)
 
                 }
 
