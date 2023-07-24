@@ -3,6 +3,7 @@ package com.example.decise
 import android.annotation.SuppressLint
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.example.decise.base.BaseFragment
 import com.example.decise.databinding.FragmentCardInfoBinding
@@ -14,18 +15,23 @@ import com.example.decise.utils.show
 import com.example.decise.utils.showDialog
 import com.example.decise.utils.toast
 import com.example.decise.viewmodel.AuthViewModel
+import com.example.decise.viewmodel.SubscriptionViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
 class CardInfoFragment : BaseFragment<FragmentCardInfoBinding>() {
-    private val authViewModel by viewModels<AuthViewModel>()
+    private val subscriptionViewModel by viewModels<SubscriptionViewModel>()
 
     override fun getFragmentView(): Int {
         return R.layout.fragment_card_info
     }
 
     override fun configUi() {
+        subscriptionViewModel.chooseSubscriptionResponse.observe(viewLifecycleOwner){
+            Log.d("TAG", "chooseSubscriptionResponse: $it")
+
+        }
         buttonEnableAfterTextFillUp()
 
     }
@@ -81,7 +87,9 @@ class CardInfoFragment : BaseFragment<FragmentCardInfoBinding>() {
 
 
     override fun binObserver() {
-        authViewModel.responseSendEmail.observe(this) {
+
+
+     /*   subscriptionViewModel.responseSendEmail.observe(this) {
             binding.progressBar.gone()
             when (it) {
                 is NetworkResult.Success -> {
@@ -110,7 +118,7 @@ class CardInfoFragment : BaseFragment<FragmentCardInfoBinding>() {
                     binding.progressBar.show()
                 }
             }
-        }
+        }*/
 
 
     }
