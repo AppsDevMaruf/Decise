@@ -261,6 +261,4 @@ class ChooseSubscriptionFragment : BaseFragment<FragmentChooseSubscriptionBindin
         super.onStop()
         (activity as AppCompatActivity?)!!.supportActionBar!!.show()
     }
-
-
 }
