@@ -4,4 +4,12 @@
     <string name="confirm_password_is_required">Confirm Password is Required</string>
     <string name="personal_sub_type_details_text">5 Decisions\n1 User\n2 Guests\n6 Decision SubTypes\nTechnical Support - Knowledge Base Access\n2GB Storage\nMachine Learning</string>
     <string name="you_have_selected_the_entrepreneur_subscription_nyou_will_be_charged_39_per_month_per_user_after_your_free_trial_ends">You have selected the Entrepreneur subscription\nYou will be charged $39 per month per User after your free trial ends</string>
+    <string name="monthly">Monthly</string>
+    <string name="select">Select</string>
+    <string name="per_user">PER USER</string>
+    <string name="for_personal_use">For personal use</string>
+    <string name="business">Business</string>
+    <string name="_39">$39</string>
+    <string name="for_startup_teams">For startup teams</string>
+    <string name="entrepreneur">Entrepreneur</string>
 </resources>

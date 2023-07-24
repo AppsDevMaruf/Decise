@@ -11,6 +11,7 @@ import com.example.decise.data.models.subscription.subscriptionList.ResponseSubs
 import com.example.decise.databinding.FragmentChooseSubscriptionBinding
 import com.example.decise.utils.NetworkResult
 import com.example.decise.utils.gone
+import com.example.decise.utils.hide
 import com.example.decise.utils.show
 import com.example.decise.utils.showDialog
 import com.example.decise.viewmodel.SubscriptionViewModel
@@ -137,9 +138,34 @@ class ChooseSubscriptionFragment : BaseFragment<FragmentChooseSubscriptionBindin
     private fun setSubDetails(data: ResponseSubscriptionsList?) {
         if (data != null) {
             val featuresPersonal = data.subscription?.get(0)
-            binding.titlePersonal.text = data.subscription?.get(0)?.title
-            binding.detailsPersonal.text = data.subscription?.get(0)?.details
-            binding.featuresPersonal.text = "${featuresPersonal?.features?.get(0)?.title}\n" +
+            binding.titlePersonal.text = featuresPersonal?.title
+            binding.detailsPersonal.text = featuresPersonal?.details
+            var showHideTextPersonal = false
+            binding.showHidePersonalBtn.setOnClickListener {
+                showHideTextPersonal = !showHideTextPersonal
+                if (showHideTextPersonal) {
+                    binding.featuresPersonal.show()
+                    binding.showHidePersonalBtn.text = "Hide Details"
+                    binding.showHidePersonalBtn.setCompoundDrawablesWithIntrinsicBounds(
+                        0,
+                        0,
+                        R.drawable.ic_arrow_up,
+                        0
+                    )
+                } else {
+                    binding.featuresPersonal.gone()
+                    binding.showHidePersonalBtn.text = "See Details"
+                    binding.showHidePersonalBtn.setCompoundDrawablesWithIntrinsicBounds(
+                        0,
+                        0,
+                        R.drawable.ic_arrow_down,
+                        0
+                    )
+                }
+
+            }
+
+            binding.featuresPersonal.text = "${featuresPersonal?.title}\n" +
                     "${featuresPersonal?.features?.get(1)?.title}\n" +
                     "${featuresPersonal?.features?.get(2)?.title}\n" +
                     "${featuresPersonal?.features?.get(3)?.title}\n" +
@@ -148,10 +174,54 @@ class ChooseSubscriptionFragment : BaseFragment<FragmentChooseSubscriptionBindin
                     "${featuresPersonal?.features?.get(6)?.title}\n"
 
             val featuresEntrepreneur = data.subscription?.get(1)
-            binding.titleEntrepreneur.text = data.subscription?.get(1)?.title
-            binding.detailsEntrepreneur.text = data.subscription?.get(1)?.details
+            binding.titleEntrepreneur.text = featuresEntrepreneur?.title
+            binding.detailsEntrepreneur.text = featuresEntrepreneur?.details
+            var showHideTextEntrepreneur = false
+            binding.showHideEntrepreneurBtn.setOnClickListener {
+                showHideTextEntrepreneur = !showHideTextEntrepreneur
+                if (showHideTextEntrepreneur) {
+                    binding.featuresEntrepreneur.show()
+                    binding.showHideEntrepreneurBtn.text = "Hide Details"
+                    binding.showHideEntrepreneurBtn.setCompoundDrawablesWithIntrinsicBounds(
+                        0,
+                        0,
+                        R.drawable.ic_arrow_up,
+                        0
+                    )
+                } else {
+                    binding.featuresEntrepreneur.gone()
+                    binding.showHideEntrepreneurBtn.text = "See Details"
+                    binding.showHideEntrepreneurBtn.setCompoundDrawablesWithIntrinsicBounds(
+                        0,
+                        0,
+                        R.drawable.ic_arrow_down,
+                        0
+                    )
+                }
+            }
+            binding.currencyCodeEntrepreneur.text = featuresEntrepreneur?.currencyCode
+            if (binding.switchEntrepreneur.isChecked) {
+                binding.priceTypeEntrepreneur.text = "Yearly"
+                binding.priceEntrepreneur.text =
+                    featuresEntrepreneur?.currencySymbol + featuresEntrepreneur?.priceYearly
+            } else {
+                binding.priceTypeEntrepreneur.text = "Monthly"
+                binding.priceEntrepreneur.text =
+                    featuresEntrepreneur?.currencySymbol + featuresEntrepreneur?.priceMonthly
+            }
+            binding.switchEntrepreneur.setOnCheckedChangeListener { _, cheeked ->
+                if (cheeked) {
+                    binding.priceTypeEntrepreneur.text = "Yearly"
+                    binding.priceEntrepreneur.text =
+                        featuresEntrepreneur?.currencySymbol + featuresEntrepreneur?.priceYearly
+                } else {
+                    binding.priceTypeEntrepreneur.text = "Monthly"
+                    binding.priceEntrepreneur.text =
+                        featuresEntrepreneur?.currencySymbol + featuresEntrepreneur?.priceMonthly
+                }
+            }
             binding.featuresEntrepreneur.text =
-                "${featuresEntrepreneur?.features?.get(0)?.title}\n" +
+                "${featuresEntrepreneur?.title}\n" +
                         "${featuresEntrepreneur?.features?.get(1)?.title}\n" +
                         "${featuresEntrepreneur?.features?.get(2)?.title}\n" +
                         "${featuresEntrepreneur?.features?.get(3)?.title}\n" +
@@ -163,38 +233,128 @@ class ChooseSubscriptionFragment : BaseFragment<FragmentChooseSubscriptionBindin
                         "${featuresEntrepreneur?.features?.get(9)?.title}\n"
 
             val featuresBusiness = data.subscription?.get(2)
-            binding.titleBusiness.text = data.subscription?.get(2)?.title
-            binding.detailsBusiness.text = data.subscription?.get(2)?.details
-            binding.featuresBusiness.text = "${featuresBusiness?.features?.get(0)?.title}\n" +
-                    "${featuresBusiness?.features?.get(1)?.title}\n" +
-                    "${featuresBusiness?.features?.get(2)?.title}\n" +
-                    "${featuresBusiness?.features?.get(3)?.title}\n" +
-                    "${featuresBusiness?.features?.get(4)?.title}\n" +
-                    "${featuresBusiness?.features?.get(5)?.title}\n" +
-                    "${featuresBusiness?.features?.get(6)?.title}\n" +
-                    "${featuresBusiness?.features?.get(7)?.title}\n" +
-                    "${featuresBusiness?.features?.get(8)?.title}\n" +
-                    "${featuresBusiness?.features?.get(9)?.title}\n"
+            binding.titleBusiness.text = featuresBusiness?.title
+            binding.detailsBusiness.text = featuresBusiness?.details
+            var showHideTextBusiness = false
+            binding.showHideBusinessBtn.setOnClickListener {
+                showHideTextBusiness = !showHideTextBusiness
+                if (showHideTextBusiness) {
+                    binding.featuresBusiness.show()
+                    binding.showHideBusinessBtn.text = "Hide Details"
+                    binding.showHideBusinessBtn.setCompoundDrawablesWithIntrinsicBounds(
+                        0,
+                        0,
+                        R.drawable.ic_arrow_up,
+                        0
+                    )
+                } else {
+                    binding.featuresBusiness.gone()
+                    binding.showHideBusinessBtn.text = "See Details"
+                    binding.showHideBusinessBtn.setCompoundDrawablesWithIntrinsicBounds(
+                        0,
+                        0,
+                        R.drawable.ic_arrow_down,
+                        0
+                    )
+                }
+                binding.currencyCodeBusiness.text = featuresBusiness?.currencyCode
+                if (binding.switchBusiness.isChecked) {
+                    binding.priceTypeBusiness.text = "Yearly"
+                    binding.priceBusiness.text =
+                        featuresBusiness?.currencySymbol + featuresBusiness?.priceYearly
+                } else {
+                    binding.priceTypeBusiness.text = "Monthly"
+                    binding.priceBusiness.text =
+                        featuresBusiness?.currencySymbol + featuresBusiness?.priceMonthly
+                }
+                binding.switchBusiness.setOnCheckedChangeListener { _, cheeked ->
+                    if (cheeked) {
+                        binding.priceTypeBusiness.text = "Yearly"
+                        binding.priceBusiness.text =
+                            featuresBusiness?.currencySymbol + featuresBusiness?.priceYearly
+                    } else {
+                        binding.priceTypeBusiness.text = "Monthly"
+                        binding.priceBusiness.text =
+                            featuresBusiness?.currencySymbol + featuresBusiness?.priceMonthly
+                    }
+                }
+                binding.featuresBusiness.text = "${featuresBusiness?.title}\n" +
+                        "${featuresBusiness?.features?.get(1)?.title}\n" +
+                        "${featuresBusiness?.features?.get(2)?.title}\n" +
+                        "${featuresBusiness?.features?.get(3)?.title}\n" +
+                        "${featuresBusiness?.features?.get(4)?.title}\n" +
+                        "${featuresBusiness?.features?.get(5)?.title}\n" +
+                        "${featuresBusiness?.features?.get(6)?.title}\n" +
+                        "${featuresBusiness?.features?.get(7)?.title}\n" +
+                        "${featuresBusiness?.features?.get(8)?.title}\n" +
+                        "${featuresBusiness?.features?.get(9)?.title}\n"
 
-            val featuresEnterprise = data.subscription?.get(3)
-            binding.titleEnterprise.text = data.subscription?.get(3)?.title
-            binding.detailsEnterprise.text = data.subscription?.get(3)?.details
-            binding.featuresEnterprise.text = "${featuresEnterprise?.features?.get(0)?.title}\n" +
-                    "${featuresEnterprise?.features?.get(1)?.title}\n" +
-                    "${featuresEnterprise?.features?.get(2)?.title}\n" +
-                    "${featuresEnterprise?.features?.get(3)?.title}\n" +
-                    "${featuresEnterprise?.features?.get(4)?.title}\n" +
-                    "${featuresEnterprise?.features?.get(5)?.title}\n" +
-                    "${featuresEnterprise?.features?.get(6)?.title}\n" +
-                    "${featuresEnterprise?.features?.get(7)?.title}\n" +
-                    "${featuresEnterprise?.features?.get(8)?.title}\n" +
-                    "${featuresEnterprise?.features?.get(9)?.title}\n" +
-                    "${featuresEnterprise?.features?.get(10)?.title}\n" +
-                    "${featuresEnterprise?.features?.get(11)?.title}\n" +
-                    "${featuresEnterprise?.features?.get(12)?.title}\n"
+                val featuresEnterprise = data.subscription?.get(3)
+                binding.titleEnterprise.text = featuresEnterprise?.title
+                binding.detailsEnterprise.text = featuresEnterprise?.details
+                var showHideTextEnterprise = false
+                binding.showHideEnterpriseBtn.setOnClickListener {
+                    showHideTextEnterprise = !showHideTextEnterprise
+                    if (showHideTextEnterprise) {
+                        binding.featuresEnterprise.show()
+                        binding.showHideEnterpriseBtn.text = "Hide Details"
+                        binding.showHideEnterpriseBtn.setCompoundDrawablesWithIntrinsicBounds(
+                            0,
+                            0,
+                            R.drawable.ic_arrow_up,
+                            0
+                        )
+                    } else {
+                        binding.featuresEnterprise.gone()
+                        binding.showHideEnterpriseBtn.text = "See Details"
+                        binding.showHideEnterpriseBtn.setCompoundDrawablesWithIntrinsicBounds(
+                            0,
+                            0,
+                            R.drawable.ic_arrow_down,
+                            0
+                        )
+                    }
+                    binding.currencyCodeEnterprise.text = featuresEnterprise?.currencyCode
+                    binding.priceEnterprise.text =
+                        featuresEnterprise?.currencySymbol + featuresEnterprise?.priceMonthly
+                    if (binding.switchEnterprise.isChecked) {
+                        binding.priceTypeEnterprise.text = "Yearly"
+                        binding.priceEnterprise.text =
+                            featuresEnterprise?.currencySymbol + featuresEnterprise?.priceYearly
+                    } else {
+                        binding.priceTypeEnterprise.text = "Monthly"
+                        binding.priceEnterprise.text =
+                            featuresEnterprise?.currencySymbol + featuresEnterprise?.priceMonthly
+                    }
+                    binding.switchEnterprise.setOnCheckedChangeListener { _, cheeked ->
+                        if (cheeked) {
+                            binding.priceTypeEnterprise.text = "Yearly"
+                            binding.priceEnterprise.text =
+                                featuresEnterprise?.currencySymbol + featuresEnterprise?.priceYearly
+                        } else {
+                            binding.priceTypeEnterprise.text = "Monthly"
+                            binding.priceEnterprise.text =
+                                featuresEnterprise?.currencySymbol + featuresEnterprise?.priceMonthly
+                        }
+                    }
+                    binding.featuresEnterprise.text = "${featuresEnterprise?.title}\n" +
+                            "${featuresEnterprise?.features?.get(1)?.title}\n" +
+                            "${featuresEnterprise?.features?.get(2)?.title}\n" +
+                            "${featuresEnterprise?.features?.get(3)?.title}\n" +
+                            "${featuresEnterprise?.features?.get(4)?.title}\n" +
+                            "${featuresEnterprise?.features?.get(5)?.title}\n" +
+                            "${featuresEnterprise?.features?.get(6)?.title}\n" +
+                            "${featuresEnterprise?.features?.get(7)?.title}\n" +
+                            "${featuresEnterprise?.features?.get(8)?.title}\n" +
+                            "${featuresEnterprise?.features?.get(9)?.title}\n" +
+                            "${featuresEnterprise?.features?.get(10)?.title}\n" +
+                            "${featuresEnterprise?.features?.get(11)?.title}\n" +
+                            "${featuresEnterprise?.features?.get(12)?.title}\n"
 
+                }
+
+            }
         }
-
     }
 
     override fun onResume() {

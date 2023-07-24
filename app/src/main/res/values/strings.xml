@@ -40,4 +40,15 @@
     <string name="card_holder_s_name">Card Holder\'s Name</string>
     <string name="card_number">Card Number<font color="#FF3D00">*</font></string>
     <string name="this_field_is_required">This field is required</string>
+    <string name="monthly">Monthly</string>
+    <string name="select">Select</string>
+    <string name="per_user">PER USER</string>
+    <string name="for_personal_use">For personal use</string>
+    <string name="business">Business</string>
+    <string name="_39">$39</string>
+    <string name="for_startup_teams">For startup teams</string>
+    <string name="entrepreneur">Entrepreneur</string>
+    <string name="free">Free</string>
+    <string name="personal">Personal</string>
+    <string name="enterprise">Enterprise</string>
 </resources>
