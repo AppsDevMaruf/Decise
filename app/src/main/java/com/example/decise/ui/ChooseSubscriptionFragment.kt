@@ -213,7 +213,7 @@ class ChooseSubscriptionFragment : BaseFragment<FragmentChooseSubscriptionBindin
 
     }
 
-    private fun getFeatures(
+     private fun getFeatures(
         features: List<ResponseSubscriptionsList.Subscription.Feature?>,
         view: TextView
     ) {

@@ -28,11 +28,9 @@ import javax.inject.Inject
 class SubscriptionViewModel @Inject constructor(
     private val securedRepository: SecuredRepository
 ) : ViewModel() {
+
     private val _chooseSubscriptionResponse = MutableLiveData<RequestChooseSubscriptionType>()
-    val chooseSubscriptionResponse: LiveData<RequestChooseSubscriptionType> =
-        _chooseSubscriptionResponse
-
-
+    val chooseSubscriptionResponse: LiveData<RequestChooseSubscriptionType> = _chooseSubscriptionResponse
     fun setChooseSubscriptionResponse(response: RequestChooseSubscriptionType) {
         _chooseSubscriptionResponse.postValue(response)
     }
