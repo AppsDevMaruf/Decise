@@ -6,6 +6,7 @@ import android.widget.ImageSwitcher
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.decise.R
@@ -13,6 +14,7 @@ import com.example.decise.base.BaseFragment
 import com.example.decise.data.models.profile.chooseSubscriptionType.RequestChooseSubscriptionType
 import com.example.decise.data.models.subscription.subscriptionList.ResponseSubscriptionsList
 import com.example.decise.databinding.FragmentChooseSubscriptionBinding
+import com.example.decise.utils.DurationType
 import com.example.decise.utils.NetworkResult
 import com.example.decise.utils.gone
 import com.example.decise.utils.show
@@ -22,16 +24,18 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ChooseSubscriptionFragment : BaseFragment<FragmentChooseSubscriptionBinding>() {
-    private val subscriptionViewModel by viewModels<SubscriptionViewModel>()
+    private val subscriptionViewModel by activityViewModels<SubscriptionViewModel>()
     private var durationTypeEntrepreneur = "MONTHLY"
     private var durationTypeBusiness = "MONTHLY"
     private var durationTypeEnterprise = "MONTHLY"
     override fun getFragmentView(): Int {
         return R.layout.fragment_choose_subscription
     }
+
     override fun configUi() {
         subscriptionViewModel.getSubscriptionListVM()
     }
+
     override fun setupNavigation() {
         binding.showHidePersonalBtn.setOnClickListener {
             binding.featuresPersonal.show()
@@ -47,7 +51,7 @@ class ChooseSubscriptionFragment : BaseFragment<FragmentChooseSubscriptionBindin
                 subscriptionType = "PERSONAL"
             )
             subscriptionViewModel.setChooseSubscriptionResponse(request)
-            Log.d("TAG", "setChooseSubscriptionResponse: $request")
+            Log.d("TAG", "PERSONAL: $request")
             findNavController().navigate(R.id.action_chooseSubscriptionFragment_to_cardInfoFragment)
 
         }
@@ -56,43 +60,45 @@ class ChooseSubscriptionFragment : BaseFragment<FragmentChooseSubscriptionBindin
                 cardHolderName = null,
                 cardNumber = null,
                 cvvNumber = null,
-                durationType = durationTypeBusiness,//YEARLY
+                durationType = binding.priceTypeBusiness.text.toString().uppercase(),//YEARLY
                 expiryDate = null,
                 subscriptionPeriodInDays = 30,
                 subscriptionType = "BUSINESS"
             )
             subscriptionViewModel.setChooseSubscriptionResponse(result)
+            Log.d("TAG", "BUSINESS: $result")
             findNavController().navigate(R.id.action_chooseSubscriptionFragment_to_cardInfoFragment)
         }
         binding.subTypeEnterpriseBtn.setOnClickListener {
-            subscriptionViewModel.setChooseSubscriptionResponse(
-                RequestChooseSubscriptionType(
-                    cardHolderName = null,
-                    cardNumber = null,
-                    cvvNumber = null,
-                    durationType = durationTypeEnterprise,//YEARLY
-                    expiryDate = null,
-                    subscriptionPeriodInDays = 30,
-                    subscriptionType = "ENTERPRISE"
-                )
+            val result = RequestChooseSubscriptionType(
+                cardHolderName = null,
+                cardNumber = null,
+                cvvNumber = null,
+                durationType = binding.priceTypeEnterprise.text.toString().uppercase(),//YEARLY
+                expiryDate = null,
+                subscriptionPeriodInDays = 30,
+                subscriptionType = "ENTERPRISE"
             )
+            subscriptionViewModel.setChooseSubscriptionResponse(result)
+            Log.d("TAG", "ENTERPRISE: $result")
             findNavController().navigate(R.id.action_chooseSubscriptionFragment_to_cardInfoFragment)
         }
         binding.subTypeEntrepreneurBtn.setOnClickListener {
-            subscriptionViewModel.setChooseSubscriptionResponse(
-                RequestChooseSubscriptionType(
-                    cardHolderName = null,
-                    cardNumber = null,
-                    cvvNumber = null,
-                    durationType = durationTypeEntrepreneur,
-                    expiryDate = null,
-                    subscriptionPeriodInDays = 30,
-                    subscriptionType = "ENTREPRENEUR"
-                )
+            val result = RequestChooseSubscriptionType(
+                cardHolderName = null,
+                cardNumber = null,
+                cvvNumber = null,
+                durationType = binding.priceTypeEntrepreneur.text.toString().uppercase(),
+                expiryDate = null,
+                subscriptionPeriodInDays = 30,
+                subscriptionType = "ENTREPRENEUR"
             )
+            subscriptionViewModel.setChooseSubscriptionResponse(result)
+            Log.d("TAG", "ENTREPRENEUR: $result")
             findNavController().navigate(R.id.action_chooseSubscriptionFragment_to_cardInfoFragment)
         }
     }
+
     override fun binObserver() {
         subscriptionViewModel.getSubscriptionListVMLD.observe(this) {
             binding.progressBar.gone()
@@ -124,6 +130,7 @@ class ChooseSubscriptionFragment : BaseFragment<FragmentChooseSubscriptionBindin
 
 
     }
+
     @SuppressLint("SetTextI18n")
     private fun setSubDetails(data: ResponseSubscriptionsList?) {
         if (data != null) {
@@ -133,6 +140,7 @@ class ChooseSubscriptionFragment : BaseFragment<FragmentChooseSubscriptionBindin
             setEnterpriseData(data)
         }
     }
+
     private fun setPersonalData(data: ResponseSubscriptionsList) {
         val featuresPersonal = data.subscription?.get(0)
         binding.titlePersonal.text = featuresPersonal?.title
@@ -140,6 +148,7 @@ class ChooseSubscriptionFragment : BaseFragment<FragmentChooseSubscriptionBindin
         toggleButton(binding.showHidePersonalBtn, binding.featuresPersonal)
         featuresPersonal?.features?.let { getFeatures(it, binding.featuresPersonal) }
     }
+
     private fun setEntrepreneurData(data: ResponseSubscriptionsList) {
         val featuresEntrepreneur = data.subscription?.get(1)
         binding.titleEntrepreneur.text = featuresEntrepreneur?.title
@@ -156,6 +165,7 @@ class ChooseSubscriptionFragment : BaseFragment<FragmentChooseSubscriptionBindin
 
 
     }
+
     private fun setBusinessData(data: ResponseSubscriptionsList) {
         val featuresBusiness = data.subscription?.get(2)
         binding.titleBusiness.text = featuresBusiness?.title
@@ -170,6 +180,7 @@ class ChooseSubscriptionFragment : BaseFragment<FragmentChooseSubscriptionBindin
             binding.priceBusiness
         )
     }
+
     private fun setEnterpriseData(data: ResponseSubscriptionsList) {
         val featuresEnterprise = data.subscription?.get(3)
         binding.titleEnterprise.text = featuresEnterprise?.title
@@ -213,7 +224,7 @@ class ChooseSubscriptionFragment : BaseFragment<FragmentChooseSubscriptionBindin
 
     }
 
-     private fun getFeatures(
+    private fun getFeatures(
         features: List<ResponseSubscriptionsList.Subscription.Feature?>,
         view: TextView
     ) {
@@ -223,40 +234,41 @@ class ChooseSubscriptionFragment : BaseFragment<FragmentChooseSubscriptionBindin
         }
         view.text = strFeatures
     }
+
     @SuppressLint("SetTextI18n")
     private fun switchButton(
         data: ResponseSubscriptionsList.Subscription?,
         switchButton: SwitchCompat,
         durationType: TextView,
-        price: TextView
+        price: TextView,
     ) {
         if (switchButton.isChecked) {
             durationType.text = "Yearly"
-            durationTypeBusiness = "YEARLY"
             price.text = data?.currencySymbol + data?.priceYearly
 
         } else {
             durationType.text = "Monthly"
             price.text = data?.currencySymbol + data?.priceMonthly
-            durationTypeBusiness = "MONTHLY"
+
+
         }
         switchButton.setOnCheckedChangeListener { _, cheeked ->
             if (cheeked) {
-                durationTypeBusiness = "YEARLY"
                 durationType.text = "Yearly"
                 price.text = data?.currencySymbol + data?.priceYearly
 
             } else {
-                durationTypeBusiness = "MONTHLY"
                 durationType.text = "Monthly"
                 price.text = data?.currencySymbol + data?.priceMonthly
             }
         }
     }
+
     override fun onResume() {
         super.onResume()
         (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
     }
+
     override fun onStop() {
         super.onStop()
         (activity as AppCompatActivity?)!!.supportActionBar!!.show()

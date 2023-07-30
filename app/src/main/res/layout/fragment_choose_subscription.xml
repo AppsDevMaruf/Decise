@@ -235,6 +235,7 @@
                         android:fontFamily="@font/gotham_medium"
                         android:gravity="center"
                         android:text="@string/monthly"
+                        android:textAllCaps="false"
                         android:textColor="@color/gray" />
 
                     <androidx.appcompat.widget.SwitchCompat
@@ -391,6 +392,7 @@
                         android:fontFamily="@font/gotham_medium"
                         android:gravity="center"
                         android:text="@string/monthly"
+                        android:textAllCaps="false"
                         android:textColor="@color/gray" />
 
                     <androidx.appcompat.widget.SwitchCompat
@@ -544,6 +546,7 @@
                         android:fontFamily="@font/gotham_medium"
                         android:gravity="center"
                         android:text="@string/monthly"
+                        android:textAllCaps="false"
                         android:textColor="@color/gray" />
 
                     <androidx.appcompat.widget.SwitchCompat
