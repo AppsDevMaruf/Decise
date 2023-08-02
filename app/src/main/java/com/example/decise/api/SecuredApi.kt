@@ -2,17 +2,21 @@ package com.example.decise.api
 
 import com.example.decise.data.models.profile.chooseSubscriptionType.RequestChooseSubscriptionType
 import com.example.decise.data.models.profile.chooseSubscriptionType.ResponseChooseSubscriptionType
+import com.example.decise.data.models.profile.personalProfileResponse.ResponsePersonalProfile
 import com.example.decise.data.models.subscription.subscriptionList.ResponseSubscriptionsList
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.PUT
+import retrofit2.http.Query
 
 interface SecuredApi {
     @GET("subscription/list")
     suspend fun getSubscriptionList(): Response<ResponseSubscriptionsList>
     @PUT("profile/choose-subscription-type")
     suspend fun chooseSubscriptionType(@Body chooseSubscriptionType: RequestChooseSubscriptionType): Response<ResponseChooseSubscriptionType>
+    @GET("profile/personal/")
+    suspend fun getPersonalProfile(@Query("id") id: Int): Response<ResponsePersonalProfile>
 
   /*  @POST("/subscription/checkout")
     suspend fun checkoutSubscription(@Body request: CheckoutRequest): Response<CheckoutResponse>

@@ -51,4 +51,6 @@
     <string name="free">Free</string>
     <string name="personal">Personal</string>
     <string name="enterprise">Enterprise</string>
+    <string name="first_name">First Name</string>
+    <string name="lastname">LastName</string>
 </resources>

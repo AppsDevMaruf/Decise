@@ -14,6 +14,7 @@ class SecuredRepository @Inject constructor(private val securedApi: SecuredApi) 
         suspend fun logout() = securedApi.logout()
         suspend fun getTransactionHistory() = securedApi.getTransactionHistory()*/
     suspend fun getSubscriptionListRepo() = securedApi.getSubscriptionList()
+    suspend fun getPersonalProfileRepo(id: Int) = securedApi.getPersonalProfile(id)
 
     suspend fun chooseSubscriptionTypeRepo(chooseSubscriptionType: RequestChooseSubscriptionType) =
         securedApi.chooseSubscriptionType(chooseSubscriptionType)

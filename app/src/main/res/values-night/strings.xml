@@ -12,4 +12,6 @@
     <string name="_39">$39</string>
     <string name="for_startup_teams">For startup teams</string>
     <string name="entrepreneur">Entrepreneur</string>
+    <string name="first_name">First Name</string>
+    <string name="lastname">LastName</string>
 </resources>

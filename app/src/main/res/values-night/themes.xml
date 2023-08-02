@@ -4,11 +4,14 @@
         <!-- This is used for statusbar color. -->
         <item name="colorPrimaryDark">@color/purple</item>
         <!-- This is used for status bar content color. If status bar Color is light, use "true" otherwise use "false"-->
-      <!--  <item name="android:windowLightStatusBar">false</item>
+        <!--<item name="android:windowLightStatusBar">false</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>-->
         <!-- Primary brand color. -->
+        <item name="android:windowBackground">@drawable/stratus_bar_bg_gradient</item>
+        <item name="android:statusBarColor">#00000000</item>
+        <item name="android:actionBarStyle">@style/CustomActionBar</item>
         <item name="android:textColor">@color/white</item>
         <item name="colorControlNormal">@color/white</item>
         <item name="android:actionMenuTextColor">@color/white</item>
@@ -34,7 +37,7 @@
         <item name="cornerSize">50%</item>
     </style>
 
+
     <style name="Theme.Decise" parent="Base.Theme.Decise" />
 
-    <style name="CustomActionBar"></style>
 </resources>

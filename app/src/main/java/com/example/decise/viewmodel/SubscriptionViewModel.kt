@@ -30,7 +30,9 @@ class SubscriptionViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _chooseSubscriptionResponse = MutableLiveData<RequestChooseSubscriptionType>()
-    val chooseSubscriptionResponse: LiveData<RequestChooseSubscriptionType> = _chooseSubscriptionResponse
+    val chooseSubscriptionResponse: LiveData<RequestChooseSubscriptionType> =
+        _chooseSubscriptionResponse
+
     fun setChooseSubscriptionResponse(response: RequestChooseSubscriptionType) {
         _chooseSubscriptionResponse.postValue(response)
     }
@@ -72,6 +74,47 @@ class SubscriptionViewModel @Inject constructor(
     }
 
     //  getSubscriptionList   end
+
+
+    //  chooseSubscriptionType start
+
+    private var _responseChooseSubscriptionType =
+        MutableLiveData<NetworkResult<ResponseChooseSubscriptionType>>()
+    val chooseSubscriptionTypeVMLD: LiveData<NetworkResult<ResponseChooseSubscriptionType>> =
+        _responseChooseSubscriptionType
+
+    @SuppressLint("SuspiciousIndentation")
+    fun chooseSubscriptionTypeVM(request: RequestChooseSubscriptionType) {
+        _responseChooseSubscriptionType.postValue(NetworkResult.Loading())
+
+        viewModelScope.launch {
+            try {
+                val response = securedRepository.chooseSubscriptionTypeRepo(request)
+
+                if (response.isSuccessful && response.body() != null) {
+
+                    _responseChooseSubscriptionType.postValue(NetworkResult.Success(response.body()!!))
+
+                } else if (response.errorBody() != null) {
+
+                    val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+                    _responseChooseSubscriptionType.postValue(
+                        NetworkResult.Error(errorObj.getString("message"))
+                    )
+
+                }
+            } catch (noInternetException: NoInternetException) {
+                _responseChooseSubscriptionType.postValue(noInternetException.localizedMessage?.let {
+                    NetworkResult.Error(
+                        it
+                    )
+                })
+            }
+        }
+
+    }
+
+    //  chooseSubscriptionType   end
 
 
 }

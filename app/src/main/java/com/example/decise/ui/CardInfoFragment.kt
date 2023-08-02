@@ -1,4 +1,4 @@
-package com.example.decise
+package com.example.decise.ui
 
 import android.annotation.SuppressLint
 import android.text.Editable
@@ -6,12 +6,17 @@ import android.text.TextWatcher
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
+import com.example.decise.R
 import com.example.decise.base.BaseFragment
+import com.example.decise.data.models.profile.chooseSubscriptionType.RequestChooseSubscriptionType
 import com.example.decise.databinding.FragmentCardInfoBinding
+import com.example.decise.utils.NetworkResult
 import com.example.decise.utils.enableBtn
 import com.example.decise.utils.gone
 import com.example.decise.utils.onTextChanged
 import com.example.decise.utils.show
+import com.example.decise.utils.showDialog
 import com.example.decise.viewmodel.SubscriptionViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -52,6 +57,23 @@ class CardInfoFragment : BaseFragment<FragmentCardInfoBinding>() {
 
     @SuppressLint("SetTextI18n")
     override fun setupNavigation() {
+        binding.continueBtn.setOnClickListener {
+
+            subscriptionViewModel.chooseSubscriptionResponse.observe(this) {
+                Log.d("TAG", "chooseSubscriptionResponse: $it")
+                val request = RequestChooseSubscriptionType(
+                    cardHolderName = binding.cardHolderNameEt.text.toString(),
+                    cardNumber = binding.cardNumberEt.text.toString().replace("\\s".toRegex(), ""),
+                    durationType = it.durationType,
+                    cvvNumber = binding.cvvEt.text.toString(),
+                    expiryDate = binding.expiryEt.text.toString(),
+                    subscriptionPeriodInDays = 30,
+                    subscriptionType = it.subscriptionType
+                )
+                Log.d("TAG", "request: $request")
+                subscriptionViewModel.chooseSubscriptionTypeVM(request)
+            }
+        }
 
     }
 
@@ -183,8 +205,34 @@ class CardInfoFragment : BaseFragment<FragmentCardInfoBinding>() {
 
     override fun binObserver() {
 
-        subscriptionViewModel.chooseSubscriptionResponse.observe(this) {
-            Log.d("TAG", "chooseSubscriptionResponse: $it")
+        subscriptionViewModel.chooseSubscriptionTypeVMLD.observe(viewLifecycleOwner) {
+            binding.progressBar.gone()
+            when (it) {
+                is NetworkResult.Success -> {
+                    Log.d("TAG", "Success: $it")
+                    findNavController().navigate(R.id.action_cardInfoFragment_to_homeFragment)
+                }
+
+                is NetworkResult.Error -> {
+                    showDialog(
+                        context = requireActivity(),
+                        title = "",
+                        details = "${it.message}",
+                        resId = R.drawable.ic_round_warning,
+                        yesContent = "Okay",
+                        noContent = "Cancel",
+                        showNoBtn = false,
+                        positiveFun = {
+                        }, {}
+                    )
+
+                }
+
+                is NetworkResult.Loading -> {
+                    binding.progressBar.show()
+                }
+            }
+
         }
         /*   subscriptionViewModel.responseSendEmail.observe(this) {
                binding.progressBar.gone()

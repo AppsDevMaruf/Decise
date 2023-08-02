@@ -25,9 +25,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class ChooseSubscriptionFragment : BaseFragment<FragmentChooseSubscriptionBinding>() {
     private val subscriptionViewModel by activityViewModels<SubscriptionViewModel>()
-    private var durationTypeEntrepreneur = "MONTHLY"
-    private var durationTypeBusiness = "MONTHLY"
-    private var durationTypeEnterprise = "MONTHLY"
     override fun getFragmentView(): Int {
         return R.layout.fragment_choose_subscription
     }
@@ -60,7 +57,7 @@ class ChooseSubscriptionFragment : BaseFragment<FragmentChooseSubscriptionBindin
                 cardHolderName = null,
                 cardNumber = null,
                 cvvNumber = null,
-                durationType = binding.priceTypeBusiness.text.toString().uppercase(),//YEARLY
+                durationType = binding.priceTypeBusiness.text.toString().uppercase(),
                 expiryDate = null,
                 subscriptionPeriodInDays = 30,
                 subscriptionType = "BUSINESS"

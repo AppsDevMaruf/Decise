@@ -20,16 +20,12 @@
             <include
                 android:id="@+id/toolbar"
                 layout="@layout/dashboard_toolbar"/>
-
-            <com.github.ybq.android.spinkit.SpinKitView
-                android:id="@+id/progress"
-                style="@style/SpinKitView.Circle"
+            <ProgressBar
+                android:id="@+id/progressBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:indeterminate="true"
+                android:indeterminateTint="@color/orange"
                 android:visibility="gone"
-                app:SpinKit_Color="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
