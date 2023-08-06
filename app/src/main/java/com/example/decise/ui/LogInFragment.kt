@@ -81,6 +81,7 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>() {
                 is NetworkResult.Success -> {
 
                     tokenManager.saveToken(Constants.TOKEN, "${it.data?.type} ${it.data?.token}")
+                    tokenManager.saveUserID(Constants.USER_ID, "${it.data?.id}")
                     if (it.data?.firstLogin == true) {
                         findNavController().navigate(R.id.action_logInFragment_to_chooseSubscriptionFragment)
 

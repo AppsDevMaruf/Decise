@@ -7,15 +7,15 @@ data class ResponsePersonalProfile(
     @SerializedName("companyId")
     val companyId: Int?,
     @SerializedName("countryCode")
-    val countryCode: Any?,
+    val countryCode: String?,
     @SerializedName("decisionGroups")
-    val decisionGroups: List<Any?>?,
+    val decisionGroups: List<String?>?,
     @SerializedName("department")
-    val department: Any?,
+    val department: String?,
     @SerializedName("designation")
-    val designation: Any?,
+    val designation: String?,
     @SerializedName("dob")
-    val dob: Any?,
+    val dob: String?,
     @SerializedName("email")
     val email: String?,
     @SerializedName("expiredAt")
@@ -33,13 +33,13 @@ data class ResponsePersonalProfile(
     @SerializedName("needPasswordChange")
     val needPasswordChange: Boolean?,
     @SerializedName("phoneNumber")
-    val phoneNumber: Any?,
+    val phoneNumber: String?,
     @SerializedName("profilePhoto")
     val profilePhoto: String?,
     @SerializedName("roles")
     val roles: List<String?>?,
     @SerializedName("subscriptionDate")
-    val subscriptionDate: Any?,
+    val subscriptionDate: String?,
     @SerializedName("subscriptionLeftDays")
     val subscriptionLeftDays: Int?,
     @SerializedName("subscriptionType")

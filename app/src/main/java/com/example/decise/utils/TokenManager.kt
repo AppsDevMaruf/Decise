@@ -15,7 +15,16 @@ class TokenManager @Inject constructor(@ApplicationContext context: Context) {
         editor.putString(key, value)
         editor.apply()
     }
+    fun saveUserID(userID: String, value: String) {
+        val editor: SharedPreferences.Editor = prefs.edit()
+        editor.putString(userID, value)
+        editor.apply()
+    }
 
+    fun getUserID(userID: String): String {
+        val sharedNameValue = prefs.getString(userID, Constants.NO_DATA)
+        return sharedNameValue.toString()
+    }
     fun getToken(key: String): String {
         val sharedNameValue = prefs.getString(key, Constants.NO_DATA)
         return sharedNameValue.toString()

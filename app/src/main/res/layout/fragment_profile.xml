@@ -152,7 +152,11 @@
                         android:drawableStart="@drawable/ic_person"
                         android:drawablePadding="4dp"
                         android:importantForAutofill="no"
-                        android:inputType="text" />
+                        android:inputType="text"
+                        android:ellipsize="end"
+                        android:textAllCaps="false"
+                        android:scrollHorizontally="true"
+                        android:singleLine="true" />
 
                     <TextView
                         style="@style/titleText"
@@ -216,6 +220,7 @@
                         android:drawablePadding="4dp"
                         android:enabled="false"
                         android:importantForAutofill="no" />
+
                     <TextView
                         style="@style/titleText"
                         android:layout_width="match_parent"
@@ -233,6 +238,8 @@
                         android:drawablePadding="4dp"
                         android:enabled="false"
                         android:importantForAutofill="no"
+                        android:ellipsize="end"
+                        android:scrollHorizontally="true"
                         android:inputType="text" />
 
                     <TextView

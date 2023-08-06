@@ -13,6 +13,7 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -49,14 +50,22 @@ class MainActivity : AppCompatActivity() {
 
         val navController = findNavController(R.id.nav_host_fragment)
 
-        /* nav = binding.navigationView.getHeaderView(0)
-         userProfilePicHeader = nav.findViewById(R.id.userProfilePicHeader)
-         uploadProfilePicBtn = nav.findViewById(R.id.uploadProfilePicBtn)
+        nav = binding.navigationView.getHeaderView(0)
+        userProfilePicHeader = nav.findViewById(R.id.userProfilePicHeader)
+        uploadProfilePicBtn = nav.findViewById(R.id.uploadProfilePicBtn)
 
-         userProfilePicABHeader = nav.findViewById(R.id.profilePicABHeader)*/
+        userProfilePicABHeader = nav.findViewById(R.id.profilePicABHeader)
 
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
+
+        binding.toolbar.profilePicAB.setOnClickListener {
+            navController.navigate(R.id.profileFragment)
+        }
+        binding.toolbar.userProfilePic.setOnClickListener {
+            navController.navigate(R.id.profileFragment)
+        }
+
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.homeFragment
@@ -93,7 +102,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-
 
 
     }

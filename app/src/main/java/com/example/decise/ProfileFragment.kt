@@ -1,59 +1,71 @@
 package com.example.decise
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import com.example.decise.base.BaseFragment
+import com.example.decise.data.models.profile.personalProfileResponse.ResponsePersonalProfile
+import com.example.decise.databinding.FragmentProfileBinding
+import com.example.decise.utils.Constants
+import com.example.decise.utils.NetworkResult
+import com.example.decise.utils.TokenManager
+import com.example.decise.utils.gone
+import com.example.decise.utils.show
+import com.example.decise.viewmodel.ProfileViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+@AndroidEntryPoint
+class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
+    private val profileViewModel by viewModels<ProfileViewModel>()
+    @Inject
+    lateinit var tokenManager: TokenManager
+    override fun getFragmentView(): Int {
+        return R.layout.fragment_profile
+    }
 
-/**
- * A simple [Fragment] subclass.
- * Use the [ProfileFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class ProfileFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    override fun configUi() {
+       val userId = tokenManager.getUserID(Constants.USER_ID).toInt()
+        profileViewModel.getProfileData(userId)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    }
+
+    override fun setupNavigation() {
+
+    }
+
+    override fun binObserver() {
+        profileViewModel.profileDataVMLD.observe(viewLifecycleOwner) {
+            binding.progressBar.gone()
+            when (it) {
+                is NetworkResult.Success -> {
+                    setProfileData(it.data)
+                }
+                is NetworkResult.Error -> {}
+                is NetworkResult.Loading -> {
+                    binding.progressBar.show()
+                }
+            }
+        }
+    }
+    private fun setProfileData(data: ResponsePersonalProfile?) {
+        if (data != null) {
+            binding.firstName.setText(data.firstName)
+            binding.lastName.setText(data.lastName)
+            binding.email.setText(data.email)
+            var roleList = ""
+            data.roles?.forEach { roles ->
+                roleList += "${roles},"
+            }
+            binding.deciseRoleEt.setText(roleList)
+            binding.phoneNumberEt.setText(data.phoneNumber)
+            binding.jobTitleEt.setText(data.designation)
+            binding.departmentEt.setText(data.department)
+            var decisionList = ""
+            data.decisionGroups?.forEach { decisions ->
+                decisionList += "${decisions},"
+            }
+            binding.decisionGroup.setText(decisionList)
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false)
-    }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ProfileFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ProfileFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
 }
