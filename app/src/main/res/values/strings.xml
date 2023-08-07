@@ -5,6 +5,7 @@
     <string name="todo">TODO</string>
     <string name="password_required">Password<font color="#FF3D00">*</font></string>
     <string name="last_name_is_required">Last name is required</string>
+    <string name="phone_number_is_required">Phone Number is required</string>
     <string name="enter_last_name">Enter last name</string>
     <string name="last_name_required">Last Name<font color="#FF3D00">*</font></string>
     <string name="first_name_is_required">First name is required</string>
@@ -53,4 +54,5 @@
     <string name="enterprise">Enterprise</string>
     <string name="first_name">First Name</string>
     <string name="lastname">LastName</string>
+    <string name="update">Update</string>
 </resources>

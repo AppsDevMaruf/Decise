@@ -1,7 +1,6 @@
 package com.example.decise.ui
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.fragment.app.viewModels
 import com.example.decise.R
 import com.example.decise.base.BaseFragment
