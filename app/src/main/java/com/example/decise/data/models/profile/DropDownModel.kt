@@ -1,6 +1,7 @@
-package com.example.decise.data.models.profile.decisionGroups
+package com.example.decise.data.models.profile
+
 import com.google.gson.annotations.SerializedName
-data class DecisionGroups(
+data class DropDownModel(
     @SerializedName("companyId")
     val companyId: Int?,
     @SerializedName("id")

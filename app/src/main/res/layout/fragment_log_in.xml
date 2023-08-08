@@ -73,7 +73,7 @@
                             android:drawableStart="@drawable/baseline_email_24"
                             android:drawablePadding="4dp"
                             android:hint="@string/email"
-                            android:text="uu@yopmail.com"
+                            android:text="antman420@yopmail.com"
                             android:inputType="textEmailAddress" />
 
                         <TextView
@@ -103,7 +103,7 @@
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/password"
-                                android:text="Maruf786@"
+                                android:text="abAB12!@"
                                 style="@style/editTextStyle"
                                 android:layout_width="match_parent"
                                 android:layout_height="38dp"

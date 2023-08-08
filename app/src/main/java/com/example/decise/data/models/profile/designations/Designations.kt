@@ -10,7 +10,7 @@ data class Designations(
     @SerializedName("name")
     val name: String?,
     @SerializedName("note")
-    val note: Any?,
+    val note: String?,
     @SerializedName("status")
     val status: Boolean?
 )

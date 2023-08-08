@@ -3,6 +3,8 @@ package com.example.decise.api
 import com.example.decise.data.models.profile.departments.Departments
 import com.example.decise.data.models.profile.chooseSubscriptionType.RequestChooseSubscriptionType
 import com.example.decise.data.models.profile.chooseSubscriptionType.ResponseChooseSubscriptionType
+import com.example.decise.data.models.profile.decisionGroups.DecisionGroups
+import com.example.decise.data.models.profile.designations.Designations
 import com.example.decise.data.models.profile.personalProfileResponse.ResponsePersonalProfile
 import com.example.decise.data.models.profile.update_personal_profile.RequestUpdatePersonalProfile
 import com.example.decise.data.models.profile.update_personal_profile.ResponseUpdatePersonalProfile
@@ -28,10 +30,10 @@ interface SecuredApi {
     suspend fun getDepartmentList(@Path("companyId") companyId: Int): Response<List<Departments>>
 
     @GET("decision-group/list/{companyId}")
-    suspend fun getDecisionGroupList(@Path("companyId") companyId: Int): Response<List<Departments>>
+    suspend fun getDecisionGroupList(@Path("companyId") companyId: Int): Response<List<DecisionGroups>>
 
     @GET("designation/list/{companyId}")
-    suspend fun getDesignationList(@Path("companyId") companyId: Int): Response<List<Departments>>
+    suspend fun getDesignationList(@Path("companyId") companyId: Int): Response<List<Designations>>
 
     @PUT("profile/update-personal")
     suspend fun updatePersonalProfile(@Body requestUpdatePersonalProfile: RequestUpdatePersonalProfile): Response<ResponseUpdatePersonalProfile>

@@ -5,7 +5,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.decise.data.models.profile.decisionGroups.DecisionGroups
 import com.example.decise.data.models.profile.departments.Departments
+import com.example.decise.data.models.profile.designations.Designations
 import com.example.decise.data.models.profile.personalProfileResponse.ResponsePersonalProfile
 import com.example.decise.data.models.profile.update_personal_profile.RequestUpdatePersonalProfile
 import com.example.decise.data.models.profile.update_personal_profile.ResponseUpdatePersonalProfile
@@ -78,6 +80,73 @@ class ProfileViewModel @Inject constructor(
                 }
             } catch (noInternetException: NoInternetException) {
                 _responseDepartments.postValue(
+                    NetworkResult.Error(
+                        noInternetException.localizedMessage ?: "No Internet Connection"
+                    )
+                )
+            }
+        }
+    }
+
+    //department list end
+
+    //Designations list start
+
+    private var _responseDesignations = MutableLiveData<NetworkResult<List<Designations>>>()
+    val designationsVMLD: LiveData<NetworkResult<List<Designations>>> = _responseDesignations
+
+    fun getDesignations(id: Int) {
+        _responseDesignations.postValue(NetworkResult.Loading())
+
+        viewModelScope.launch {
+            try {
+                val response = securedRepository.getDesignationListRepo(id)
+
+                if (response.isSuccessful && response.body() != null) {
+                    _responseDesignations.postValue(NetworkResult.Success(response.body()!!))
+                } else if (response.errorBody() != null) {
+                    val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+                    _responseDesignations.postValue(
+                        NetworkResult.Error(
+                            errorObj.getString("message")
+                        )
+                    )
+                }
+            } catch (noInternetException: NoInternetException) {
+                _responseDesignations.postValue(
+                    NetworkResult.Error(
+                        noInternetException.localizedMessage ?: "No Internet Connection"
+                    )
+                )
+            }
+        }
+    }
+
+    //Designations list end
+    //department list start
+
+    private var _responseDecisionGroups = MutableLiveData<NetworkResult<List<DecisionGroups>>>()
+    val decisionGroupsVMLD: LiveData<NetworkResult<List<DecisionGroups>>> = _responseDecisionGroups
+
+    fun getDecisionGroups(id: Int) {
+        _responseDecisionGroups.postValue(NetworkResult.Loading())
+
+        viewModelScope.launch {
+            try {
+                val response = securedRepository.getDecisionGroupListRepo(id)
+
+                if (response.isSuccessful && response.body() != null) {
+                    _responseDecisionGroups.postValue(NetworkResult.Success(response.body()!!))
+                } else if (response.errorBody() != null) {
+                    val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+                    _responseDecisionGroups.postValue(
+                        NetworkResult.Error(
+                            errorObj.getString("message")
+                        )
+                    )
+                }
+            } catch (noInternetException: NoInternetException) {
+                _responseDecisionGroups.postValue(
                     NetworkResult.Error(
                         noInternetException.localizedMessage ?: "No Internet Connection"
                     )

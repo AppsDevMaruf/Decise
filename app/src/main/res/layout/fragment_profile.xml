@@ -237,7 +237,7 @@
                         android:text="Decisions Group" />
 
                     <TextView
-                        android:id="@+id/decisionSpinner"
+                        android:id="@+id/decisionGroupSpinner"
                         style="@style/editTextStyle"
                         android:layout_width="match_parent"
                         android:layout_height="38dp"

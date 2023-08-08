@@ -1,21 +1,23 @@
 package com.example.decise.ui.profile
 
-import android.util.Log
 import android.view.WindowManager
 import android.widget.ImageView
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.decise.R
 import com.example.decise.base.BaseFragment
+import com.example.decise.data.models.profile.DropDownModel
+import com.example.decise.data.models.profile.decisionGroups.DecisionGroups
 import com.example.decise.data.models.profile.departments.Departments
+import com.example.decise.data.models.profile.designations.Designations
 import com.example.decise.data.models.profile.personalProfileResponse.ResponsePersonalProfile
 import com.example.decise.data.models.profile.update_personal_profile.RequestUpdatePersonalProfile
 import com.example.decise.databinding.FragmentProfileBinding
-import com.example.decise.interfaces.DepartmentSelectListener
-import com.example.decise.ui.profile.adapter.DepartmentAdapter
+import com.example.decise.interfaces.DropDownInteractionListener
+import com.example.decise.ui.profile.adapter.DropDownAdapter
 import com.example.decise.utils.Constants
+import com.example.decise.utils.DropDownType
 import com.example.decise.utils.NetworkResult
 import com.example.decise.utils.TokenManager
 import com.example.decise.utils.enableBtn
@@ -23,19 +25,24 @@ import com.example.decise.utils.gone
 import com.example.decise.utils.hideSoftKeyboard
 import com.example.decise.utils.onTextChanged
 import com.example.decise.utils.show
+import com.example.decise.utils.toast
 import com.example.decise.viewmodel.ProfileViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.ArrayList
 import java.util.Locale
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 @AndroidEntryPoint
-class ProfileFragment : BaseFragment<FragmentProfileBinding>(),DepartmentSelectListener{
+class ProfileFragment : BaseFragment<FragmentProfileBinding>(),DropDownInteractionListener {
+
+    private lateinit var dropDownAdapter: DropDownAdapter
     private val profileViewModel by viewModels<ProfileViewModel>()
     private lateinit var bottomSheetDialog: BottomSheetDialog
     private lateinit var departmentList: ArrayList<Departments>
-    private lateinit var departmentAdapter: DepartmentAdapter
+    private lateinit var jobTitleList: ArrayList<Designations>
+    private lateinit var decisionGroupList: ArrayList<DecisionGroups>
+
     @Inject
     lateinit var tokenManager: TokenManager
     override fun getFragmentView(): Int {
@@ -47,12 +54,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(),DepartmentSelectL
         profileViewModel.getProfileData(userId)
 
         buttonEnableAfterTextFillUp()
-        binding.departmentSpinner.setOnClickListener {
-            showBottomSheetDepartments()
-            hideSoftKeyboard()
-        }
-
-
     }
 
     private fun buttonEnableAfterTextFillUp() {
@@ -99,7 +100,50 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(),DepartmentSelectL
     }
 
     override fun setupNavigation() {
+        val dropDownList = ArrayList<DropDownModel>()
+        /*  binding.departmentSpinner.setOnClickListener {
+              departmentList.forEach { department ->
+                  val dropDownModel = DropDownModel(
+                      department.companyId,
+                      department.id,
+                      department.name,
+                      department.note,
+                      department.status
+                  )
+                  dropDownList.add(dropDownModel);
+              }
+              showBottomSheetDropDown(dropDownList);
+              hideSoftKeyboard()
+          }*/
+        /* binding.jobTitleSpinner.setOnClickListener {
+             jobTitleList.forEach { department ->
+                 val dropDownModel = DropDownModel(
+                     department.companyId,
+                     department.id,
+                     department.name,
+                     department.note,
+                     department.status
+                 )
+                 dropDownList.add(dropDownModel);
+             }
+             showBottomSheetDropDown(dropDownList);
+             hideSoftKeyboard()
+         }*/
+        /*binding.departmentSpinner.setOnClickListener {
 
+            decisionGroupList.forEach { department ->
+                val dropDownModel = DropDownModel(
+                    department.companyId,
+                    department.id,
+                    department.name,
+                    department.note,
+                    department.status
+                );
+                dropDownList.add(dropDownModel);
+            }
+            showBottomSheetDropDown(dropDownList);
+            hideSoftKeyboard()
+        }*/
     }
 
     override fun binObserver() {
@@ -107,6 +151,11 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(),DepartmentSelectL
             binding.progressBar.gone()
             when (it) {
                 is NetworkResult.Success -> {
+                    it.data?.companyId?.let { companyId ->
+                        profileViewModel.getDesignations(companyId)
+                        profileViewModel.getDepartments(companyId)
+                        profileViewModel.getDecisionGroups(companyId)
+                    }
                     setProfileData(it.data)
                 }
 
@@ -121,12 +170,77 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(),DepartmentSelectL
             when (it) {
                 is NetworkResult.Success -> {
                     departmentList = (it.data as ArrayList<Departments>?)!!
-                    it.data?.forEach {
-                        Log.d("TAG", "binObserver: ${it.name}")
+                    binding.departmentSpinner.setOnClickListener {
+                        val dropDownList = ArrayList<DropDownModel>()
+                        departmentList.forEach { department ->
+                            val dropDownModel = DropDownModel(
+                                department.companyId,
+                                department.id,
+                                department.name,
+                                department.note,
+                                department.status
+                            )
+                            dropDownList.add(dropDownModel);
+                        }
+                        showBottomSheetDropDown(dropDownList, DropDownType.DEPARTMENT);
+                        hideSoftKeyboard()
                     }
+                }
 
+                is NetworkResult.Error -> {}
+                is NetworkResult.Loading -> {
+                    binding.progressBar.show()
+                }
+            }
+        }
+        profileViewModel.designationsVMLD.observe(viewLifecycleOwner) {
+            binding.progressBar.gone()
+            when (it) {
+                is NetworkResult.Success -> {
+                    jobTitleList = (it.data as ArrayList<Designations>?)!!
+                    binding.jobTitleSpinner.setOnClickListener {
+                        val dropDownList = ArrayList<DropDownModel>()
+                        jobTitleList.forEach { department ->
+                            val dropDownModel = DropDownModel(
+                                department.companyId,
+                                department.id,
+                                department.name,
+                                department.note,
+                                department.status
+                            )
+                            dropDownList.add(dropDownModel);
+                        }
+                        showBottomSheetDropDown(dropDownList, DropDownType.DESIGNATION);
+                        hideSoftKeyboard()
+                    }
+                }
 
-
+                is NetworkResult.Error -> {}
+                is NetworkResult.Loading -> {
+                    binding.progressBar.show()
+                }
+            }
+        }
+        profileViewModel.decisionGroupsVMLD.observe(viewLifecycleOwner) {
+            binding.progressBar.gone()
+            when (it) {
+                is NetworkResult.Success -> {
+                    decisionGroupList = (it.data as ArrayList<DecisionGroups>?)!!
+                    binding.decisionGroupSpinner.setOnClickListener {
+                        val dropDownList = ArrayList<DropDownModel>()
+                        decisionGroupList.forEach { department ->
+                            val dropDownModel = DropDownModel(
+                                department.companyId,
+                                department.id,
+                                department.name,
+                                department.note,
+                                department.status
+                            );
+                            dropDownList.add(dropDownModel);
+                        }
+                        showBottomSheetDropDown(dropDownList, DropDownType.DECISION_GROUP)
+                        hideSoftKeyboard()
+                    }
                 }
 
                 is NetworkResult.Error -> {}
@@ -139,6 +253,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(),DepartmentSelectL
 
     private fun setProfileData(data: ResponsePersonalProfile?) {
         if (data != null) {
+
             binding.firstName.setText(data.firstName)
             binding.lastName.setText(data.lastName)
             binding.email.setText(data.email)
@@ -172,7 +287,12 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(),DepartmentSelectL
             )
         }
     }
-    private fun showBottomSheetDepartments() {
+
+
+    private fun showBottomSheetDropDown(
+        dropDownList: ArrayList<DropDownModel>,
+        dropDownType: DropDownType
+    ) {
         bottomSheetDialog = BottomSheetDialog(requireContext())
         bottomSheetDialog.setContentView(R.layout.bottom_dialog)
         bottomSheetDialog.behavior.maxHeight = 1000 // set max height when expanded in PIXEL
@@ -190,7 +310,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(),DepartmentSelectL
 
 
 
-        buildDepartmentsRecyclerView(recyclerView!!)
+        buildDropDownRecyclerView(recyclerView!!, dropDownList, dropDownType)
         val searchView = bottomSheetDialog.findViewById<SearchView>(R.id.searchText)
 
         searchView!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -201,7 +321,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(),DepartmentSelectL
             override fun onQueryTextChange(newText: String): Boolean {
                 // inside on query text change method we are
                 // calling a method to filter our recycler view.
-                filterDepartments(newText)
+                filterDropDownItem(dropDownList, newText)
                 return false
             }
         })
@@ -209,12 +329,22 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(),DepartmentSelectL
         bottomSheetDialog.show()
     }
 
-    private fun filterDepartments(text: String) {
+    private fun buildDropDownRecyclerView(
+        recyclerView: RecyclerView,
+        dropDownList: ArrayList<DropDownModel>,
+        dropDownType: DropDownType
+    ) {
+      dropDownAdapter = DropDownAdapter(this, dropDownType) // 'this' refers to the fragment
+        dropDownAdapter.submitInitialList(dropDownList)
+        recyclerView.adapter = dropDownAdapter
+    }
+
+    private fun filterDropDownItem(dropDownList: ArrayList<DropDownModel>, text: String) {
         // creating a new array list to filter our data.
-        val filteredlist = ArrayList<Departments>()
+        val filteredlist = ArrayList<DropDownModel>()
 
         // running a for loop to compare elements.
-        for (item in departmentList) {
+        for (item in dropDownList) {
             // checking if the entered string matched with any item of our recycler view.
             if (item.name!!.lowercase(Locale.ROOT)
                     .contains(text.lowercase(Locale.getDefault()))
@@ -227,37 +357,30 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(),DepartmentSelectL
         if (filteredlist.isEmpty()) {
             // if no item is added in filtered list we are
             // displaying a toast message as no data found.
-//            Toast.makeText(this, "No Data Found..", Toast.LENGTH_SHORT).show()
+            toast("No Data Found..")
+
         } else {
             // at last we are passing that filtered
             // list to our adapter class.
-            departmentAdapter.filterList(filteredlist)
+            dropDownAdapter.filterList(filteredlist)
         }
     }
 
-    private fun buildDepartmentsRecyclerView(recyclerView: RecyclerView) {
+    override fun selectedDropDownItem(dropDownModel: DropDownModel, dropDownType: DropDownType) {
+        when (dropDownType) {
+            DropDownType.DEPARTMENT -> {
+                binding.departmentSpinner.text = dropDownModel.name
+            }
 
+            DropDownType.DESIGNATION -> {
+                binding.jobTitleSpinner.text = dropDownModel.name
+            }
 
-        // initializing our adapter class.
-        departmentAdapter = DepartmentAdapter(this, departmentList, requireContext())
-
-        // adding layout manager to our recycler view.
-        val manager = LinearLayoutManager(requireContext())
-        recyclerView.setHasFixedSize(true)
-
-        // setting layout manager
-        // to our recycler view.
-        recyclerView.layoutManager = manager
-
-        // setting adapter to
-        // our recycler view.
-        recyclerView.adapter = departmentAdapter
-
-
-    }
-
-    override fun selectedDepartment(departments: Departments) {
-
+            DropDownType.DECISION_GROUP -> {
+                binding.decisionGroupSpinner.text = dropDownModel.name
+            }
+        }
+        bottomSheetDialog.dismiss()
     }
 
 }
