@@ -1,8 +1,10 @@
 package com.example.decise.ui.profile
 
 import android.view.WindowManager
+import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.LinearLayout
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
@@ -197,7 +199,8 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(), DropDownInteract
                             );
                             dropDownList.add(dropDownModel);
                         }
-                        showBottomSheetDropDown(dropDownList, DropDownType.DECISION_GROUP)
+                        showBottomSheetCheckboxDropDown(dropDownList)
+                        //showBottomSheetDropDown(dropDownList, DropDownType.DECISION_GROUP)
                         hideSoftKeyboard()
                     }
                 }
@@ -329,6 +332,39 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(), DropDownInteract
             }
         }
         bottomSheetDialog.dismiss()
+    }
+
+    private fun showBottomSheetCheckboxDropDown(
+        dropDownList: ArrayList<DropDownModel>,
+    ) {
+        bottomSheetDialog = BottomSheetDialog(requireContext())
+        bottomSheetDialog.setContentView(R.layout.bottom_sheet_checkbox)
+        bottomSheetDialog.behavior.maxHeight = 1000 // set max height when expanded in PIXEL
+        bottomSheetDialog.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
+
+        // bottomSheetDialog.window?.setBackgroundDrawableResource(android.R.color.transparent);
+        bottomSheetDialog.findViewById<ImageView>(R.id.cancel_buttonSheet)?.setOnClickListener {
+            bottomSheetDialog.dismiss()
+        }
+
+        val checkBoxContainer = bottomSheetDialog.findViewById<LinearLayout>(R.id.checkBoxContainer)
+
+        for (itemText in dropDownList) {
+            val checkBox = CheckBox(requireContext())
+            checkBox.text = itemText.name.toString()
+            checkBoxContainer!!.addView(checkBox)
+        }
+
+        bottomSheetDialog.show()
+    }
+
+    private fun buildDropCheckBoxDownRecyclerView(
+        recyclerView: RecyclerView,
+        dropDownList: ArrayList<DropDownModel>,
+    ) {/*
+        dropDownAdapter = DropDownAdapter(this, dropDownType) // 'this' refers to the fragment
+        dropDownAdapter.submitInitialList(dropDownList)
+        recyclerView.adapter = dropDownAdapter*/
     }
 
 }
