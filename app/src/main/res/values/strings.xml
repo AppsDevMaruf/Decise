@@ -55,4 +55,5 @@
     <string name="first_name">First Name</string>
     <string name="lastname">LastName</string>
     <string name="update">Update</string>
+    <string name="general_information">General Information</string>
 </resources>

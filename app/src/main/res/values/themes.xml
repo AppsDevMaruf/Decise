@@ -39,6 +39,7 @@
         <item name="android:padding">4dp</item>
         <item name="android:letterSpacing">0.01</item>
         <item name="minHeight">48dp</item>
+        <item name="android:textAppearance">@style/TextAppearance.Material3.BodyMedium</item>
         <item name="android:includeFontPadding">false</item>
         <item name="android:textColor">@color/black</item>
     </style>

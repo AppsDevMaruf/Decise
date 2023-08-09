@@ -1,6 +1,7 @@
 package com.example.decise.ui.profile
 
 import android.view.WindowManager
+import android.widget.EditText
 import android.widget.ImageView
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
@@ -34,7 +35,7 @@ import javax.inject.Inject
 import kotlin.collections.ArrayList
 
 @AndroidEntryPoint
-class ProfileFragment : BaseFragment<FragmentProfileBinding>(),DropDownInteractionListener {
+class ProfileFragment : BaseFragment<FragmentProfileBinding>(), DropDownInteractionListener {
 
     private lateinit var dropDownAdapter: DropDownAdapter
     private val profileViewModel by viewModels<ProfileViewModel>()
@@ -86,11 +87,11 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(),DropDownInteracti
         }
         binding.phoneNumberEt.onTextChanged {
             if (!it.trim().isNullOrBlank()) {
-                hasLastName = !it.trim().isNullOrBlank()
+                hasPhoneNumber = !it.trim().isNullOrBlank()
                 binding.phoneNumberWarning.gone()
                 enableBtn(hasFirstName && hasLastName && hasPhoneNumber, binding.updateBtn)
             } else {
-                hasLastName = false
+                hasPhoneNumber = false
                 binding.phoneNumberWarning.show()
                 enableBtn(hasFirstName && hasLastName && hasPhoneNumber, binding.updateBtn)
             }
@@ -100,50 +101,8 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(),DropDownInteracti
     }
 
     override fun setupNavigation() {
-        val dropDownList = ArrayList<DropDownModel>()
-        /*  binding.departmentSpinner.setOnClickListener {
-              departmentList.forEach { department ->
-                  val dropDownModel = DropDownModel(
-                      department.companyId,
-                      department.id,
-                      department.name,
-                      department.note,
-                      department.status
-                  )
-                  dropDownList.add(dropDownModel);
-              }
-              showBottomSheetDropDown(dropDownList);
-              hideSoftKeyboard()
-          }*/
-        /* binding.jobTitleSpinner.setOnClickListener {
-             jobTitleList.forEach { department ->
-                 val dropDownModel = DropDownModel(
-                     department.companyId,
-                     department.id,
-                     department.name,
-                     department.note,
-                     department.status
-                 )
-                 dropDownList.add(dropDownModel);
-             }
-             showBottomSheetDropDown(dropDownList);
-             hideSoftKeyboard()
-         }*/
-        /*binding.departmentSpinner.setOnClickListener {
 
-            decisionGroupList.forEach { department ->
-                val dropDownModel = DropDownModel(
-                    department.companyId,
-                    department.id,
-                    department.name,
-                    department.note,
-                    department.status
-                );
-                dropDownList.add(dropDownModel);
-            }
-            showBottomSheetDropDown(dropDownList);
-            hideSoftKeyboard()
-        }*/
+
     }
 
     override fun binObserver() {
@@ -256,7 +215,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(),DropDownInteracti
 
             binding.firstName.setText(data.firstName)
             binding.lastName.setText(data.lastName)
-            binding.email.setText(data.email)
+            binding.email.text = data.email
             var roleList = ""
             data.roles?.forEach { roles ->
                 roleList += "${roles},"
@@ -265,27 +224,23 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(),DropDownInteracti
             binding.deciseRoleEt.text = roleList
             binding.phoneNumberEt.setText(data.phoneNumber)
 
-            var decisionList = ""
-            data.decisionGroups?.forEach { decisions ->
-                decisionList += "${decisions},"
-            }
-            data.companyId?.let { profileViewModel.getDepartments(it) }
+            binding.updateBtn.setOnClickListener {
 
+                val request = RequestUpdatePersonalProfile(
+                    firstName = binding.firstName.text.toString(),
+                    lastName = binding.lastName.text.toString(),
+                    countryCode = data.countryCode,
+                    department = binding.departmentSpinner.text.toString(),
+                    decisionGroups = null,
+                    //TODO decisionGroups
+                    //decisionGroups = binding.decisionGroupSpinner.text.toString(),
+                    designation = binding.jobTitleSpinner.text.toString(),
+                    id = tokenManager.getUserID(Constants.USER_ID).toInt(),
+                    phoneNumber = binding.phoneNumberEt.text.toString()
+                )
+            }
         }
-        binding.updateBtn.setOnClickListener {
-            val firstName = binding.firstName.text.toString()
-            val request = RequestUpdatePersonalProfile(
-                firstName = firstName,
-                lastName = null,
-                companyName = null,
-                countryCode = null,
-                department = data?.department,
-                decisionGroups = null,
-                designation = data?.designation,
-                id = tokenManager.getUserID(Constants.USER_ID).toInt(),
-                phoneNumber = binding.phoneNumberEt.text.toString()
-            )
-        }
+
     }
 
 
@@ -303,7 +258,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(),DropDownInteracti
             bottomSheetDialog.dismiss()
         }
 
-
         //  bottomSheetDialog.behavior.peekHeight = 400 // set default height when collapsed in PIXEL
         // val copy = bottomSheetDialog.findViewById<LinearLayout>(R.id.copyLinearLayout)
         val recyclerView = bottomSheetDialog.findViewById<RecyclerView>(R.id.recyclerView)
@@ -311,21 +265,10 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(),DropDownInteracti
 
 
         buildDropDownRecyclerView(recyclerView!!, dropDownList, dropDownType)
-        val searchView = bottomSheetDialog.findViewById<SearchView>(R.id.searchText)
-
-        searchView!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String): Boolean {
-                return false
-            }
-
-            override fun onQueryTextChange(newText: String): Boolean {
-                // inside on query text change method we are
-                // calling a method to filter our recycler view.
-                filterDropDownItem(dropDownList, newText)
-                return false
-            }
-        })
-
+        val searchView = bottomSheetDialog.findViewById<EditText>(R.id.searchText)
+        searchView!!.onTextChanged {
+            filterDropDownItem(dropDownList, it.trim())
+        }
         bottomSheetDialog.show()
     }
 
@@ -334,14 +277,14 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(),DropDownInteracti
         dropDownList: ArrayList<DropDownModel>,
         dropDownType: DropDownType
     ) {
-      dropDownAdapter = DropDownAdapter(this, dropDownType) // 'this' refers to the fragment
+        dropDownAdapter = DropDownAdapter(this, dropDownType) // 'this' refers to the fragment
         dropDownAdapter.submitInitialList(dropDownList)
         recyclerView.adapter = dropDownAdapter
     }
 
     private fun filterDropDownItem(dropDownList: ArrayList<DropDownModel>, text: String) {
         // creating a new array list to filter our data.
-        val filteredlist = ArrayList<DropDownModel>()
+        val filteredList = ArrayList<DropDownModel>()
 
         // running a for loop to compare elements.
         for (item in dropDownList) {
@@ -351,18 +294,23 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(),DropDownInteracti
             ) {
                 // if the item is matched we are
                 // adding it to our filtered list.
-                filteredlist.add(item)
+                filteredList.add(item)
             }
         }
-        if (filteredlist.isEmpty()) {
+        if (filteredList.isEmpty()) {
             // if no item is added in filtered list we are
             // displaying a toast message as no data found.
-            toast("No Data Found..")
+            bottomSheetDialog.findViewById<RecyclerView>(R.id.recyclerView)!!.gone()
+            bottomSheetDialog.findViewById<RecyclerView>(R.id.noDataTv)!!.show()
+
 
         } else {
             // at last we are passing that filtered
             // list to our adapter class.
-            dropDownAdapter.filterList(filteredlist)
+            dropDownAdapter.filterList(filteredList)
+            bottomSheetDialog.findViewById<RecyclerView>(R.id.noDataTv)!!.gone()
+            bottomSheetDialog.findViewById<RecyclerView>(R.id.recyclerView)!!.show()
+
         }
     }
 

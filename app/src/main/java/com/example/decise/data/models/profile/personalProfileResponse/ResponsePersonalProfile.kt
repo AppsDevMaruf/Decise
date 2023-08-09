@@ -7,7 +7,7 @@ data class ResponsePersonalProfile(
     @SerializedName("companyId")
     val companyId: Int?,
     @SerializedName("countryCode")
-    val countryCode: Any?,
+    val countryCode: String?,
     @SerializedName("decisionGroups")
     val decisionGroups: List<DecisionGroup?>?,
     @SerializedName("department")
@@ -15,7 +15,7 @@ data class ResponsePersonalProfile(
     @SerializedName("designation")
     val designation: String?,
     @SerializedName("dob")
-    val dob: Any?,
+    val dob: String?,
     @SerializedName("email")
     val email: String?,
     @SerializedName("expiredAt")
@@ -55,7 +55,7 @@ data class ResponsePersonalProfile(
         @SerializedName("name")
         val name: String?,
         @SerializedName("note")
-        val note: Any?,
+        val note: String?,
         @SerializedName("status")
         val status: Boolean?
     )

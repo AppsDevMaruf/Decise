@@ -29,10 +29,15 @@
                 android:layout_gravity="end"
                 android:src="@drawable/handler" />
 
-            <androidx.appcompat.widget.SearchView
+            <EditText
+                android:drawableStart="@drawable/ic_search"
+                android:drawablePadding="8dp"
                 android:id="@+id/searchText"
+                android:paddingStart="8dp"
+                android:imeOptions="actionSearch"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
+                android:inputType="text"
                 android:background="@drawable/background_edit_text_gray"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

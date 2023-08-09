@@ -4,8 +4,6 @@ package com.example.decise.data.models.profile.update_personal_profile
 import com.google.gson.annotations.SerializedName
 
 data class RequestUpdatePersonalProfile(
-    @SerializedName("companyName")
-    val companyName: String?,
     @SerializedName("countryCode")
     val countryCode: String?,
     @SerializedName("decisionGroups")
