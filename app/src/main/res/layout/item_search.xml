@@ -22,20 +22,6 @@
             android:orientation="horizontal"
             android:tag="Date of Birth">
 
-
-           <!-- <TextView
-                android:id="@+id/departmentItemTv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_margin="0dp"
-                android:includeFontPadding="false"
-                android:paddingStart="10dp"
-                android:text="CSE"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                tools:ignore="RtlSymmetry" />-->
-
             <TextView
                 android:id="@+id/dropDownItemTv"
                 android:layout_width="match_parent"
@@ -44,7 +30,7 @@
                 android:layout_margin="0dp"
                 android:includeFontPadding="false"
                 android:paddingStart="10dp"
-                android:text="CSEmjnuy6yhyg"
+                android:text="CSE"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 tools:ignore="RtlSymmetry" />

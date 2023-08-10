@@ -4,11 +4,11 @@ data class DecisionGroups(
     @SerializedName("companyId")
     val companyId: Int?,
     @SerializedName("id")
-    val id: Int?,
+    val id: Int? = 0,
     @SerializedName("name")
     val name: String?,
     @SerializedName("note")
-    val note: String?,
+    val note: String? = null,
     @SerializedName("status")
-    val status: Boolean?
+    val status: Boolean? = false
 )

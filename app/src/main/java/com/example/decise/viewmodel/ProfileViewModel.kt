@@ -24,7 +24,7 @@ import javax.inject.Inject
 class ProfileViewModel @Inject constructor(
     private val securedRepository: SecuredRepository
 ) : ViewModel() {
-
+    val selectedItems = mutableListOf<String>()
 
     private var _responseProfileData = MutableLiveData<NetworkResult<ResponsePersonalProfile>>()
     val profileDataVMLD: LiveData<NetworkResult<ResponsePersonalProfile>> = _responseProfileData

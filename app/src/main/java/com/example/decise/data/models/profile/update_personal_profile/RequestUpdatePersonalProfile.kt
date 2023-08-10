@@ -7,7 +7,7 @@ data class RequestUpdatePersonalProfile(
     @SerializedName("countryCode")
     val countryCode: String?,
     @SerializedName("decisionGroups")
-    val decisionGroups: List<String?>?,
+    val decisionGroups: List<DecisionGroup?>?,
     @SerializedName("department")
     val department: String?,
     @SerializedName("designation")

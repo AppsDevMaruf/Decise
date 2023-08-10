@@ -48,7 +48,7 @@ class ChooseSubscriptionFragment : BaseFragment<FragmentChooseSubscriptionBindin
                 subscriptionType = "PERSONAL"
             )
             subscriptionViewModel.setChooseSubscriptionResponse(request)
-            Log.d("TAG", "PERSONAL: $request")
+
             findNavController().navigate(R.id.action_chooseSubscriptionFragment_to_cardInfoFragment)
 
         }
