@@ -9,7 +9,7 @@ fun Any.isPasswordMatch(passwordHere: String, confirmHere: String): Boolean {
 }
 
 fun Any.isLength8(passwordHere: String): Boolean {
-    return passwordHere.length > 8
+    return passwordHere.length > 7
 }
 
 fun Any.hasUpperCase(passwordHere: String): Boolean {

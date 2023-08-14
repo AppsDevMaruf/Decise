@@ -251,6 +251,7 @@
                         app:drawableStartCompat="@drawable/ic_person" />
 
                     <TextView
+                        android:id="@+id/changePasswordBtn"
                         style="@style/titleText"
                         android:layout_width="match_parent"
                         android:layout_height="38dp"

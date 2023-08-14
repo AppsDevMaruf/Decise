@@ -1,30 +1,24 @@
 package com.example.decise.ui.profile
 
 import android.content.res.ColorStateList
-import android.graphics.Color
-import android.graphics.Color.BLUE
 import android.graphics.Color.WHITE
-import android.graphics.Color.rgb
-import android.os.Build
-import android.util.Log
 import android.view.WindowManager
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
-import androidx.appcompat.widget.SearchView
-import androidx.core.widget.CompoundButtonCompat
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.decise.R
 import com.example.decise.base.BaseFragment
+import com.example.decise.data.models.profile.DecisionGroup
 import com.example.decise.data.models.profile.DropDownModel
 import com.example.decise.data.models.profile.decisionGroups.DecisionGroups
 import com.example.decise.data.models.profile.departments.Departments
 import com.example.decise.data.models.profile.designations.Designations
 import com.example.decise.data.models.profile.personalProfileResponse.ResponsePersonalProfile
 import com.example.decise.data.models.profile.update_personal_profile.RequestUpdatePersonalProfile
-import com.example.decise.data.models.profile.update_personal_profile.RequestUpdatePersonalProfile.*
 import com.example.decise.databinding.FragmentProfileBinding
 import com.example.decise.interfaces.DropDownInteractionListener
 import com.example.decise.ui.profile.adapter.DropDownAdapter
@@ -44,7 +38,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Locale
 import javax.inject.Inject
-import kotlin.collections.ArrayList
 
 @AndroidEntryPoint
 class ProfileFragment : BaseFragment<FragmentProfileBinding>(), DropDownInteractionListener {
@@ -54,7 +47,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(), DropDownInteract
     private lateinit var departmentList: ArrayList<Departments>
     private lateinit var jobTitleList: ArrayList<Designations>
     private lateinit var decisionGroupList: ArrayList<DecisionGroups>
-    private var decisionGroups = ArrayList<DecisionGroup>()
+    private var selectedItemsString = ""
     var userCompanyId: Int? = null
 
     @Inject
@@ -114,6 +107,9 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(), DropDownInteract
     }
 
     override fun setupNavigation() {
+        binding.changePasswordBtn.setOnClickListener {
+            findNavController().navigate(R.id.action_profileFragment_to_changePasswordFragment)
+        }
 
 
     }
@@ -133,17 +129,15 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(), DropDownInteract
                 }
 
                 is NetworkResult.Error -> {
-                    showDialog(
-                        context = requireActivity(),
+                    showDialog(context = requireActivity(),
                         title = "",
                         details = "${it.message}",
                         resId = R.drawable.ic_round_warning,
                         yesContent = "Okay",
                         noContent = "Cancel",
                         showNoBtn = false,
-                        positiveFun = {
-                        }, {}
-                    )
+                        positiveFun = {},
+                        {})
                 }
 
                 is NetworkResult.Loading -> {
@@ -166,25 +160,23 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(), DropDownInteract
                                 department.note,
                                 department.status
                             )
-                            dropDownList.add(dropDownModel);
+                            dropDownList.add(dropDownModel)
                         }
-                        showBottomSheetDropDown(dropDownList, DropDownType.DEPARTMENT);
+                        showBottomSheetDropDown(dropDownList, DropDownType.DEPARTMENT)
                         hideSoftKeyboard()
                     }
                 }
 
                 is NetworkResult.Error -> {
-                    showDialog(
-                        context = requireActivity(),
+                    showDialog(context = requireActivity(),
                         title = "",
                         details = "${it.message}",
                         resId = R.drawable.ic_round_warning,
                         yesContent = "Okay",
                         noContent = "Cancel",
                         showNoBtn = false,
-                        positiveFun = {
-                        }, {}
-                    )
+                        positiveFun = {},
+                        {})
                 }
 
                 is NetworkResult.Loading -> {
@@ -207,25 +199,23 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(), DropDownInteract
                                 department.note,
                                 department.status
                             )
-                            dropDownList.add(dropDownModel);
+                            dropDownList.add(dropDownModel)
                         }
-                        showBottomSheetDropDown(dropDownList, DropDownType.DESIGNATION);
+                        showBottomSheetDropDown(dropDownList, DropDownType.DESIGNATION)
                         hideSoftKeyboard()
                     }
                 }
 
                 is NetworkResult.Error -> {
-                    showDialog(
-                        context = requireActivity(),
+                    showDialog(context = requireActivity(),
                         title = "",
                         details = "${it.message}",
                         resId = R.drawable.ic_round_warning,
                         yesContent = "Okay",
                         noContent = "Cancel",
                         showNoBtn = false,
-                        positiveFun = {
-                        }, {}
-                    )
+                        positiveFun = {},
+                        {})
                 }
 
                 is NetworkResult.Loading -> {
@@ -247,8 +237,8 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(), DropDownInteract
                                 department.name,
                                 department.note,
                                 department.status
-                            );
-                            dropDownList.add(dropDownModel);
+                            )
+                            dropDownList.add(dropDownModel)
                         }
                         showBottomSheetCheckboxDropDown(dropDownList)
                         hideSoftKeyboard()
@@ -256,17 +246,15 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(), DropDownInteract
                 }
 
                 is NetworkResult.Error -> {
-                    showDialog(
-                        context = requireActivity(),
+                    showDialog(context = requireActivity(),
                         title = "",
                         details = "${it.message}",
                         resId = R.drawable.ic_round_warning,
                         yesContent = "Okay",
                         noContent = "Cancel",
                         showNoBtn = false,
-                        positiveFun = {
-                        }, {}
-                    )
+                        positiveFun = {},
+                        {})
                 }
 
                 is NetworkResult.Loading -> {
@@ -282,17 +270,15 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(), DropDownInteract
                 }
 
                 is NetworkResult.Error -> {
-                    showDialog(
-                        context = requireActivity(),
+                    showDialog(context = requireActivity(),
                         title = "",
                         details = "${it.message}",
                         resId = R.drawable.ic_round_warning,
                         yesContent = "Okay",
                         noContent = "Cancel",
                         showNoBtn = false,
-                        positiveFun = {
-                        }, {}
-                    )
+                        positiveFun = {},
+                        {})
                 }
 
                 is NetworkResult.Loading -> {
@@ -304,7 +290,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(), DropDownInteract
 
     private fun setProfileData(data: ResponsePersonalProfile?) {
         if (data != null) {
-
             binding.firstName.setText(data.firstName)
             binding.lastName.setText(data.lastName)
             binding.email.text = data.email
@@ -317,35 +302,47 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(), DropDownInteract
             binding.phoneNumberEt.setText(data.phoneNumber)
             binding.jobTitleSpinner.text = data.designation
             binding.departmentSpinner.text = data.department
-            var decisionGroupList = ""
-            data.decisionGroups?.forEach { decisionGroup ->
 
-                decisionGroupList += "${decisionGroup?.name},"
+            data.decisionGroups?.let {
+                it.forEach { decisionGroup ->
+                    if (decisionGroup != null) {
+                        profileViewModel.selectedItems.add(decisionGroup)
+                        selectedItemsString += "${decisionGroup.name},"
+                    }
+                }
             }
-            binding.decisionGroupSpinner.text = decisionGroupList
+            if (selectedItemsString != null && selectedItemsString.length > 1) {
+                selectedItemsString =
+                    selectedItemsString.substring(0, selectedItemsString.length - 1)
+                binding.decisionGroupSpinner.text = selectedItemsString
+            } else {
+                binding.decisionGroupSpinner.text = "Select decision group"
+            }
 
             binding.updateBtn.setOnClickListener {
-
-                val request = RequestUpdatePersonalProfile(
-                    firstName = binding.firstName.text.toString(),
-                    lastName = binding.lastName.text.toString(),
-                    countryCode = data.countryCode,
-                    department = binding.departmentSpinner.text.toString(),
-                    decisionGroups = decisionGroups,
-                    designation = binding.jobTitleSpinner.text.toString(),
-                    id = tokenManager.getUserID(Constants.USER_ID).toInt(),
-                    phoneNumber = binding.phoneNumberEt.text.toString()
-                )
+                val request = prepareRequestData(data)
                 profileViewModel.updatePersonalProfile(request)
             }
         }
 
+
     }
 
+    private fun prepareRequestData(data: ResponsePersonalProfile): RequestUpdatePersonalProfile {
+        return RequestUpdatePersonalProfile(
+            firstName = binding.firstName.text.toString(),
+            lastName = binding.lastName.text.toString(),
+            countryCode = data.countryCode,
+            department = binding.departmentSpinner.text.toString(),
+            decisionGroups = profileViewModel.selectedItems,
+            designation = binding.jobTitleSpinner.text.toString(),
+            id = tokenManager.getUserID(Constants.USER_ID).toInt(),
+            phoneNumber = binding.phoneNumberEt.text.toString()
+        )
+    }
 
     private fun showBottomSheetDropDown(
-        dropDownList: ArrayList<DropDownModel>,
-        dropDownType: DropDownType
+        dropDownList: ArrayList<DropDownModel>, dropDownType: DropDownType
     ) {
         bottomSheetDialog = BottomSheetDialog(requireContext())
         bottomSheetDialog.setContentView(R.layout.bottom_dialog)
@@ -386,9 +383,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(), DropDownInteract
         // running a for loop to compare elements.
         for (item in dropDownList) {
             // checking if the entered string matched with any item of our recycler view.
-            if (item.name!!.lowercase(Locale.ROOT)
-                    .contains(text.lowercase(Locale.getDefault()))
-            ) {
+            if (item.name!!.lowercase(Locale.ROOT).contains(text.lowercase(Locale.getDefault()))) {
                 // if the item is matched we are
                 // adding it to our filtered list.
                 filteredList.add(item)
@@ -411,7 +406,9 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(), DropDownInteract
         }
     }
 
-    override fun selectedDropDownItem(dropDownModel: DropDownModel, dropDownType: DropDownType) {
+    override fun selectedDropDownItem(
+        dropDownModel: DropDownModel, dropDownType: DropDownType
+    ) {
         when (dropDownType) {
             DropDownType.DEPARTMENT -> {
                 binding.departmentSpinner.text = dropDownModel.name
@@ -450,8 +447,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(), DropDownInteract
 
             // Set layout params with margins for each checkbox
             val layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
+                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT
             )
             layoutParams.setMargins(0, 8, 0, 8)
             checkBox.layoutParams = layoutParams
@@ -460,52 +456,70 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(), DropDownInteract
             checkBox.setBackgroundResource(R.drawable.gradient_orange_pink_rectangle)
 
             checkBoxContainer!!.addView(checkBox)
-            // Check the CheckBox if it was previously selected
-            decisionGroups.forEach { dg ->
-                if (dg.status == true) {
-                    checkBox.isChecked = true
-                    profileViewModel.selectedItems.contains(itemText.name.toString())
-                }
+
+            val decisionGroup: DecisionGroup? = existItem(checkBox.text.toString())
+            if (decisionGroup != null) {
+                checkBox.isChecked = true
+                profileViewModel.selectedItems.add(decisionGroup)
             }
 
             checkBox.setOnCheckedChangeListener { _, isChecked ->
-                handleCheckBoxChange(checkBox, isChecked)
+                val decisionGroup = getDecisionGroupByName(dropDownList, checkBox.text.toString())
+
+                if (isChecked) {
+                    if (decisionGroup != null) profileViewModel.selectedItems.add(decisionGroup)
+
+                } else {
+                    profileViewModel.selectedItems.remove(decisionGroup)
+                }
+                selectedItemsString = ""
+                if (profileViewModel.selectedItems != null) {
+                    profileViewModel.selectedItems.forEach { decisionGroup ->
+                        if (decisionGroup != null) {
+                            profileViewModel.selectedItems.add(decisionGroup)
+                            selectedItemsString += "${decisionGroup.name},"
+                        }
+                    }
+                }
+
+                if (selectedItemsString != null && selectedItemsString.length > 1) {
+                    selectedItemsString =
+                        selectedItemsString.substring(0, selectedItemsString.length - 1)
+                    binding.decisionGroupSpinner.text = selectedItemsString
+                } else {
+                    binding.decisionGroupSpinner.text = "Select decision group"
+                }
+
+
             }
         }
-
         bottomSheetDialog.show()
     }
 
-    private fun handleCheckBoxChange(checkBox: CheckBox, isChecked: Boolean) {
-
-        if (isChecked) {
-
-            profileViewModel.selectedItems.add(checkBox.text.toString())
-
-        } else {
-            profileViewModel.selectedItems.remove(checkBox.text.toString())
+    private fun existItem(itemName: String): DecisionGroup? {
+        if (profileViewModel.selectedItems != null) {
+            profileViewModel.selectedItems.forEach { dg ->
+                if (dg.name == itemName) return dg
+            }
         }
-
-        printSelectedItems()
+        return null
     }
 
-    private fun printSelectedItems() {
-        profileViewModel.selectedItems.forEach {
-            decisionGroups.add(
-                DecisionGroup(
-                    companyId = userCompanyId,
-                    id = null,
-                    name = it,
-                    note = null,
-                    status = true
-                )
-            )
-            Log.d("TAG", "${decisionGroups.size}")
+    private fun getDecisionGroupByName(
+        dropDownList: ArrayList<DropDownModel>, name: String
+    ): DecisionGroup? {
+        if (dropDownList != null) {
+            dropDownList.forEach { item ->
+                if (item.name == name) {
+                    return DecisionGroup(
+                        item.companyId, item.id, item.name, null, true
+                    )
+                }
+            }
         }
-
-        val selectedItemsString = profileViewModel.selectedItems.joinToString(", ")
-        binding.decisionGroupSpinner.text = selectedItemsString
+        return null
     }
-
-
 }
+
+
+

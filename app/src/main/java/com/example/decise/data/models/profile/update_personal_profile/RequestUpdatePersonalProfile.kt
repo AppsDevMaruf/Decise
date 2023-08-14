@@ -1,13 +1,14 @@
 package com.example.decise.data.models.profile.update_personal_profile
 
 
+import com.example.decise.data.models.profile.DecisionGroup
 import com.google.gson.annotations.SerializedName
 
 data class RequestUpdatePersonalProfile(
     @SerializedName("countryCode")
     val countryCode: String?,
     @SerializedName("decisionGroups")
-    val decisionGroups: List<DecisionGroup?>?,
+    val decisionGroups: MutableSet<DecisionGroup>,
     @SerializedName("department")
     val department: String?,
     @SerializedName("designation")
@@ -20,17 +21,4 @@ data class RequestUpdatePersonalProfile(
     val lastName: String?,
     @SerializedName("phoneNumber")
     val phoneNumber: String?
-) {
-    data class DecisionGroup(
-        @SerializedName("companyId")
-        val companyId: Int?,
-        @SerializedName("id")
-        val id: Int?,
-        @SerializedName("name")
-        val name: String?,
-        @SerializedName("note")
-        val note: String?,
-        @SerializedName("status")
-        val status: Boolean?
-    )
-}
+)

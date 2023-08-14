@@ -1,9 +1,11 @@
 package com.example.decise.api
 
-import com.example.decise.data.models.profile.departments.Departments
+import com.example.decise.data.models.ResponseMessage
+import com.example.decise.data.models.profile.changePassword.RequestChangePassword
 import com.example.decise.data.models.profile.chooseSubscriptionType.RequestChooseSubscriptionType
 import com.example.decise.data.models.profile.chooseSubscriptionType.ResponseChooseSubscriptionType
 import com.example.decise.data.models.profile.decisionGroups.DecisionGroups
+import com.example.decise.data.models.profile.departments.Departments
 import com.example.decise.data.models.profile.designations.Designations
 import com.example.decise.data.models.profile.personalProfileResponse.ResponsePersonalProfile
 import com.example.decise.data.models.profile.update_personal_profile.RequestUpdatePersonalProfile
@@ -37,6 +39,9 @@ interface SecuredApi {
 
     @PUT("profile/update-personal")
     suspend fun updatePersonalProfile(@Body requestUpdatePersonalProfile: RequestUpdatePersonalProfile): Response<ResponseUpdatePersonalProfile>
+
+    @PUT("profile/change-password")
+    suspend fun changePassword(@Body req: RequestChangePassword): Response<ResponseMessage>
 
     /*  @POST("/subscription/checkout")
       suspend fun checkoutSubscription(@Body request: CheckoutRequest): Response<CheckoutResponse>

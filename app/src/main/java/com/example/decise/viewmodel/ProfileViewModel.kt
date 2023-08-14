@@ -5,6 +5,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.decise.data.models.ResponseMessage
+import com.example.decise.data.models.profile.DecisionGroup
+import com.example.decise.data.models.profile.changePassword.RequestChangePassword
 import com.example.decise.data.models.profile.decisionGroups.DecisionGroups
 import com.example.decise.data.models.profile.departments.Departments
 import com.example.decise.data.models.profile.designations.Designations
@@ -24,7 +27,7 @@ import javax.inject.Inject
 class ProfileViewModel @Inject constructor(
     private val securedRepository: SecuredRepository
 ) : ViewModel() {
-    val selectedItems = mutableListOf<String>()
+    val selectedItems = mutableSetOf<DecisionGroup>()
 
     private var _responseProfileData = MutableLiveData<NetworkResult<ResponsePersonalProfile>>()
     val profileDataVMLD: LiveData<NetworkResult<ResponsePersonalProfile>> = _responseProfileData
@@ -234,6 +237,42 @@ class ProfileViewModel @Inject constructor(
             }
         }
     }
+    //updatePersonalProfile end
+
+//change password start
+
+    private var _responseChangePassword =
+        MutableLiveData<NetworkResult<ResponseMessage>>()
+    val responseChangePasswordVMLD: LiveData<NetworkResult<ResponseMessage>> =
+        _responseChangePassword
+
+    fun changePasswordVM(requestChangePassword: RequestChangePassword) {
+        _responseChangePassword.postValue(NetworkResult.Loading())
+
+        viewModelScope.launch {
+            try {
+                val response = securedRepository.changePassword(requestChangePassword)
+
+                if (response.isSuccessful && response.body() != null) {
+                    _responseChangePassword.postValue(NetworkResult.Success(response.body()!!))
+                } else if (response.errorBody() != null) {
+                    val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+                    _responseChangePassword.postValue(
+                        NetworkResult.Error(
+                            errorObj.getString("message")
+                        )
+                    )
+                }
+            } catch (noInternetException: NoInternetException) {
+                _responseChangePassword.postValue(
+                    NetworkResult.Error(
+                        noInternetException.localizedMessage ?: "No Internet Connection"
+                    )
+                )
+            }
+        }
+    }
+
+//change password end
 
 }
-//updatePersonalProfile end
