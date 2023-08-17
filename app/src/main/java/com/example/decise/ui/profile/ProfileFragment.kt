@@ -59,7 +59,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(), DropDownInteract
     override fun configUi() {
         val userId = tokenManager.getUserID(Constants.USER_ID).toInt()
         profileViewModel.getProfileData(userId)
-
         buttonEnableAfterTextFillUp()
     }
 
@@ -67,7 +66,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(), DropDownInteract
         var hasFirstName = false
         var hasLastName = false
         var hasPhoneNumber = false
-
 
         binding.firstName.onTextChanged {
             if (!it.trim().isNullOrBlank()) {
@@ -110,8 +108,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(), DropDownInteract
         binding.changePasswordBtn.setOnClickListener {
             findNavController().navigate(R.id.action_profileFragment_to_changePasswordFragment)
         }
-
-
     }
 
     override fun binObserver() {
@@ -297,8 +293,10 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(), DropDownInteract
             data.roles?.forEach { roles ->
                 roleList += "${roles},"
             }
-            roleList.lowercase()
-            binding.deciseRoleEt.text = roleList
+            if (roleList != null && roleList.length > 1) {
+                roleList = roleList.substring(0, roleList.length - 1)
+                binding.deciseRoleEt.text = roleList
+            }
             binding.phoneNumberEt.setText(data.phoneNumber)
             binding.jobTitleSpinner.text = data.designation
             binding.departmentSpinner.text = data.department

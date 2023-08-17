@@ -128,9 +128,11 @@
                         style="@style/editTextStyle"
                         android:layout_width="match_parent"
                         android:layout_height="38dp"
+                        android:gravity="center_vertical"
                         android:background="@drawable/background_edit_text_gray"
                         android:drawablePadding="4dp"
                         android:enabled="false"
+                        android:layout_gravity="center_vertical"
                         android:importantForAutofill="no"
                         app:drawableStartCompat="@drawable/baseline_email_24" />
 
