@@ -1,29 +1,32 @@
 package com.example.decise.base
 
-import android.content.Intent
-import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.Window
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.navigation.Navigation
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.decise.R
 import com.example.decise.databinding.ActivityMainBinding
+import com.example.decise.di.SocketHandler
+import com.example.decise.utils.NetworkResult
+import com.example.decise.utils.gone
+import com.example.decise.utils.show
+import com.example.decise.viewmodel.NotificationsViewModel
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.navigation.NavigationView
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.HiltAndroidApp
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -33,7 +36,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var userProfilePicABHeader: TextView
     private lateinit var profilePicAB: TextView
     private lateinit var appBarConfiguration: AppBarConfiguration
-    lateinit var nav: View
+    private lateinit var nav: View
+    private val notificationsViewModel by viewModels<NotificationsViewModel>()
+
     private lateinit var toolbar: Toolbar
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +47,19 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.hide()
         setContentView(binding.root)
 
+        // The following lines connects the Android app to the server.
 
+        // args[0] is the data from the server
+// Change "as Int" according to the data type
+// Example "as String" or write nothing
+// Logging the data is optional
+        binding.toolbar.notification.setOnClickListener {
+            Toast.makeText(this, "test", Toast.LENGTH_SHORT).show()
+
+        }
+
+
+        //notificationsViewModel.getNotificationByCompanyIdAndStatusVM(24, true, 0, 5)
         val drawerLayout: DrawerLayout = findViewById(R.id.drawerLayout)
         val navView: NavigationView = findViewById(R.id.navigationView)
         navView.itemIconTintList = null
@@ -106,9 +123,38 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    fun binObserver() {
+        notificationsViewModel.getNotificationByCompanyIdAndStatusVMLD.observe(this) {
+            binding.progressBar.gone()
+            when (it) {
+                is NetworkResult.Success -> {
+                    Log.d("TAG", "binObserver: ${it.data?.total.toString()} ")
+
+                    Toast.makeText(this, "I am coming...", Toast.LENGTH_LONG).show()
+                }
+
+                is NetworkResult.Error -> {
+
+
+                }
+
+                is NetworkResult.Loading -> {
+                    binding.progressBar.show()
+                }
+            }
+        }
+    }
+
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        SocketHandler.closeConnection()
+    }
+
+
 }

@@ -72,7 +72,6 @@ class ChangePasswordFragment : BaseFragment<FragmentChangePasswordBinding>() {
 
     private fun buttonEnableAfterTextFillUp() {
 
-
         var hasCurrentPassword = false
         var hasNewPassword = false
         var hasConfirmPassword = false

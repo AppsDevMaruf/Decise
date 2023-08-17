@@ -48,7 +48,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(), DropDownInteract
     private lateinit var jobTitleList: ArrayList<Designations>
     private lateinit var decisionGroupList: ArrayList<DecisionGroups>
     private var selectedItemsString = ""
-    var userCompanyId: Int? = null
+    private var userCompanyId: Int? = null
 
     @Inject
     lateinit var tokenManager: TokenManager

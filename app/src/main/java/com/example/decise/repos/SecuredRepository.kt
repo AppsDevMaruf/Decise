@@ -21,4 +21,12 @@ class SecuredRepository @Inject constructor(private val securedApi: SecuredApi) 
     suspend fun chooseSubscriptionTypeRepo(chooseSubscriptionType: RequestChooseSubscriptionType) =
         securedApi.chooseSubscriptionType(chooseSubscriptionType)
 
+    //Notification
+    suspend fun getNotificationByCompanyIdAndStratusRepo(
+        companyId: Int,
+        status: Boolean,
+        page: Int,
+        size: Int
+    ) = securedApi.getNotificationByCompanyIdAndStatus(companyId, status, page, size)
+
 }

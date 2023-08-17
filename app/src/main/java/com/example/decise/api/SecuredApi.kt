@@ -1,6 +1,7 @@
 package com.example.decise.api
 
 import com.example.decise.data.models.ResponseMessage
+import com.example.decise.data.models.notifications.ResponseFindByCompanyIdAndStatus
 import com.example.decise.data.models.profile.changePassword.RequestChangePassword
 import com.example.decise.data.models.profile.chooseSubscriptionType.RequestChooseSubscriptionType
 import com.example.decise.data.models.profile.chooseSubscriptionType.ResponseChooseSubscriptionType
@@ -42,6 +43,16 @@ interface SecuredApi {
 
     @PUT("profile/change-password")
     suspend fun changePassword(@Body req: RequestChangePassword): Response<ResponseMessage>
+
+    //notification
+    @GET("notification/findByCompanyIdAndStatus")
+    suspend fun getNotificationByCompanyIdAndStatus(
+        @Query("companyId") companyId: Int,
+        @Query("status") status: Boolean,
+        @Query("page") page: Int,
+        @Query("size") size: Int
+    ): Response<ResponseFindByCompanyIdAndStatus>
+
 
     /*  @POST("/subscription/checkout")
       suspend fun checkoutSubscription(@Body request: CheckoutRequest): Response<CheckoutResponse>

@@ -13,7 +13,9 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 
 abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
-
+    protected val TAG: String by lazy {
+        this.javaClass.simpleName
+    }
 
     private var _binding: T? = null
     val binding get() = _binding!!
