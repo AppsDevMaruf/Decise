@@ -1,5 +1,11 @@
 package com.example.decise.api
 
+import com.example.decise.api.APIs.CHANGE_PASSWORD
+import com.example.decise.api.APIs.CHOOSE_SUBSCRIPTION_TYPE
+import com.example.decise.api.APIs.DECISION_GROUP_LIST
+import com.example.decise.api.APIs.DEPARTMENT_LIST
+import com.example.decise.api.APIs.PERSONAL
+import com.example.decise.api.APIs.UPDATE_PERSONAL
 import com.example.decise.data.models.ResponseMessage
 import com.example.decise.data.models.notifications.ResponseFindByCompanyIdAndStatus
 import com.example.decise.data.models.profile.changePassword.RequestChangePassword
@@ -23,26 +29,27 @@ interface SecuredApi {
     @GET("subscription/list")
     suspend fun getSubscriptionList(): Response<ResponseSubscriptionsList>
 
-    @PUT("profile/choose-subscription-type")
-    suspend fun chooseSubscriptionType(@Body chooseSubscriptionType: RequestChooseSubscriptionType): Response<ResponseChooseSubscriptionType>
-
-    @GET("profile/personal/")
+    @GET(PERSONAL)
     suspend fun getPersonalProfile(@Query("id") id: Int): Response<ResponsePersonalProfile>
 
-    @GET("/department/list/{companyId}")
-    suspend fun getDepartmentList(@Path("companyId") companyId: Int): Response<List<Departments>>
+    @PUT(CHOOSE_SUBSCRIPTION_TYPE)
+    suspend fun chooseSubscriptionType(@Body chooseSubscriptionType: RequestChooseSubscriptionType): Response<ResponseChooseSubscriptionType>
 
-    @GET("decision-group/list/{companyId}")
-    suspend fun getDecisionGroupList(@Path("companyId") companyId: Int): Response<List<DecisionGroups>>
-
-    @GET("designation/list/{companyId}")
-    suspend fun getDesignationList(@Path("companyId") companyId: Int): Response<List<Designations>>
-
-    @PUT("profile/update-personal")
+    @PUT(UPDATE_PERSONAL)
     suspend fun updatePersonalProfile(@Body requestUpdatePersonalProfile: RequestUpdatePersonalProfile): Response<ResponseUpdatePersonalProfile>
 
-    @PUT("profile/change-password")
+    @PUT(CHANGE_PASSWORD)
     suspend fun changePassword(@Body req: RequestChangePassword): Response<ResponseMessage>
+
+    @GET(DEPARTMENT_LIST)
+    suspend fun getDepartmentList(@Path("companyId") companyId: Int): Response<List<Departments>>
+
+    @GET(DECISION_GROUP_LIST)
+    suspend fun getDecisionGroupList(@Path("companyId") companyId: Int): Response<List<DecisionGroups>>
+
+    @GET(DECISION_GROUP_LIST)
+    suspend fun getDesignationList(@Path("companyId") companyId: Int): Response<List<Designations>>
+
 
     //notification
     @GET("notification/findByCompanyIdAndStatus")
@@ -54,15 +61,4 @@ interface SecuredApi {
     ): Response<ResponseFindByCompanyIdAndStatus>
 
 
-    /*  @POST("/subscription/checkout")
-      suspend fun checkoutSubscription(@Body request: CheckoutRequest): Response<CheckoutResponse>
-
-      @GET("/subscription/confirm")
-      suspend fun confirmSubscription(): Response<ConfirmationResponse>
-
-      @POST("/subscription/do-transaction")
-      suspend fun doTransaction(@Body request: TransactionRequest): Response<TransactionResponse>
-
-      @POST("/subscription/payment")
-      suspend fun makePayment(@Body request: PaymentRequest): Response<PaymentResponse>*/
 }

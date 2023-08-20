@@ -1,5 +1,6 @@
 package com.example.decise.di
 
+import com.example.decise.api.APIs.BASE_URL
 import com.example.decise.api.AuthInterceptor
 import com.example.decise.api.PublicApi
 import com.example.decise.api.SecuredApi
@@ -24,7 +25,7 @@ class NetworkModule {
     fun providesRetrofit(): Retrofit.Builder {
 
         return Retrofit.Builder()
-            .baseUrl(Constants.BASE_URL)
+            .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
     }
     @Singleton

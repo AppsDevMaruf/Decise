@@ -479,7 +479,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(), DropDownInteract
                         }
                     }
                 }
-
                 if (selectedItemsString != null && selectedItemsString.length > 1) {
                     selectedItemsString =
                         selectedItemsString.substring(0, selectedItemsString.length - 1)

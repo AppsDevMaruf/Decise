@@ -1,10 +1,8 @@
 package com.example.decise.utils
 
 object Constants {
-    const val TAG = "DuFaAppTAG"
-    const val BASE_URL = "http://170.64.137.92:7777/"
-    //const val BASE_URL = "http://192.168.50.25:7777/"
-    const val TEST_BASE_URL = "https://mocki.io/v1/"
+
+
 
 
     const val USER_TOKEN = "user_token"
@@ -12,7 +10,7 @@ object Constants {
     const val NO_DATA = "no_data"
     const val TOKEN = "token"
     const val PREFS_TOKEN_FILE = "prefs_token_file"
-    const val IMG_PREFIX = "https://dufa9596.org"
+
     val BG_COLORS = arrayOf("#fef9ed", "#f2f8ff", "#edffee", "#fce9ff")
 
 

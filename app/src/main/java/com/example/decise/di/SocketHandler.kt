@@ -1,9 +1,15 @@
 package com.example.decise.di
 
+import android.content.Context
 import android.util.Log
+import com.google.android.material.internal.ContextUtils.getActivity
 import io.socket.client.IO
 import io.socket.client.Socket
+import io.socket.emitter.Emitter
+import org.json.JSONException
+import org.json.JSONObject
 import java.net.URISyntaxException
+
 
 object SocketHandler {
     private lateinit var mSocket: Socket
@@ -30,11 +36,27 @@ object SocketHandler {
     @Synchronized
     fun establishConnection() {
         Log.d("TAG", "establishConnection: ")
+
+        mSocket.on("/topic/decision-chat") { args -> println(args.contentToString())
+            Log.d("TAG", "${args.contentToString()}:")
+        }
+
         mSocket.connect()
+
+
+      /*  mSocket.on("topic/decision-chat",    Emitter.Listener { args ->
+
+            val data = args[0] as JSONObject
+            val username: String
+            val message: String
+            Log.d("TAG", "Emitter.Listener: ")
+        } );*/
     }
 
     @Synchronized
     fun closeConnection() {
         mSocket.disconnect()
     }
+
+
 }
