@@ -8,6 +8,7 @@ object APIs {
 
 
     //CONTROLLER
+    private const val SIGNUP_CONTROLLER = "/signup"
     private const val PROFILE_CONTROLLER = "/profile"
     private const val DESIGNATION_CONTROLLER = "/designation"
     private const val DEPARTMENT_CONTROLLER = "/department"
@@ -16,8 +17,15 @@ object APIs {
     private const val DECISION_GROUP_CONTROLLER = "/decision-group"
     private const val VERSION = "/v3"
 
+    //SIGNIN
+    const val SIGNIN = "signin/"
+    //SIGNUP
+    const val VERIFY_EMAIL = "$SIGNUP_CONTROLLER/verify-email"
+    const val SEND_EMAIL = "$SIGNUP_CONTROLLER/send-email"
+    const val COMPLETE_SIGNUP = "$SIGNUP_CONTROLLER/complete-signup"
+
     // PROFILE
-    const val PERSONAL = "$PROFILE_CONTROLLER/personal/"
+    const val PERSONAL = "$PROFILE_CONTROLLER/personal"
     const val BUSINESS = "$PROFILE_CONTROLLER/business/"
     const val UPDATE_PERSONAL = "$PROFILE_CONTROLLER/update-personal"
     const val UPDATE_BUSINESS = "$PROFILE_CONTROLLER/update-business"

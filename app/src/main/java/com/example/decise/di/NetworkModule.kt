@@ -4,7 +4,6 @@ import com.example.decise.api.APIs.BASE_URL
 import com.example.decise.api.AuthInterceptor
 import com.example.decise.api.PublicApi
 import com.example.decise.api.SecuredApi
-import com.example.decise.utils.Constants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,11 +22,11 @@ class NetworkModule {
     @Provides
     @Singleton
     fun providesRetrofit(): Retrofit.Builder {
-
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
     }
+
     @Singleton
     @Provides
     fun provideOkHttpClient(interceptor: AuthInterceptor): OkHttpClient {
@@ -46,8 +45,10 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun providesDashboardApi(retrofitBuilder: Retrofit.Builder, okHttpClient: OkHttpClient): SecuredApi {
+    fun providesDashboardApi(
+        retrofitBuilder: Retrofit.Builder,
+        okHttpClient: OkHttpClient
+    ): SecuredApi {
         return retrofitBuilder.client(okHttpClient).build().create(SecuredApi::class.java)
     }
-    
 }

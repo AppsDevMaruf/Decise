@@ -1,7 +1,8 @@
-package com.example.decise
+package com.example.decise.ui.profile
 
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.example.decise.R
 import com.example.decise.base.BaseFragment
 import com.example.decise.data.models.profile.changePassword.RequestChangePassword
 import com.example.decise.databinding.FragmentChangePasswordBinding
@@ -16,7 +17,7 @@ import com.example.decise.utils.isLength8
 import com.example.decise.utils.isPasswordMatch
 import com.example.decise.utils.onTextChanged
 import com.example.decise.utils.show
-import com.example.decise.utils.showDialog
+import com.example.decise.utils.showErrorDialog
 import com.example.decise.utils.toast
 import com.example.decise.viewmodel.ProfileViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -51,15 +52,7 @@ class ChangePasswordFragment : BaseFragment<FragmentChangePasswordBinding>() {
                 }
 
                 is NetworkResult.Error -> {
-                    showDialog(context = requireActivity(),
-                        title = "",
-                        details = "${it.message}",
-                        resId = R.drawable.ic_round_warning,
-                        yesContent = "Okay",
-                        noContent = "Cancel",
-                        showNoBtn = false,
-                        positiveFun = {},
-                        {})
+                    it.message?.let { errorMgs -> showErrorDialog(errorMgs) {} }
 
                 }
 

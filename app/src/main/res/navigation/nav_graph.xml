@@ -24,7 +24,9 @@
             app:destination="@id/sendEmailFragment" />
         <action
             android:id="@+id/action_logInFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/logInFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_logInFragment_to_forgetPasswordFragment"
             app:destination="@id/forgetPasswordFragment" />
@@ -34,7 +36,12 @@
             app:uri="http://170.64.137.92//login" />
         <action
             android:id="@+id/action_logInFragment_to_chooseSubscriptionFragment"
-            app:destination="@id/chooseSubscriptionFragment" />
+            app:destination="@id/chooseSubscriptionFragment"
+            app:popUpTo="@id/logInFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_logInFragment_to_selectCompanyFragment"
+            app:destination="@id/selectCompanyFragment" />
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
@@ -104,7 +111,16 @@
     </fragment>
     <fragment
         android:id="@+id/changePasswordFragment"
-        android:name="com.example.decise.ChangePasswordFragment"
+        android:name="com.example.decise.ui.profile.ChangePasswordFragment"
         android:label="fragment_change_password"
         tools:layout="@layout/fragment_change_password" />
+    <fragment
+        android:id="@+id/selectCompanyFragment"
+        android:name="com.example.decise.SelectCompanyFragment"
+        android:label="fragment_select_company"
+        tools:layout="@layout/fragment_select_company" >
+        <action
+            android:id="@+id/action_selectCompanyFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
 </navigation>

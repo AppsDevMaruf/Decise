@@ -32,6 +32,7 @@ import com.example.decise.utils.hideSoftKeyboard
 import com.example.decise.utils.onTextChanged
 import com.example.decise.utils.show
 import com.example.decise.utils.showDialog
+import com.example.decise.utils.showErrorDialog
 import com.example.decise.utils.toast
 import com.example.decise.viewmodel.ProfileViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -68,8 +69,8 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(), DropDownInteract
         var hasPhoneNumber = false
 
         binding.firstName.onTextChanged {
-            if (!it.trim().isNullOrBlank()) {
-                hasFirstName = !it.trim().isNullOrBlank()
+            if (!it.isNullOrBlank()) {
+                hasFirstName = !it.isNullOrBlank()
                 binding.firstNameWarning.gone()
                 enableBtn(hasFirstName && hasLastName && hasPhoneNumber, binding.updateBtn)
             } else {
@@ -125,15 +126,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(), DropDownInteract
                 }
 
                 is NetworkResult.Error -> {
-                    showDialog(context = requireActivity(),
-                        title = "",
-                        details = "${it.message}",
-                        resId = R.drawable.ic_round_warning,
-                        yesContent = "Okay",
-                        noContent = "Cancel",
-                        showNoBtn = false,
-                        positiveFun = {},
-                        {})
+                    it.message?.let { errorMgs -> showErrorDialog(errorMgs) {} }
                 }
 
                 is NetworkResult.Loading -> {
@@ -164,15 +157,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(), DropDownInteract
                 }
 
                 is NetworkResult.Error -> {
-                    showDialog(context = requireActivity(),
-                        title = "",
-                        details = "${it.message}",
-                        resId = R.drawable.ic_round_warning,
-                        yesContent = "Okay",
-                        noContent = "Cancel",
-                        showNoBtn = false,
-                        positiveFun = {},
-                        {})
+                    it.message?.let { errorMgs -> showErrorDialog(errorMgs,{}) }
                 }
 
                 is NetworkResult.Loading -> {
@@ -203,15 +188,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(), DropDownInteract
                 }
 
                 is NetworkResult.Error -> {
-                    showDialog(context = requireActivity(),
-                        title = "",
-                        details = "${it.message}",
-                        resId = R.drawable.ic_round_warning,
-                        yesContent = "Okay",
-                        noContent = "Cancel",
-                        showNoBtn = false,
-                        positiveFun = {},
-                        {})
+                    it.message?.let { errorMgs -> showErrorDialog(errorMgs) {} }
                 }
 
                 is NetworkResult.Loading -> {
@@ -242,15 +219,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(), DropDownInteract
                 }
 
                 is NetworkResult.Error -> {
-                    showDialog(context = requireActivity(),
-                        title = "",
-                        details = "${it.message}",
-                        resId = R.drawable.ic_round_warning,
-                        yesContent = "Okay",
-                        noContent = "Cancel",
-                        showNoBtn = false,
-                        positiveFun = {},
-                        {})
+                    it.message?.let { errorMgs -> showErrorDialog(errorMgs,{}) }
                 }
 
                 is NetworkResult.Loading -> {
@@ -263,18 +232,11 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(), DropDownInteract
             when (it) {
                 is NetworkResult.Success -> {
                     toast("Profile update Successfully")
+                    it.data?.message?.let { errorMgs -> showErrorDialog(errorMgs) {} }
                 }
 
                 is NetworkResult.Error -> {
-                    showDialog(context = requireActivity(),
-                        title = "",
-                        details = "${it.message}",
-                        resId = R.drawable.ic_round_warning,
-                        yesContent = "Okay",
-                        noContent = "Cancel",
-                        showNoBtn = false,
-                        positiveFun = {},
-                        {})
+                    it.message?.let { errorMgs -> showErrorDialog(errorMgs) {} }
                 }
 
                 is NetworkResult.Loading -> {
@@ -322,7 +284,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(), DropDownInteract
                 profileViewModel.updatePersonalProfile(request)
             }
         }
-
 
     }
 
@@ -445,8 +406,8 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(), DropDownInteract
 
             // Set layout params with margins for each checkbox
             val layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT
-            )
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT)
             layoutParams.setMargins(0, 8, 0, 8)
             checkBox.layoutParams = layoutParams
 
@@ -517,6 +478,3 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(), DropDownInteract
         return null
     }
 }
-
-
-

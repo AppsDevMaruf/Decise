@@ -7,10 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import com.example.decise.R
+import com.example.decise.utils.isConnectedToNetwork
+import com.example.decise.utils.showDialog
 
 abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
     protected val TAG: String by lazy {
@@ -44,7 +46,21 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         configUi()
         setupNavigation()
-        binObserver()
+        if (isConnectedToNetwork(requireContext())) {
+            binObserver()
+        } else {
+            showDialog(
+                context = requireActivity(),
+                title = getString(R.string.no_internet_connection),
+                details = getString(R.string.no_internet_msg),
+                resId = R.drawable.ic_round_warning,
+                yesContent = getString(R.string.okay),
+                noContent = getString(R.string.cancel),
+                showNoBtn = false,
+                positiveFun = {
+                }, {}
+            )
+        }
 
 
     }
@@ -58,6 +74,7 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
     abstract fun getFragmentView(): Int
     open fun configUi() {}
     open fun setupNavigation() {}
+
     open fun binObserver() {}
 
 

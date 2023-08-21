@@ -29,7 +29,7 @@ interface SecuredApi {
     @GET("subscription/list")
     suspend fun getSubscriptionList(): Response<ResponseSubscriptionsList>
 
-    @GET(PERSONAL)
+    @GET("profile/personal")
     suspend fun getPersonalProfile(@Query("id") id: Int): Response<ResponsePersonalProfile>
 
     @PUT(CHOOSE_SUBSCRIPTION_TYPE)

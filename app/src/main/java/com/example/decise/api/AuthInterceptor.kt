@@ -1,14 +1,13 @@
 package com.example.decise.api
 
 import android.content.Context
-import android.util.Log
 import com.example.decise.utils.Constants
 import com.example.decise.utils.NoInternetException
 import com.example.decise.utils.TokenManager
+import com.example.decise.utils.isConnectedToNetwork
 import dagger.hilt.android.qualifiers.ApplicationContext
 import okhttp3.Interceptor
 import okhttp3.Response
-import com.example.decise.utils.isConnected
 import javax.inject.Inject
 
 class AuthInterceptor @Inject constructor(@ApplicationContext var appContext: Context) :
@@ -18,11 +17,8 @@ class AuthInterceptor @Inject constructor(@ApplicationContext var appContext: Co
     lateinit var tokenManager: TokenManager
 
 
-
     override fun intercept(chain: Interceptor.Chain): Response {
-
-
-        if (!appContext.isConnected) {
+        if (!isConnectedToNetwork(appContext)) {
             throw NoInternetException("Make sure You have an active internet connection !")
         } else {
             val request = chain.request().newBuilder()

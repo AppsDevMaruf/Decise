@@ -8,7 +8,11 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.text.Editable
+import android.text.Layout
+import android.text.Spannable
+import android.text.SpannableString
 import android.text.TextWatcher
+import android.text.style.AlignmentSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -35,6 +39,16 @@ fun Fragment.toast(str: String) {
 
 }
 
+fun Context.showToast(message: String, duration: Int = Toast.LENGTH_SHORT) {
+
+    val centeredText: Spannable = SpannableString(message)
+    centeredText.setSpan(
+        AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER),
+        0, message.length - 1,
+        Spannable.SPAN_INCLUSIVE_INCLUSIVE
+    )
+    Toast.makeText(this.applicationContext, centeredText, duration).show()
+}
 
 
 fun View.hide() {
@@ -50,6 +64,10 @@ fun View.show() {
     visibility = View.VISIBLE
 }
 
+fun Button.disableFor1Sec() {
+    this.isClickable = false
+    this.postDelayed({ this.isClickable = true }, 1000)
+}
 
 fun Fragment.enableBtn(given: Boolean, btn: Button) {
 
@@ -58,10 +76,16 @@ fun Fragment.enableBtn(given: Boolean, btn: Button) {
 
     if (btn.isEnabled) {
         btn.background =
-            AppCompatResources.getDrawable(requireActivity(), R.drawable.button_login_bg_orange_enable)
+            AppCompatResources.getDrawable(
+                requireActivity(),
+                R.drawable.button_login_bg_orange_enable
+            )
     } else {
         btn.background =
-            AppCompatResources.getDrawable(requireActivity(), R.drawable.button_primary_bg_orange_disable)
+            AppCompatResources.getDrawable(
+                requireActivity(),
+                R.drawable.button_primary_bg_orange_disable
+            )
 
 
     }
@@ -135,7 +159,6 @@ fun Activity.hideSoftKeyboard() {
 }
 
 
-
 fun EditText.onTextChanged(onTextChanged: (String) -> Unit) {
     this.addTextChangedListener(object : TextWatcher {
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -150,7 +173,6 @@ fun EditText.onTextChanged(onTextChanged: (String) -> Unit) {
         }
     })
 }
-
 
 
 fun Any.removeUnderscore(originalString: String): String? {
@@ -186,7 +208,6 @@ fun Any.getZonedTime(zoneTime: String): String {
     }
 
 
-
 }
 
 fun TextView.setTextNonNull(str: String?) {
@@ -194,9 +215,10 @@ fun TextView.setTextNonNull(str: String?) {
         this.text = it
     }
 }
+
+
 fun Fragment.showDialog(
     context: Context,
-
     title: String,
     details: String,
     resId: Int,
@@ -207,7 +229,6 @@ fun Fragment.showDialog(
     negativeFun: () -> Unit,
 
     ) {
-
     val deleteDialogView: View = LayoutInflater.from(context)
         .inflate(R.layout.item_dialog, null)
     val deleteDialog: AlertDialog = AlertDialog.Builder(context).setCancelable(false).create()
@@ -249,12 +270,36 @@ fun Fragment.showDialog(
         deleteDialog.dismiss()
     }
 
-
-
     deleteDialog.show()
-
-
 }
+
+fun Fragment.showErrorDialog(
+    message: String,
+    positiveFun: () -> Unit
+) {
+    val errorDialogLayout: View = LayoutInflater.from(requireActivity())
+        .inflate(R.layout.item_dialog, null)
+    val deleteDialog: AlertDialog =
+        AlertDialog.Builder(requireActivity()).setCancelable(false).create()
+    deleteDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+    deleteDialog.setView(errorDialogLayout)
+    val titleTv = errorDialogLayout.findViewById<TextView>(R.id.titleTv)
+    val detailsTv = errorDialogLayout.findViewById<TextView>(R.id.detailsTv)
+    val yesButton = errorDialogLayout.findViewById<Button>(R.id.yesBtn)
+    val noButton = errorDialogLayout.findViewById<Button>(R.id.noBtn)
+    val logoIcon = errorDialogLayout.findViewById<ImageView>(R.id.topIcon)
+    titleTv.text = ""
+    detailsTv.text = message
+    yesButton.text = getString(R.string.okay)
+    noButton.gone()
+    logoIcon.setImageResource(R.drawable.ic_round_warning)
+    yesButton.setOnClickListener {
+        positiveFun.invoke()
+        deleteDialog.dismiss()
+    }
+    deleteDialog.show()
+}
+
 
 fun String.titleCaseFirstChar() = replaceFirstChar(Char::titlecase)
 

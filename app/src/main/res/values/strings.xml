@@ -62,4 +62,24 @@
     <string name="password_matched">Password matched</string>
     <string name="enter_current_password">Enter current password</string>
     <string name="current_password_is_required">Current password is required</string>
+    //Message
+    <string name="no_internet_connection">No Internet Connection !</string>
+    <string name="no_internet_msg">Please activate your internet connection and try again</string>
+    // Button
+    <string name="cancel">Cancel</string>
+    <string name="button_not_now">Not Now</string>
+    <string name="button_update">Update Now</string>
+    <string name="buttoin_continue">Continue</string>
+    <string name="button_next">Next</string>
+    <string name="btn_dont_allow">Don\'t Allow</string>
+    <string name="next" translatable="false">Submit</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
+    <string name="register">Submit</string>
+    <string name="btn_search">Search</string>
+    <string name="okay">Okay</string>
+    <string name="ok">OK</string>
+    <string name="details_btn">Details</string>
+    <string name="btn_retry">Retry</string>
+
 </resources>
