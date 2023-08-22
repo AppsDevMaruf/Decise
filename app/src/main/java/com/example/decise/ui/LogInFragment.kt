@@ -1,22 +1,25 @@
 package com.example.decise.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.decise.R
 import com.example.decise.base.BaseFragment
 import com.example.decise.data.models.auth.login.RequestLogin
+import com.example.decise.data.prefs.PrefKeys
+import com.example.decise.data.prefs.PreferenceManager
+import com.example.decise.data.prefs.TokenManager
 import com.example.decise.databinding.FragmentLogInBinding
 import com.example.decise.utils.Constants
 import com.example.decise.utils.NetworkResult
-import com.example.decise.utils.TokenManager
 import com.example.decise.utils.gone
+import com.example.decise.utils.hideActionBar
 import com.example.decise.utils.isConnectedToNetwork
 import com.example.decise.utils.isValidEmail
 import com.example.decise.utils.onTextChanged
 import com.example.decise.utils.show
+import com.example.decise.utils.showActionBar
 import com.example.decise.utils.showDialog
 import com.example.decise.utils.showErrorDialog
 import com.example.decise.viewmodel.AuthViewModel
@@ -26,10 +29,12 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class LogInFragment : BaseFragment<FragmentLogInBinding>() {
-    private val authViewModel by viewModels<AuthViewModel>()
+    private val authViewModel by activityViewModels<AuthViewModel>()
 
     @Inject
     lateinit var tokenManager: TokenManager
+    @Inject
+    lateinit var  preferenceManager: PreferenceManager
 
     override fun getFragmentView(): Int {
         return R.layout.fragment_log_in
@@ -81,7 +86,7 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>() {
                 is NetworkResult.Success -> {
 
                     tokenManager.saveToken(Constants.TOKEN, "${it.data?.type} ${it.data?.token}")
-                    tokenManager.saveUserID(Constants.USER_ID, "${it.data?.id}")
+                    it.data?.id?.let { userId -> preferenceManager.put(PrefKeys.SAVED_USER_ID, userId) }
                     if (it.data?.firstLogin == true) {
                         findNavController().navigate(R.id.action_logInFragment_to_chooseSubscriptionFragment)
 
@@ -89,9 +94,11 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>() {
                         findNavController().navigate(R.id.action_logInFragment_to_selectCompanyFragment)
                     }
                 }
+
                 is NetworkResult.Error -> {
                     it.message?.let { it1 -> showErrorDialog(it1) {} }
                 }
+
                 is NetworkResult.Loading -> {
                     binding.progressBar.show()
                 }
@@ -158,12 +165,12 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>() {
 
     override fun onResume() {
         super.onResume()
-        (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
+        hideActionBar()
     }
 
     override fun onStop() {
         super.onStop()
-        (activity as AppCompatActivity?)!!.supportActionBar!!.show()
+        showActionBar()
     }
 
     private fun showNoInternetDialog() {

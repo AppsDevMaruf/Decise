@@ -11,6 +11,8 @@ import android.text.TextWatcher
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 
 
 fun dpFromPx(context: Context, px: Float): Float {
@@ -85,6 +87,13 @@ fun Activity.iconColor(activity: Activity) {
         decor.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
     }
 
+}
+fun Fragment.hideActionBar() {
+    (requireActivity() as AppCompatActivity).supportActionBar?.hide()
+}
+
+fun Fragment.showActionBar() {
+    (requireActivity() as AppCompatActivity).supportActionBar?.show()
 }
 
 

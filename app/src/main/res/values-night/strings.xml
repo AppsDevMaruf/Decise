@@ -19,4 +19,8 @@
     <string name="one_uppercase_character">One uppercase character</string>
     <string name="password_matched">Password matched</string>
     <string name="current_password_is_required">Current password is required</string>
+    <string name="select_the_company_you_would_like_to_enter">Select the company you would like to enter</string>
+    <string name="your_company">Your Company</string>
+    <string name="my_company">My Company</string>
+    <string name="others_company">Others Company</string>
 </resources>

@@ -19,7 +19,7 @@
 
             <include
                 android:id="@+id/toolbarLogin"
-                layout="@layout/toolbar_forget_password"
+                layout="@layout/toolbar_global"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

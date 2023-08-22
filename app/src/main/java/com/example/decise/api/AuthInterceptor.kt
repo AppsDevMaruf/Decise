@@ -1,9 +1,9 @@
 package com.example.decise.api
 
 import android.content.Context
+import com.example.decise.data.prefs.TokenManager
 import com.example.decise.utils.Constants
 import com.example.decise.utils.NoInternetException
-import com.example.decise.utils.TokenManager
 import com.example.decise.utils.isConnectedToNetwork
 import dagger.hilt.android.qualifiers.ApplicationContext
 import okhttp3.Interceptor

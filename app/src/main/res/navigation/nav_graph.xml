@@ -116,7 +116,7 @@
         tools:layout="@layout/fragment_change_password" />
     <fragment
         android:id="@+id/selectCompanyFragment"
-        android:name="com.example.decise.SelectCompanyFragment"
+        android:name="com.example.decise.ui.SelectCompanyFragment"
         android:label="fragment_select_company"
         tools:layout="@layout/fragment_select_company" >
         <action

@@ -5,17 +5,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.decise.data.models.auth.forgetPassword.ResponseForgetPassword
-import com.example.decise.data.models.auth.login.RequestLogin
-import com.example.decise.data.models.auth.verifyEmail.ResponseVerifyEmail
-import com.example.decise.data.models.auth.signUp.RequestSignUp
-import com.example.decise.data.models.auth.login.ResponseLogin
-import com.example.decise.data.models.auth.sendEmail.ResponseSendEmail
-import com.example.decise.data.models.auth.signUp.ResponseSignUp
 import com.example.decise.data.models.profile.chooseSubscriptionType.RequestChooseSubscriptionType
 import com.example.decise.data.models.profile.chooseSubscriptionType.ResponseChooseSubscriptionType
 import com.example.decise.data.models.subscription.subscriptionList.ResponseSubscriptionsList
-import com.example.decise.repos.PublicRepository
 import com.example.decise.repos.SecuredRepository
 import com.example.decise.utils.NetworkResult
 import com.example.decise.utils.NoInternetException

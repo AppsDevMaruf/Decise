@@ -20,9 +20,9 @@ import dagger.hilt.android.AndroidEntryPoint
 class VerifyEmailFragment : BaseFragment<FragmentVerifyEmailBinding>() {
     private val authViewModel by viewModels<AuthViewModel>()
     private val arg: VerifyEmailFragmentArgs by navArgs()
-    var subscriptionType = ""
-    var signupType = ""
-    var email = ""
+    private var subscriptionType = ""
+    private var signupType = ""
+    private var email = ""
 
     override fun getFragmentView(): Int {
         return R.layout.fragment_verify_email
@@ -50,7 +50,8 @@ class VerifyEmailFragment : BaseFragment<FragmentVerifyEmailBinding>() {
                         email = email,
                     )
 
-                    val action =VerifyEmailFragmentDirections.actionVerifyEmailFragmentToSignUpFragment(
+                    val action =
+                        VerifyEmailFragmentDirections.actionVerifyEmailFragmentToSignUpFragment(
                             responseVerifyEmail
                         )
                     findNavController().navigate(action)
