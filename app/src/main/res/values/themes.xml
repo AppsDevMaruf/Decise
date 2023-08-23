@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Base.Theme.Decise" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- This is used for status bar color. -->
@@ -42,6 +42,12 @@
         <item name="android:textAppearance">@style/TextAppearance.Material3.BodyMedium</item>
         <item name="android:includeFontPadding">false</item>
         <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
+
+        <item name="colorAccent">@color/black</item>
+
     </style>
 
     <style name="warningText" parent="">
@@ -93,8 +99,6 @@
     <style name="CustomActionBar" parent="Widget.AppCompat.ActionBar">
         <item name="android:background">@drawable/toolbar_gradient</item>
     </style>
-
-
 
 
 </resources>

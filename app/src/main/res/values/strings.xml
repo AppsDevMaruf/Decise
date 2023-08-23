@@ -65,6 +65,34 @@
     //Message
     <string name="no_internet_connection">No Internet Connection !</string>
     <string name="no_internet_msg">Please activate your internet connection and try again</string>
+
+    //.........................................RUNTIME Permission..
+    <string name="permission_required">Permission Required</string>
+    <string name="permission_msg_contact">Contact Permission is required to use this feature</string>
+    <string name="permission_sms_contact">SMS Permission is required to use this feature</string>
+    <string name="permission_call_phone_one">Phone call permission is required to use this feature</string>
+    <string name="permission_call_phone_two">Phone call permission is required to use this feature</string>
+
+    <string name="permission_msg_sms">SMS permission is required to use this feature</string>
+    <string name="permission_msg_for_location">Location permit is required to use this app</string>
+
+    <string name="permission_contact_denied_one">Contact permit is required to use this feature</string>
+    <string name="permission_contact_denied_two">Contact permit is required to use this feature</string>
+
+    <string name="permission_storage_denied_one">Storage permission is required to use this feature</string>
+    <string name="permission_storage_denied_two">Storage permission is required to use this feature</string>
+
+    <string name="permission_camera_denied_one">Camera permission is required to use this feature</string>
+    <string name="permission_msg_for_camera">Camera and Storage permission are required to use this feature
+    </string>
+    <string name="permission_camera_denied_two">Camera permission is required to use this feature</string>
+
+    <string name="permission_to_save_image_one">Storage permission is required to use this feature</string>
+    <string name="permission_to_save_image_two">Storage permission is required to use this feature</string>
+
+    <string name="permission_for_notification">Notification permission is required to get Notifications</string>
+
+
     // Button
     <string name="cancel">Cancel</string>
     <string name="button_not_now">Not Now</string>
