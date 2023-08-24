@@ -135,7 +135,8 @@ dependencies {
     //Supported for reading: JPEG, PNG, WebP, HEIF, DNG, CR2, NEF, NRW, ARW, RW2, ORF, PEF, SRW, RAF.
     //Supported for writing: JPEG, PNG, WebP
     implementation 'androidx.exifinterface:exifinterface:1.3.6'
-
+    //coil image downloader
+    implementation 'io.coil-kt:coil:2.4.0'
     //image cropper
     implementation 'com.vanniktech:android-image-cropper:4.5.0'
     implementation 'id.zelory:compressor:3.0.1'

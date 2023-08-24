@@ -1,7 +1,6 @@
 package com.example.decise.base
 
 import android.Manifest
-import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -36,20 +35,22 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.bumptech.glide.load.resource.bitmap.TransformationUtils
-import com.canhub.cropper.CropImage.CancelledResult.bitmap
 import com.example.decise.R
 import com.example.decise.data.prefs.PreferenceManager
 import com.example.decise.databinding.ActivityMainBinding
 import com.example.decise.di.SocketHandler
+import com.example.decise.file.FileUploader
 import com.example.decise.utils.AlertService
 import com.example.decise.utils.AppConstants
-import com.example.decise.utils.AppConstants.REQUEST_CAMERA
 import com.example.decise.utils.AppUtils
+import com.example.decise.utils.ImageCompresser
 import com.example.decise.utils.NetworkResult
 import com.example.decise.utils.PermissionUtils
 import com.example.decise.utils.gone
 import com.example.decise.utils.show
+import com.example.decise.utils.showToast
 import com.example.decise.viewmodel.NotificationsViewModel
+import com.example.decise.viewmodel.ProfileViewModel
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.navigation.NavigationView
 import dagger.hilt.android.AndroidEntryPoint
@@ -58,6 +59,7 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Date
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -69,8 +71,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var nav: View
     private val notificationsViewModel by viewModels<NotificationsViewModel>()
+    private val profileViewModel by viewModels<ProfileViewModel>()
     private var GALLERY_PERMISSION = arrayOf<String>(Manifest.permission.READ_EXTERNAL_STORAGE)
-    private lateinit var permissionsRequest: ActivityResultLauncher<Array<String>>
+    private var fileToUpload: File? = null
+    private var attachmentUri: Uri? = null
+    private lateinit var fileUploader: FileUploader
     private lateinit var cameraLauncher: ActivityResultLauncher<Intent>
     private lateinit var galleryLauncher: ActivityResultLauncher<Intent>
 
@@ -174,6 +179,71 @@ class MainActivity : AppCompatActivity() {
 
 
     }
+
+    //TODO get the image from gallery and display it
+    private var galleryActivityResultLauncher = registerForActivityResult<Intent, ActivityResult>(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == RESULT_OK) {
+
+            if (result != null && result.data != null) {
+                attachmentUri = result.data!!.data
+                try {
+                    val realImagePath = fileUploader.getRealPathFromUri(attachmentUri!!)
+                    if (realImagePath != null) {
+                        fileToUpload =
+                            ImageCompresser.instance.getCompressedImageFile(realImagePath, this)
+                        fileUploader = FileUploader(this)
+                        //file upload to server
+                        profileViewModel.changePictureVM(
+                            fileUploader.getMultipartBodyPartFromFile("file", fileToUpload)!!
+                        )
+
+                        val bitmap = BitmapFactory.decodeFile(fileToUpload!!.absolutePath)
+                        userProfilePicHeader.setImageBitmap(bitmap)
+
+                    }
+                } catch (e: Exception) {
+                    //
+                }
+            }
+        }
+
+    }
+
+    //TODO capture the image using camera and display it
+    private var cameraActivityResultLauncher = registerForActivityResult<Intent, ActivityResult>(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == RESULT_OK) {
+            try {
+                imagePath?.let {
+                    userProfilePicHeader.setImageBitmap(getBitmapFromImagePath(it))
+                    fileToUpload = ImageCompresser.instance.getCompressedImageFile(it, this)
+                    Log.d("TAG", "1...: $fileToUpload")
+                    fileUploader = FileUploader(this)
+                    profileViewModel.changePictureVM(
+                        fileUploader.getMultipartBodyPartFromFile(
+                            "file",
+                            fileToUpload
+                        )!!
+                    )
+                    Log.d("TAG", "2...: $fileToUpload")
+
+                    if (imagePath != null) {
+                        val file = File(imagePath)
+                        if (file.exists())
+                            file.delete()
+                    }
+                }
+
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -287,20 +357,18 @@ class MainActivity : AppCompatActivity() {
                     FileProvider.getUriForFile(this, authorities, imageFile)
                 }
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
-                takePhotoForResult.launch(intent)
+                cameraActivityResultLauncher.launch(intent)
             }
         }
     }
 
     private fun openGallery() {
-
         val pickIntent = Intent(Intent.ACTION_PICK)
         pickIntent.setDataAndType(
             MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
             "image/*"
         )
-        pickImageFromGalleryForResult.launch(pickIntent)
-
+        galleryActivityResultLauncher.launch(pickIntent)
 
     }
 
@@ -391,53 +459,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private val takePhotoForResult =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                val data = result.data
-                when (result.resultCode) {
-                    REQUEST_CAMERA -> {
-                        val imageBitmap = data?.extras?.get("data") as Bitmap
-                        userProfilePicHeader.setImageBitmap(imageBitmap)
-                    }
-
-                }
-
-            }
-        }
-
-    private val pickImageFromGalleryForResult =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-            if (result.resultCode == AppConstants.REQUEST_GALLERY) {
-                val intent = result.data
-                // handle image from gallery
-                Log.d("TAG", "gallery:$intent ")
-                if (intent != null) {
-                    userProfilePicHeader.setImageURI(intent.data)
-                }
-
-                if (getIntent() != null && getIntent().data != null) {
-                    userProfilePicHeader.setImageBitmap(bitmap)
-                    //attachmentUri = getIntent().data
-                    /*try {
-                        val realImagePath = fileUploader.getRealPathFromUri(attachmentUri!!)
-                        if (realImagePath != null) {
-                            fileToUpload =
-                                ImageCompresser.instance.getCompressedImageFile(
-                                    realImagePath,
-                                    this
-                                )
-                            val bitmap = BitmapFactory.decodeFile(fileToUpload!!.absolutePath)
-                            binding.toolbar.userProfilePic.setImageBitmap(bitmap)
-
-                        }
-                    } catch (e: Exception) {
-                        Log.e("LOG .....", "${e.localizedMessage}")
-                    }*/
-                }
-            }
-        }
-
     /** Checking Camera and Storage Permission  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
     private fun hasCameraAndStoragePermission(): Boolean {
         return hasCameraPermission() && hasStoragePermission()
@@ -460,7 +481,11 @@ class MainActivity : AppCompatActivity() {
 
 
         galleryBtn.setOnClickListener {
-            manageGallery()
+            if (hasCameraAndStoragePermission()) {
+                manageGallery()
+            } else {
+                manageCameraAndStoragePermission()
+            }
             dialog.dismiss()
         }
 
@@ -497,8 +522,25 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-    }
+        profileViewModel.responseChangePictureVMLD.observe(this) {
+            binding.progressBar.gone()
+            when (it) {
+                is NetworkResult.Success -> {
+                    showToast("Change Profile Picture Successfully")
+                }
 
+                is NetworkResult.Error -> {
+                    showToast("Change Profile Picture ${it.message}")
+
+
+                }
+
+                is NetworkResult.Loading -> {
+                    binding.progressBar.show()
+                }
+            }
+        }
+    }
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)

@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.Decise" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- This is used for status bar color. -->
@@ -9,7 +9,6 @@
         <item name="windowNoTitle">false</item>-->
         <!-- Primary brand color. -->
         <item name="android:actionBarStyle">@style/CustomActionBar</item>
-
         <item name="android:textColor">@color/white</item>
         <item name="colorControlNormal">@color/white</item>
         <item name="android:actionMenuTextColor">@color/white</item>
@@ -28,14 +27,11 @@
         <item name="android:textColorPrimary">@color/white</item>
         <item name="android:textColorHint">@color/gray</item>
         <item name="editTextColor">@color/black</item>
-
     </style>
-
     <style name="ShapeAppearance.Image.PILL" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
     </style>
-
     <style name="editTextStyle" parent="">
         <item name="android:padding">4dp</item>
         <item name="android:letterSpacing">0.01</item>
@@ -44,13 +40,6 @@
         <item name="android:includeFontPadding">false</item>
         <item name="android:textColor">@color/black</item>
     </style>
-
-    <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
-
-        <item name="colorAccent">@color/black</item>
-
-    </style>
-
     <style name="warningText" parent="">
         <item name="android:fontFamily">@font/gotham_bold</item>
         <item name="android:textColor">@color/bg_danger</item>
@@ -58,9 +47,7 @@
         <item name="android:includeFontPadding">false</item>
         <item name="android:layout_marginTop">4dp</item>
         <item name="android:textAppearance">@style/TextAppearance.Material3.BodySmall</item>
-
     </style>
-
     <style name="titleText" parent="">
         <item name="android:fontFamily">@font/gotham_bold</item>
         <item name="android:textColor">@color/white</item>
@@ -70,7 +57,6 @@
         <item name="android:layout_marginTop">4dp</item>
         <item name="android:textAppearance">@style/TextAppearance.Material3.BodyMedium</item>
     </style>
-
     <style name="passwordValidateText" parent="">
         <item name="android:fontFamily">@font/gotham_light</item>
         <item name="android:textColor">@color/white</item>
@@ -80,7 +66,6 @@
         <item name="android:letterSpacing">0.01</item>
         <item name="android:textAppearance">@style/TextAppearance.Material3.BodySmall</item>
     </style>
-
     <style name="primaryButtonText" parent="">
         <item name="android:fontFamily">@font/gotham_bold</item>
         <item name="android:textColor">@color/white</item>
@@ -92,14 +77,8 @@
         <item name="android:textAppearance">@style/TextAppearance.Material3.BodyMedium</item>
         <item name="textAllCaps">false</item>
     </style>
-
-
     <style name="Theme.Decise" parent="Base.Theme.Decise" />
-
-
     <style name="CustomActionBar" parent="Widget.AppCompat.ActionBar">
         <item name="android:background">@drawable/toolbar_gradient</item>
     </style>
-
-
 </resources>

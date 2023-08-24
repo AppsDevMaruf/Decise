@@ -20,6 +20,7 @@ import com.example.decise.utils.NetworkResult
 import com.example.decise.utils.NoInternetException
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import okhttp3.MultipartBody
 import org.json.JSONObject
 import javax.inject.Inject
 
@@ -274,5 +275,41 @@ class ProfileViewModel @Inject constructor(
     }
 
 //change password end
+
+    //change picture start
+
+    private var _responseChangePicture =
+        MutableLiveData<NetworkResult<ResponseMessage>>()
+    val responseChangePictureVMLD: LiveData<NetworkResult<ResponseMessage>> =
+        _responseChangePicture
+
+    fun changePictureVM(part: MultipartBody.Part) {
+        _responseChangePicture.postValue(NetworkResult.Loading())
+
+        viewModelScope.launch {
+            try {
+                val response = securedRepository.changeProfilePic(part)
+                if (response.isSuccessful && response.body() != null) {
+                    _responseChangePicture.postValue(NetworkResult.Success(response.body()!!))
+                } else if (response.errorBody() != null) {
+                    val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+                    _responseChangePicture.postValue(
+                        NetworkResult.Error(
+                            errorObj.getString("message")
+                        )
+                    )
+                }
+            } catch (noInternetException: NoInternetException) {
+                _responseChangePicture.postValue(
+                    NetworkResult.Error(
+                        noInternetException.localizedMessage ?: "No Internet Connection"
+                    )
+                )
+            }
+        }
+    }
+
+//change picture end
+
 
 }

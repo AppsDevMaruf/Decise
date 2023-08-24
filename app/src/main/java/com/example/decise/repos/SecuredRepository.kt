@@ -4,6 +4,7 @@ import com.example.decise.api.SecuredApi
 import com.example.decise.data.models.profile.changePassword.RequestChangePassword
 import com.example.decise.data.models.profile.chooseSubscriptionType.RequestChooseSubscriptionType
 import com.example.decise.data.models.profile.update_personal_profile.RequestUpdatePersonalProfile
+import okhttp3.MultipartBody
 import javax.inject.Inject
 
 class SecuredRepository @Inject constructor(private val securedApi: SecuredApi) {
@@ -14,6 +15,8 @@ class SecuredRepository @Inject constructor(private val securedApi: SecuredApi) 
     suspend fun getDecisionGroupListRepo(id: Int) = securedApi.getDecisionGroupList(id)
     suspend fun changePassword(requestChangePassword: RequestChangePassword) =
         securedApi.changePassword(requestChangePassword)
+
+    suspend fun changeProfilePic(part: MultipartBody.Part) = securedApi.changeProfilePic(part)
 
     suspend fun updatePersonalProfile(requestUpdatePersonalProfile: RequestUpdatePersonalProfile) =
         securedApi.updatePersonalProfile(requestUpdatePersonalProfile)

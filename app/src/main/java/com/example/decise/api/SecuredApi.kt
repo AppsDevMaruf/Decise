@@ -1,10 +1,10 @@
 package com.example.decise.api
 
 import com.example.decise.api.APIs.CHANGE_PASSWORD
+import com.example.decise.api.APIs.CHANGE_PROFILE_PIC
 import com.example.decise.api.APIs.CHOOSE_SUBSCRIPTION_TYPE
 import com.example.decise.api.APIs.DECISION_GROUP_LIST
 import com.example.decise.api.APIs.DEPARTMENT_LIST
-import com.example.decise.api.APIs.PERSONAL
 import com.example.decise.api.APIs.UPDATE_PERSONAL
 import com.example.decise.data.models.ResponseMessage
 import com.example.decise.data.models.notifications.ResponseFindByCompanyIdAndStatus
@@ -18,10 +18,13 @@ import com.example.decise.data.models.profile.personalProfileResponse.ResponsePe
 import com.example.decise.data.models.profile.update_personal_profile.RequestUpdatePersonalProfile
 import com.example.decise.data.models.profile.update_personal_profile.ResponseUpdatePersonalProfile
 import com.example.decise.data.models.subscription.subscriptionList.ResponseSubscriptionsList
+import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Multipart
 import retrofit2.http.PUT
+import retrofit2.http.Part
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -37,6 +40,10 @@ interface SecuredApi {
 
     @PUT(UPDATE_PERSONAL)
     suspend fun updatePersonalProfile(@Body requestUpdatePersonalProfile: RequestUpdatePersonalProfile): Response<ResponseUpdatePersonalProfile>
+
+    @Multipart
+    @PUT(CHANGE_PROFILE_PIC)
+    suspend fun changeProfilePic(@Part file: MultipartBody.Part): Response<ResponseMessage>
 
     @PUT(CHANGE_PASSWORD)
     suspend fun changePassword(@Body req: RequestChangePassword): Response<ResponseMessage>
