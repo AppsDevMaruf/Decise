@@ -190,7 +190,6 @@ class ProfileViewModel @Inject constructor(
                             )
                         )
                     )
-
                 }
             } catch (noInternetException: NoInternetException) {
                 _responseChooseSubscriptionType.postValue(noInternetException.localizedMessage?.let {

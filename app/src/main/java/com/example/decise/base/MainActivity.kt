@@ -1,6 +1,7 @@
 package com.example.decise.base
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -18,7 +19,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
-import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -34,8 +34,10 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import coil.load
 import com.bumptech.glide.load.resource.bitmap.TransformationUtils
 import com.example.decise.R
+import com.example.decise.data.prefs.PrefKeys
 import com.example.decise.data.prefs.PreferenceManager
 import com.example.decise.databinding.ActivityMainBinding
 import com.example.decise.di.SocketHandler
@@ -47,6 +49,8 @@ import com.example.decise.utils.ImageCompresser
 import com.example.decise.utils.NetworkResult
 import com.example.decise.utils.PermissionUtils
 import com.example.decise.utils.gone
+import com.example.decise.utils.hide
+import com.example.decise.utils.nameAbbreviationGenerator
 import com.example.decise.utils.show
 import com.example.decise.utils.showToast
 import com.example.decise.viewmodel.NotificationsViewModel
@@ -59,6 +63,7 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Date
 import javax.inject.Inject
+import kotlin.properties.Delegates
 
 
 @AndroidEntryPoint
@@ -67,6 +72,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var userProfilePicHeader: ShapeableImageView
     private lateinit var uploadProfilePicBtn: ImageView
     private lateinit var userProfilePicABHeader: TextView
+    private lateinit var userName: TextView
+    private lateinit var userTitle: TextView
     private lateinit var profilePicAB: TextView
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var nav: View
@@ -75,18 +82,20 @@ class MainActivity : AppCompatActivity() {
     private var GALLERY_PERMISSION = arrayOf<String>(Manifest.permission.READ_EXTERNAL_STORAGE)
     private var fileToUpload: File? = null
     private var attachmentUri: Uri? = null
-    private lateinit var fileUploader: FileUploader
-    private lateinit var cameraLauncher: ActivityResultLauncher<Intent>
-    private lateinit var galleryLauncher: ActivityResultLauncher<Intent>
+    lateinit var fileUploader: FileUploader
+    private var useID by Delegates.notNull<Int>()
+
 
     @Inject
     lateinit var permissionUtils: PermissionUtils
+
 
     @Inject
     lateinit var mAlertService: AlertService
 
     @Inject
     lateinit var prf: PreferenceManager
+
 
     companion object {
         private var imageUri: Uri? = null
@@ -96,17 +105,15 @@ class MainActivity : AppCompatActivity() {
     private lateinit var toolbar: Toolbar
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         this.supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         supportActionBar?.hide()
         setContentView(binding.root)
-
-        // The following lines connects the Android app to the server.
-
-        // args[0] is the data from the server
-// Change "as Int" according to the data type
-// Example "as String" or write nothing
-// Logging the data is optional
+        useID = prf.get(PrefKeys.SAVED_USER_ID) as Int
+        Log.d("TAG", "onCreate: $useID")
+        profileViewModel.getProfileData(useID)
+        binObserver()
         binding.toolbar.notification.setOnClickListener {
             Toast.makeText(this, "test", Toast.LENGTH_SHORT).show()
 
@@ -123,6 +130,8 @@ class MainActivity : AppCompatActivity() {
 
         nav = binding.navigationView.getHeaderView(0)
         userProfilePicHeader = nav.findViewById(R.id.userProfilePicHeader)
+        userName = nav.findViewById(R.id.userName)
+        userTitle = nav.findViewById(R.id.userTitle)
         uploadProfilePicBtn = nav.findViewById(R.id.uploadProfilePicBtn)
         uploadProfilePicBtn.setOnClickListener {
             showImagePickerDialog()
@@ -181,32 +190,35 @@ class MainActivity : AppCompatActivity() {
     }
 
     //TODO get the image from gallery and display it
-    private var galleryActivityResultLauncher = registerForActivityResult<Intent, ActivityResult>(
+    private var galleryActivityResultLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
         if (result.resultCode == RESULT_OK) {
+            try {
+                attachmentUri = result.data?.data
+                userProfilePicHeader.load(attachmentUri)
+                binding.toolbar.userProfilePic.load(attachmentUri)
+                fileUploader = FileUploader(this)
 
-            if (result != null && result.data != null) {
-                attachmentUri = result.data!!.data
-                try {
-                    val realImagePath = fileUploader.getRealPathFromUri(attachmentUri!!)
-                    if (realImagePath != null) {
-                        fileToUpload =
-                            ImageCompresser.instance.getCompressedImageFile(realImagePath, this)
-                        fileUploader = FileUploader(this)
-                        //file upload to server
-                        profileViewModel.changePictureVM(
-                            fileUploader.getMultipartBodyPartFromFile("file", fileToUpload)!!
-                        )
-
-                        val bitmap = BitmapFactory.decodeFile(fileToUpload!!.absolutePath)
-                        userProfilePicHeader.setImageBitmap(bitmap)
-
-                    }
-                } catch (e: Exception) {
-                    //
+                val realImagePath = fileUploader.getRealPathFromUri(attachmentUri!!)
+                if (realImagePath != null) {
+                    fileUploader = FileUploader(this)
+                    fileToUpload = ImageCompresser.instance.getCompressedImageFile(
+                        realImagePath,
+                        this@MainActivity
+                    )
+                    profileViewModel.changePictureVM(
+                        fileUploader.getMultipartBodyPartFromFile(
+                            "file",
+                            fileToUpload
+                        )!!
+                    )
                 }
+
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
+
         }
 
     }
@@ -219,8 +231,8 @@ class MainActivity : AppCompatActivity() {
             try {
                 imagePath?.let {
                     userProfilePicHeader.setImageBitmap(getBitmapFromImagePath(it))
+                    binding.toolbar.userProfilePic.load(it)
                     fileToUpload = ImageCompresser.instance.getCompressedImageFile(it, this)
-                    Log.d("TAG", "1...: $fileToUpload")
                     fileUploader = FileUploader(this)
                     profileViewModel.changePictureVM(
                         fileUploader.getMultipartBodyPartFromFile(
@@ -228,8 +240,6 @@ class MainActivity : AppCompatActivity() {
                             fileToUpload
                         )!!
                     )
-                    Log.d("TAG", "2...: $fileToUpload")
-
                     if (imagePath != null) {
                         val file = File(imagePath)
                         if (file.exists())
@@ -237,43 +247,12 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
 
-
             } catch (e: Exception) {
                 e.printStackTrace()
             }
         }
     }
 
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        when (requestCode) {
-            AppConstants.REQUEST_CAMERA ->
-                if (grantResults.isNotEmpty()) {
-                    var isBothPermissionGranted = true
-                    for (i in permissions.indices) {
-                        if (permissionUtils.shouldAskPermission(this, permissions[i])) {
-                            isBothPermissionGranted = false
-                            break
-                        }
-                    }
-                    if (isBothPermissionGranted) {
-                        takePicture()
-                    } else {
-                        manageCameraAndStoragePermission()
-                    }
-                }
-
-            AppConstants.REQUEST_GALLERY -> if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                openGallery()
-            }
-        }
-
-    }
 
     private fun manageGallery() {
         permissionUtils.checkPermission(
@@ -502,6 +481,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    @SuppressLint("SetTextI18n")
     fun binObserver() {
         notificationsViewModel.getNotificationByCompanyIdAndStatusVMLD.observe(this) {
             binding.progressBar.gone()
@@ -526,13 +506,46 @@ class MainActivity : AppCompatActivity() {
             binding.progressBar.gone()
             when (it) {
                 is NetworkResult.Success -> {
-                    showToast("Change Profile Picture Successfully")
+                    showToast("Change Profile Picture Successfully", 50)
                 }
 
                 is NetworkResult.Error -> {
                     showToast("Change Profile Picture ${it.message}")
+                }
+
+                is NetworkResult.Loading -> {
+                    binding.progressBar.show()
+                }
+            }
+        }
+        profileViewModel.profileDataVMLD.observe(this) {
+            binding.progressBar.gone()
+            when (it) {
+                is NetworkResult.Success -> {
+                    it.data?.let { profile ->
+                        if (profile.profilePhoto.isNullOrBlank()) {
+                            val userName: String = "${profile.firstName} ${profile.lastName}"
+                            Log.d("TAG", "userName: $userName: ")
+                            userProfilePicABHeader.text = nameAbbreviationGenerator(userName)
+                            binding.toolbar.profilePicAB.text = nameAbbreviationGenerator(userName)
+                            userProfilePicABHeader.show()
+                            binding.toolbar.profilePicAB.show()
+                        } else {
+                            userProfilePicABHeader.hide()
+                            binding.toolbar.profilePicAB.hide()
+                            userProfilePicHeader.load(profile.profilePhoto)
+                            binding.toolbar.userProfilePic.load(profile.profilePhoto)
+                        }
+                        userName.text = "${profile.firstName} ${profile.lastName}"
+                        userTitle.text = profile.designation
+
+                    }
 
 
+                }
+
+                is NetworkResult.Error -> {
+                    showToast("Change Profile Picture ${it.message}")
                 }
 
                 is NetworkResult.Loading -> {

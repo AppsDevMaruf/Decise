@@ -74,7 +74,7 @@ class AlertService @Inject constructor() {
             }
             mAlert = null
         }
-        mAlert = AlertDialog.Builder(context,R.style.Base_Theme_Decise)
+        mAlert = AlertDialog.Builder(context,R.style.AlertDialogTheme)
             .setTitle(title)
             .setMessage(message)
             .setCancelable(false)

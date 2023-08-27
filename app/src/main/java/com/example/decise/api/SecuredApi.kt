@@ -41,6 +41,7 @@ interface SecuredApi {
     @PUT(UPDATE_PERSONAL)
     suspend fun updatePersonalProfile(@Body requestUpdatePersonalProfile: RequestUpdatePersonalProfile): Response<ResponseUpdatePersonalProfile>
 
+
     @Multipart
     @PUT(CHANGE_PROFILE_PIC)
     suspend fun changeProfilePic(@Part file: MultipartBody.Part): Response<ResponseMessage>
