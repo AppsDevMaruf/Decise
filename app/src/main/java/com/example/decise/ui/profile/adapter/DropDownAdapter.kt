@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.decise.data.models.profile.DropDownModel
+import com.example.decise.data.networks.profile.DropDownModel
 import com.example.decise.databinding.ItemSearchBinding
 import com.example.decise.interfaces.DropDownInteractionListener
 import com.example.decise.utils.DropDownType

@@ -1,9 +1,9 @@
 package com.example.decise.repos
 
 import com.example.decise.api.SecuredApi
-import com.example.decise.data.models.profile.changePassword.RequestChangePassword
-import com.example.decise.data.models.profile.chooseSubscriptionType.RequestChooseSubscriptionType
-import com.example.decise.data.models.profile.update_personal_profile.RequestUpdatePersonalProfile
+import com.example.decise.data.networks.profile.changePassword.RequestChangePassword
+import com.example.decise.data.networks.profile.chooseSubscriptionType.RequestChooseSubscriptionType
+import com.example.decise.data.networks.profile.update_personal_profile.RequestUpdatePersonalProfile
 import okhttp3.MultipartBody
 import javax.inject.Inject
 
@@ -32,4 +32,6 @@ class SecuredRepository @Inject constructor(private val securedApi: SecuredApi) 
         size: Int
     ) = securedApi.getNotificationByCompanyIdAndStatus(companyId, status, page, size)
 
+    //PEOPLE
+    suspend fun getMemberList() = securedApi.getMemberList()
 }

@@ -5,19 +5,21 @@ import com.example.decise.api.APIs.CHANGE_PROFILE_PIC
 import com.example.decise.api.APIs.CHOOSE_SUBSCRIPTION_TYPE
 import com.example.decise.api.APIs.DECISION_GROUP_LIST
 import com.example.decise.api.APIs.DEPARTMENT_LIST
+import com.example.decise.api.APIs.MEMBER_LIST
 import com.example.decise.api.APIs.UPDATE_PERSONAL
-import com.example.decise.data.models.ResponseMessage
-import com.example.decise.data.models.notifications.ResponseFindByCompanyIdAndStatus
-import com.example.decise.data.models.profile.changePassword.RequestChangePassword
-import com.example.decise.data.models.profile.chooseSubscriptionType.RequestChooseSubscriptionType
-import com.example.decise.data.models.profile.chooseSubscriptionType.ResponseChooseSubscriptionType
-import com.example.decise.data.models.profile.decisionGroups.DecisionGroups
-import com.example.decise.data.models.profile.departments.Departments
-import com.example.decise.data.models.profile.designations.Designations
-import com.example.decise.data.models.profile.personalProfileResponse.ResponsePersonalProfile
-import com.example.decise.data.models.profile.update_personal_profile.RequestUpdatePersonalProfile
-import com.example.decise.data.models.profile.update_personal_profile.ResponseUpdatePersonalProfile
-import com.example.decise.data.models.subscription.subscriptionList.ResponseSubscriptionsList
+import com.example.decise.data.networks.ResponseMessage
+import com.example.decise.data.networks.notifications.ResponseFindByCompanyIdAndStatus
+import com.example.decise.data.networks.people.ResponseMemberList
+import com.example.decise.data.networks.profile.changePassword.RequestChangePassword
+import com.example.decise.data.networks.profile.chooseSubscriptionType.RequestChooseSubscriptionType
+import com.example.decise.data.networks.profile.chooseSubscriptionType.ResponseChooseSubscriptionType
+import com.example.decise.data.networks.profile.decisionGroups.DecisionGroups
+import com.example.decise.data.networks.profile.departments.Departments
+import com.example.decise.data.networks.profile.designations.Designations
+import com.example.decise.data.networks.profile.personalProfileResponse.ResponsePersonalProfile
+import com.example.decise.data.networks.profile.update_personal_profile.RequestUpdatePersonalProfile
+import com.example.decise.data.networks.profile.update_personal_profile.ResponseUpdatePersonalProfile
+import com.example.decise.data.networks.subscription.subscriptionList.ResponseSubscriptionsList
 import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.Body
@@ -68,5 +70,9 @@ interface SecuredApi {
         @Query("size") size: Int
     ): Response<ResponseFindByCompanyIdAndStatus>
 
+
+    //PEOPLE
+    @GET(MEMBER_LIST)
+    suspend fun getMemberList():Response<ResponseMemberList>
 
 }

@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.decise.data.models.notifications.ResponseFindByCompanyIdAndStatus
+import com.example.decise.data.networks.notifications.ResponseFindByCompanyIdAndStatus
 import com.example.decise.repos.SecuredRepository
 import com.example.decise.utils.NetworkResult
 import com.example.decise.utils.NoInternetException

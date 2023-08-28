@@ -15,6 +15,7 @@ object APIs {
     private const val DECISION_CONTROLLER = "/decision"
     private const val SUBSCRIPTION_CONTROLLER = "/subscription"
     private const val DECISION_GROUP_CONTROLLER = "/decision-group"
+    private const val PEOPLE_CONTROLLER = "/people"
     private const val VERSION = "/v3"
 
     //SIGNIN
@@ -45,6 +46,9 @@ object APIs {
 
     //DECISION_GROUP
     const val DECISION_GROUP_LIST = "$DECISION_GROUP_CONTROLLER/list/{companyId}"
+    //PEOPLE
+    const val MEMBER_LIST = "$PEOPLE_CONTROLLER/member/list"
+
 
 
 }

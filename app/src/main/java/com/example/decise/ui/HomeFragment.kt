@@ -1,13 +1,11 @@
 package com.example.decise.ui
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.fragment.app.viewModels
 import com.example.decise.R
 import com.example.decise.base.BaseFragment
-import com.example.decise.data.models.profile.personalProfileResponse.ResponsePersonalProfile
+import com.example.decise.data.networks.profile.personalProfileResponse.ResponsePersonalProfile
 import com.example.decise.data.prefs.PrefKeys
-import com.example.decise.data.prefs.PrefKeys.SELECTED_COMPANY_ID
 import com.example.decise.data.prefs.PreferenceManager
 import com.example.decise.databinding.FragmentHomeBinding
 import com.example.decise.utils.NetworkResult

@@ -50,7 +50,7 @@
         tools:layout="@layout/fragment_sign_up">
         <argument
             android:name="response"
-            app:argType="com.example.decise.data.models.auth.verifyEmail.ResponseVerifyEmail" />
+            app:argType="com.example.decise.data.networks.auth.verifyEmail.ResponseVerifyEmail" />
         <action
             android:id="@+id/action_signUpFragment_to_logInFragment"
             app:destination="@id/logInFragment" />

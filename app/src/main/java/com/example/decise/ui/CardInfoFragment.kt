@@ -9,7 +9,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.decise.R
 import com.example.decise.base.BaseFragment
-import com.example.decise.data.models.profile.chooseSubscriptionType.RequestChooseSubscriptionType
+import com.example.decise.data.networks.profile.chooseSubscriptionType.RequestChooseSubscriptionType
 import com.example.decise.databinding.FragmentCardInfoBinding
 import com.example.decise.utils.NetworkResult
 import com.example.decise.utils.enableBtn

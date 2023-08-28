@@ -6,7 +6,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.decise.R
 import com.example.decise.base.BaseFragment
-import com.example.decise.data.models.auth.signUp.RequestSignUp
+import com.example.decise.data.networks.auth.signUp.RequestSignUp
 import com.example.decise.databinding.FragmentSignUpBinding
 import com.example.decise.utils.NetworkResult
 import com.example.decise.utils.enableBtn

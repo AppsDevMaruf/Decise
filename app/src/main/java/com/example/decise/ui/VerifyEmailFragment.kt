@@ -6,7 +6,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.decise.R
 import com.example.decise.base.BaseFragment
-import com.example.decise.data.models.auth.verifyEmail.ResponseVerifyEmail
+import com.example.decise.data.networks.auth.verifyEmail.ResponseVerifyEmail
 import com.example.decise.databinding.FragmentVerifyEmailBinding
 import com.example.decise.utils.NetworkResult
 import com.example.decise.utils.gone

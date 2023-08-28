@@ -2,19 +2,16 @@ package com.example.decise.ui
 
 import android.annotation.SuppressLint
 import android.util.Log
-import android.widget.ImageSwitcher
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.decise.R
 import com.example.decise.base.BaseFragment
-import com.example.decise.data.models.profile.chooseSubscriptionType.RequestChooseSubscriptionType
-import com.example.decise.data.models.subscription.subscriptionList.ResponseSubscriptionsList
+import com.example.decise.data.networks.profile.chooseSubscriptionType.RequestChooseSubscriptionType
+import com.example.decise.data.networks.subscription.subscriptionList.ResponseSubscriptionsList
 import com.example.decise.databinding.FragmentChooseSubscriptionBinding
-import com.example.decise.utils.DurationType
 import com.example.decise.utils.NetworkResult
 import com.example.decise.utils.gone
 import com.example.decise.utils.show

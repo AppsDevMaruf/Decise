@@ -4,7 +4,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.decise.R
 import com.example.decise.base.BaseFragment
-import com.example.decise.data.models.profile.changePassword.RequestChangePassword
+import com.example.decise.data.networks.profile.changePassword.RequestChangePassword
 import com.example.decise.databinding.FragmentChangePasswordBinding
 import com.example.decise.utils.NetworkResult
 import com.example.decise.utils.enableBtn

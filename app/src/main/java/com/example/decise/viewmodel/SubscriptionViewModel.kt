@@ -5,9 +5,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.decise.data.models.profile.chooseSubscriptionType.RequestChooseSubscriptionType
-import com.example.decise.data.models.profile.chooseSubscriptionType.ResponseChooseSubscriptionType
-import com.example.decise.data.models.subscription.subscriptionList.ResponseSubscriptionsList
+import com.example.decise.data.networks.profile.chooseSubscriptionType.RequestChooseSubscriptionType
+import com.example.decise.data.networks.profile.chooseSubscriptionType.ResponseChooseSubscriptionType
+import com.example.decise.data.networks.subscription.subscriptionList.ResponseSubscriptionsList
 import com.example.decise.repos.SecuredRepository
 import com.example.decise.utils.NetworkResult
 import com.example.decise.utils.NoInternetException

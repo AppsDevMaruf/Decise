@@ -63,7 +63,6 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Date
 import javax.inject.Inject
-import kotlin.properties.Delegates
 
 
 @AndroidEntryPoint
@@ -83,7 +82,6 @@ class MainActivity : AppCompatActivity() {
     private var fileToUpload: File? = null
     private var attachmentUri: Uri? = null
     lateinit var fileUploader: FileUploader
-    private var useID by Delegates.notNull<Int>()
 
 
     @Inject
@@ -110,9 +108,13 @@ class MainActivity : AppCompatActivity() {
         this.supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         supportActionBar?.hide()
         setContentView(binding.root)
-        useID = prf.get(PrefKeys.SAVED_USER_ID) as Int
+
+        val useID: Int? = prf.get(PrefKeys.SAVED_USER_ID) as? Int
         Log.d("TAG", "onCreate: $useID")
-        profileViewModel.getProfileData(useID)
+
+        if (useID != null) {
+            profileViewModel.getProfileData(useID)
+        }
         binObserver()
         binding.toolbar.notification.setOnClickListener {
             Toast.makeText(this, "test", Toast.LENGTH_SHORT).show()
@@ -170,7 +172,7 @@ class MainActivity : AppCompatActivity() {
 
                 R.id.logoutFragment -> {
                     navController.navigateUp() // to clear previous navigation history
-                    navController.navigate(R.id.logoutFragment)
+                    prf.clearPreference()
                     if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
                         binding.drawerLayout.closeDrawer(GravityCompat.START)
                     }
@@ -341,12 +343,42 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            AppConstants.REQUEST_CAMERA ->
+                if (grantResults.isNotEmpty()) {
+                    var isBothPermissionGranted = true
+                    for (i in permissions.indices) {
+                        if (permissionUtils.shouldAskPermission(this, permissions[i])) {
+                            isBothPermissionGranted = false
+                            break
+                        }
+                    }
+                    if (isBothPermissionGranted) {
+                        takePicture()
+                    } else {
+                        manageCameraAndStoragePermission()
+                    }
+                }
+
+            AppConstants.REQUEST_GALLERY -> if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                openGallery()
+            }
+        }
+    }
+
     private fun openGallery() {
-        val pickIntent = Intent(Intent.ACTION_PICK)
-        pickIntent.setDataAndType(
-            MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-            "image/*"
-        )
+        val pickIntent = Intent(Intent.ACTION_PICK).also {
+            it.type = "image/*"
+            val mineType = arrayOf("image/jpeg", "image/jpg", "image/png")
+            it.putExtra(Intent.EXTRA_MIME_TYPES, mineType)
+        }
+
         galleryActivityResultLauncher.launch(pickIntent)
 
     }
@@ -460,11 +492,7 @@ class MainActivity : AppCompatActivity() {
 
 
         galleryBtn.setOnClickListener {
-            if (hasCameraAndStoragePermission()) {
-                manageGallery()
-            } else {
-                manageCameraAndStoragePermission()
-            }
+            manageGallery()
             dialog.dismiss()
         }
 

@@ -6,7 +6,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.decise.R
 import com.example.decise.base.BaseFragment
-import com.example.decise.data.models.auth.login.RequestLogin
+import com.example.decise.data.networks.auth.login.RequestLogin
 import com.example.decise.data.prefs.PrefKeys
 import com.example.decise.data.prefs.PreferenceManager
 import com.example.decise.data.prefs.TokenManager

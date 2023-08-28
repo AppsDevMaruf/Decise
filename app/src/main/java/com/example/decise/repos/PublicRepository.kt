@@ -1,8 +1,8 @@
 package com.example.decise.repos
 
 import com.example.decise.api.PublicApi
-import com.example.decise.data.models.auth.login.RequestLogin
-import com.example.decise.data.models.auth.signUp.RequestSignUp
+import com.example.decise.data.networks.auth.login.RequestLogin
+import com.example.decise.data.networks.auth.signUp.RequestSignUp
 import javax.inject.Inject
 
 class PublicRepository @Inject constructor(private val publicApi: PublicApi) {
