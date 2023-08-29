@@ -4,10 +4,12 @@ import com.example.decise.api.APIs.CHANGE_PASSWORD
 import com.example.decise.api.APIs.CHANGE_PROFILE_PIC
 import com.example.decise.api.APIs.CHOOSE_SUBSCRIPTION_TYPE
 import com.example.decise.api.APIs.DECISION_GROUP_LIST
+import com.example.decise.api.APIs.DECISION_LIST
 import com.example.decise.api.APIs.DEPARTMENT_LIST
 import com.example.decise.api.APIs.MEMBER_LIST
 import com.example.decise.api.APIs.UPDATE_PERSONAL
 import com.example.decise.data.networks.ResponseMessage
+import com.example.decise.data.networks.decisions.ResponseDecisionList
 import com.example.decise.data.networks.notifications.ResponseFindByCompanyIdAndStatus
 import com.example.decise.data.networks.people.ResponseMemberList
 import com.example.decise.data.networks.profile.changePassword.RequestChangePassword
@@ -73,6 +75,10 @@ interface SecuredApi {
 
     //PEOPLE
     @GET(MEMBER_LIST)
-    suspend fun getMemberList():Response<ResponseMemberList>
+    suspend fun getMemberList(): Response<ResponseMemberList>
+
+    //DECISION
+    @GET(DECISION_LIST)
+    fun getDecisionList(@Query("companyId") companyId: Int): Response<ResponseDecisionList>
 
 }

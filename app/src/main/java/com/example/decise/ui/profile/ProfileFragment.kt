@@ -49,7 +49,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(), DropDownInteract
     private lateinit var decisionGroupList: ArrayList<DecisionGroups>
     private var selectedItemsString = ""
     private var userCompanyId: Int? = null
-    private var userId: Int = 0
+    private var profileUserId: Int = 0
 
     @Inject
     lateinit var preferenceManager: PreferenceManager
@@ -58,8 +58,13 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(), DropDownInteract
     }
 
     override fun configUi() {
-        userId = preferenceManager.get(PrefKeys.SAVED_USER_ID) as Int
-        profileViewModel.getProfileData(userId!!)
+        val userId: Int = preferenceManager.get(PrefKeys.SAVED_USER_ID) as Int
+        profileUserId = userId
+        if (userId!=null){
+            profileViewModel.getProfileData(userId)
+        }
+
+
         buttonEnableAfterTextFillUp()
     }
 
@@ -294,7 +299,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(), DropDownInteract
             department = binding.departmentSpinner.text.toString(),
             decisionGroups = profileViewModel.selectedItems,
             designation = binding.jobTitleSpinner.text.toString(),
-            id = userId,
+            id = profileUserId,
             phoneNumber = binding.phoneNumberEt.text.toString()
         )
     }

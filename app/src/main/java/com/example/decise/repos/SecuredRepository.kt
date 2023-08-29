@@ -34,4 +34,6 @@ class SecuredRepository @Inject constructor(private val securedApi: SecuredApi) 
 
     //PEOPLE
     suspend fun getMemberList() = securedApi.getMemberList()
+    //DECISIONS
+    suspend fun getDecisionList(companyId: Int) = securedApi.getDecisionList(companyId)
 }

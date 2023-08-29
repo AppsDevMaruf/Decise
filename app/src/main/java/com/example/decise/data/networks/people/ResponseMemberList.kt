@@ -3,8 +3,19 @@ package com.example.decise.data.networks.people
 
 import com.google.gson.annotations.SerializedName
 
-class ResponseMemberList : ArrayList<ResponseMemberListItem>(){
-    data class ResponseMemberListItem(
+data class ResponseMemberList(
+    @SerializedName("currentPage")
+    val currentPage: Int?,
+    @SerializedName("hasNext")
+    val hasNext: Boolean?,
+    @SerializedName("memberList")
+    val memberList: List<Member?>?,
+    @SerializedName("total")
+    val total: Int?,
+    @SerializedName("totalPages")
+    val totalPages: Int?
+) {
+    data class Member(
         @SerializedName("companyId")
         val companyId: Int?,
         @SerializedName("decisionGroups")

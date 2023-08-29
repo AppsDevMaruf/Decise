@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.decise.data.networks.decisions.ResponseDecisionList
 import com.example.decise.data.networks.people.ResponseMemberList
 import com.example.decise.repos.SecuredRepository
 import com.example.decise.utils.NetworkResult
@@ -16,13 +15,12 @@ import retrofit2.Response
 import javax.inject.Inject
 
 @HiltViewModel
-class DashboardViewModel @Inject constructor(private val securedRepository: SecuredRepository) :
+class PeopleViewModel @Inject constructor(private val securedRepository: SecuredRepository) :
     ViewModel() {
+
+
     private var _responseMemberList = MutableLiveData<NetworkResult<ResponseMemberList>>()
     val responseMemberList: LiveData<NetworkResult<ResponseMemberList>> = _responseMemberList
-
-    private var _responseDecisionList = MutableLiveData<NetworkResult<ResponseDecisionList>>()
-    val responseDecisionList: LiveData<NetworkResult<ResponseDecisionList>> = _responseDecisionList
 
     private fun <T> handleApiCall(
         apiCall: suspend () -> Response<T>,
@@ -55,11 +53,15 @@ class DashboardViewModel @Inject constructor(private val securedRepository: Secu
         )
     }
 
-    fun getDecisionListVM(companyId: Int) {
-        handleApiCall(
-            apiCall = { securedRepository.getDecisionList(companyId) },
-            resultLiveData = _responseDecisionList
-        )
-    }
+
+    /*
+        fun chooseSubscriptionTypeVM(request: RequestChooseSubscriptionType) {
+            handleApiCall(
+                apiCall = { securedRepository.chooseSubscriptionTypeRepo(request) },
+                resultLiveData = _responseChooseSubscriptionType
+            )
+        }
+    */
+
 
 }

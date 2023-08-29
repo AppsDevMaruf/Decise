@@ -1,9 +1,9 @@
 package com.example.decise.api
 
 object APIs {
-  const val BASE_URL = "http://170.64.137.92:7777/"
+    const val BASE_URL = "http://170.64.137.92:7777/"
 
-     //const val BASE_URL = "http://192.168.50.25:7777/"
+    //const val BASE_URL = "http://192.168.50.25:7777/"
     const val TEST_BASE_URL = "https://mocki.io/v1/"
 
 
@@ -20,6 +20,7 @@ object APIs {
 
     //SIGNIN
     const val SIGNIN = "signin/"
+
     //SIGNUP
     const val VERIFY_EMAIL = "$SIGNUP_CONTROLLER/verify-email"
     const val SEND_EMAIL = "$SIGNUP_CONTROLLER/send-email"
@@ -46,8 +47,11 @@ object APIs {
 
     //DECISION_GROUP
     const val DECISION_GROUP_LIST = "$DECISION_GROUP_CONTROLLER/list/{companyId}"
+
     //PEOPLE
     const val MEMBER_LIST = "$PEOPLE_CONTROLLER/member/list"
+    //DECISION
+    const val DECISION_LIST = "$DECISION_CONTROLLER/get-home-dashboard-data"
 
 
 
