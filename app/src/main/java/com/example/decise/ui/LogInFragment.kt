@@ -33,8 +33,9 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>() {
 
     @Inject
     lateinit var tokenManager: TokenManager
+
     @Inject
-    lateinit var  preferenceManager: PreferenceManager
+    lateinit var preferenceManager: PreferenceManager
 
     override fun getFragmentView(): Int {
         return R.layout.fragment_log_in
@@ -86,13 +87,21 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>() {
                 is NetworkResult.Success -> {
 
                     tokenManager.saveToken(Constants.TOKEN, "${it.data?.type} ${it.data?.token}")
-                    it.data?.id?.let { userId -> preferenceManager.put(PrefKeys.SAVED_USER_ID, userId) }
-                    if (it.data?.firstLogin == true) {
-                        findNavController().navigate(R.id.action_logInFragment_to_chooseSubscriptionFragment)
-
-                    } else {
-                        findNavController().navigate(R.id.action_logInFragment_to_selectCompanyFragment)
+                    it.data?.id?.let { userId ->
+                        preferenceManager.put(PrefKeys.SAVED_USER_ID, userId)
                     }
+
+                    it.data?.let { data ->
+                        if (data.firstLogin == true) {
+                            findNavController().navigate(R.id.action_logInFragment_to_chooseSubscriptionFragment)
+                        } else if (data.companyDtoList?.isNotEmpty() == true) {
+                            findNavController().navigate(R.id.action_logInFragment_to_selectCompanyFragment)
+                        } else {
+                            findNavController().navigate(R.id.action_logInFragment_to_homeFragment)
+                        }
+                    }
+
+
                 }
 
                 is NetworkResult.Error -> {

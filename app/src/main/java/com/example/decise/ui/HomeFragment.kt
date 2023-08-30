@@ -33,9 +33,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         val userID: Int = preferenceManager.get(PrefKeys.SAVED_USER_ID) as Int
         if (userID!=null){
             profileViewModel.getProfileData(userID)
+            dashboardViewModel.getMemberListVM()
         }
 
-        dashboardViewModel.getMemberListVM()
+
 
 
     }
@@ -61,7 +62,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             binding.progressBar.gone()
             when (it) {
                 is NetworkResult.Success -> {
-                    binding.totalUsers.text = it.data?.total.toString()
+                    it.data?.total?.let {total->
+                        binding.totalUsers.text = total.toString()
+                    }
+
                 }
 
                 is NetworkResult.Error -> {
@@ -77,11 +81,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             binding.progressBar.gone()
             when (it) {
                 is NetworkResult.Success -> {
-                    binding.totalDecision.text = it.data?.totalDecision.toString()
-
-                    it.data?.statusWiseCount?.forEach { _ ->
-
-
+                    it.data?.totalDecision?.let {totalDecision->
+                        binding.totalDecision.text = totalDecision.toString()
                     }
                 }
 
@@ -103,7 +104,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             data.companyId?.let { dashboardViewModel.getDecisionListVM(it) }
             binding.userName.text = "Welcome ${data.firstName} ${data.lastName}"
             binding.userWlcMgs.text =
-                "My name is ${data.firstName} and I am very happy to welcome you on board "
+                "My name is ${data.firstName} and I am very happy to welcome you on board"
         }
 
     }

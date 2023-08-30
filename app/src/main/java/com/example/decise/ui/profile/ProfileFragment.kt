@@ -60,10 +60,9 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(), DropDownInteract
     override fun configUi() {
         val userId: Int = preferenceManager.get(PrefKeys.SAVED_USER_ID) as Int
         profileUserId = userId
-        if (userId!=null){
+        if (userId != null) {
             profileViewModel.getProfileData(userId)
         }
-
 
         buttonEnableAfterTextFillUp()
     }
@@ -139,57 +138,36 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(), DropDownInteract
                 }
             }
         }
-        profileViewModel.departmentsVMLD.observe(viewLifecycleOwner) {
-            binding.progressBar.gone()
-            when (it) {
-                is NetworkResult.Success -> {
-                    departmentList = (it.data as ArrayList<Departments>?)!!
-                    binding.departmentSpinner.setOnClickListener {
-                        val dropDownList = ArrayList<DropDownModel>()
-                        departmentList.forEach { department ->
-                            val dropDownModel = DropDownModel(
-                                department.companyId,
-                                department.id,
-                                department.name,
-                                department.note,
-                                department.status
-                            )
-                            dropDownList.add(dropDownModel)
-                        }
-                        showBottomSheetDropDown(dropDownList, DropDownType.DEPARTMENT)
-                        hideSoftKeyboard()
-                    }
-                }
-
-                is NetworkResult.Error -> {
-                    it.message?.let { errorMgs -> showErrorDialog(errorMgs, {}) }
-                }
-
-                is NetworkResult.Loading -> {
-                    binding.progressBar.show()
-                }
-            }
-        }
         profileViewModel.designationsVMLD.observe(viewLifecycleOwner) {
             binding.progressBar.gone()
             when (it) {
                 is NetworkResult.Success -> {
-                    jobTitleList = (it.data as ArrayList<Designations>?)!!
-                    binding.jobTitleSpinner.setOnClickListener {
-                        val dropDownList = ArrayList<DropDownModel>()
-                        jobTitleList.forEach { department ->
-                            val dropDownModel = DropDownModel(
-                                department.companyId,
-                                department.id,
-                                department.name,
-                                department.note,
-                                department.status
-                            )
-                            dropDownList.add(dropDownModel)
+                    if (it.data?.isEmpty() == true) {
+                        binding.jobTitleSpinner.text =
+                            getString(R.string.job_title_has_not_yet_been_added_by_the_admin)
+                        binding.jobTitleSpinner.isClickable = false
+                        binding.jobTitleSpinner.isFocusable = false
+                    } else {
+
+                        //binding.jobTitleSpinner.text = getString(R.string.select_job)
+                        jobTitleList = (it.data as ArrayList<Designations>?)!!
+                        binding.jobTitleSpinner.setOnClickListener {
+                            val dropDownList = ArrayList<DropDownModel>()
+                            jobTitleList.forEach { department ->
+                                val dropDownModel = DropDownModel(
+                                    department.companyId,
+                                    department.id,
+                                    department.name,
+                                    department.note,
+                                    department.status
+                                )
+                                dropDownList.add(dropDownModel)
+                            }
+                            showBottomSheetDropDown(dropDownList, DropDownType.DESIGNATION)
+                            hideSoftKeyboard()
                         }
-                        showBottomSheetDropDown(dropDownList, DropDownType.DESIGNATION)
-                        hideSoftKeyboard()
                     }
+
                 }
 
                 is NetworkResult.Error -> {
@@ -201,26 +179,74 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(), DropDownInteract
                 }
             }
         }
+        profileViewModel.departmentsVMLD.observe(viewLifecycleOwner) {
+            binding.progressBar.gone()
+            when (it) {
+                is NetworkResult.Success -> {
+                    if (it.data?.isEmpty() == true) {
+                        binding.departmentSpinner.text =
+                            getString(R.string.department_has_not_yet_been_added_by_the_admin)
+                        binding.departmentSpinner.isClickable = false
+                        binding.departmentSpinner.isFocusable = false
+                    } else {
+                        //binding.departmentSpinner.text = getString(R.string.select_department)
+                        departmentList = (it.data as ArrayList<Departments>?)!!
+                        binding.departmentSpinner.setOnClickListener {
+                            val dropDownList = ArrayList<DropDownModel>()
+                            departmentList.forEach { department ->
+                                val dropDownModel = DropDownModel(
+                                    department.companyId,
+                                    department.id,
+                                    department.name,
+                                    department.note,
+                                    department.status
+                                )
+                                dropDownList.add(dropDownModel)
+                            }
+                            showBottomSheetDropDown(dropDownList, DropDownType.DEPARTMENT)
+                            hideSoftKeyboard()
+                        }
+                    }
+
+                }
+
+                is NetworkResult.Error -> {
+                    it.message?.let { errorMgs -> showErrorDialog(errorMgs, {}) }
+                }
+
+                is NetworkResult.Loading -> {
+                    binding.progressBar.show()
+                }
+            }
+        }
         profileViewModel.decisionGroupsVMLD.observe(viewLifecycleOwner) {
             binding.progressBar.gone()
             when (it) {
                 is NetworkResult.Success -> {
-                    decisionGroupList = (it.data as ArrayList<DecisionGroups>?)!!
-                    binding.decisionGroupSpinner.setOnClickListener {
-                        val dropDownList = ArrayList<DropDownModel>()
-                        decisionGroupList.forEach { department ->
-                            val dropDownModel = DropDownModel(
-                                department.companyId,
-                                department.id,
-                                department.name,
-                                department.note,
-                                department.status
-                            )
-                            dropDownList.add(dropDownModel)
+                    if (it.data?.isEmpty() == true) {
+                        binding.decisionGroupSpinner.text = getString(R.string.decision_has_not_yet_been_added_by_the_admin)
+                        binding.decisionGroupSpinner.isClickable = false
+                        binding.decisionGroupSpinner.isFocusable = false
+                    } else {
+                       // binding.decisionGroupSpinner.text = getString(R.string.select_decision_group)
+                        decisionGroupList = (it.data as ArrayList<DecisionGroups>?)!!
+                        binding.decisionGroupSpinner.setOnClickListener {
+                            val dropDownList = ArrayList<DropDownModel>()
+                            decisionGroupList.forEach { department ->
+                                val dropDownModel = DropDownModel(
+                                    department.companyId,
+                                    department.id,
+                                    department.name,
+                                    department.note,
+                                    department.status
+                                )
+                                dropDownList.add(dropDownModel)
+                            }
+                            showBottomSheetCheckboxDropDown(dropDownList)
+                            hideSoftKeyboard()
                         }
-                        showBottomSheetCheckboxDropDown(dropDownList)
-                        hideSoftKeyboard()
                     }
+
                 }
 
                 is NetworkResult.Error -> {
@@ -410,8 +436,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(), DropDownInteract
 
             // Set layout params with margins for each checkbox
             val layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
+                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT
             )
             layoutParams.setMargins(0, 8, 0, 8)
             checkBox.layoutParams = layoutParams

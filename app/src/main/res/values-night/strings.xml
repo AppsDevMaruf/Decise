@@ -113,5 +113,6 @@
     <string name="your_company">Your Company</string>
     <string name="my_company">My Company</string>
     <string name="others_company">Others Company</string>
+    <string name="department_has_not_yet_been_added_by_the_admin">Department has not yet been added by the Admin</string>
 
 </resources>

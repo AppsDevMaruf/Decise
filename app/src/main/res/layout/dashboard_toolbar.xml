@@ -69,8 +69,6 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_margin="4dp"
-
-            android:adjustViewBounds="true"
             android:background="@drawable/gradient_pink_orange"
             android:fontFamily="@font/gotham_medium"
             android:gravity="center"
@@ -80,9 +78,10 @@
             android:textAllCaps="false"
             android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
             android:textColor="@color/white"
-            android:visibility="gone"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/userProfilePic"
+            app:layout_constraintStart_toStartOf="@+id/userProfilePic"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="MissingConstraints" />
 

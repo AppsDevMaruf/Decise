@@ -6,6 +6,7 @@ import com.example.decise.api.APIs.CHOOSE_SUBSCRIPTION_TYPE
 import com.example.decise.api.APIs.DECISION_GROUP_LIST
 import com.example.decise.api.APIs.DECISION_LIST
 import com.example.decise.api.APIs.DEPARTMENT_LIST
+import com.example.decise.api.APIs.DESIGNATION_LIST
 import com.example.decise.api.APIs.MEMBER_LIST
 import com.example.decise.api.APIs.UPDATE_PERSONAL
 import com.example.decise.data.networks.ResponseMessage
@@ -59,7 +60,7 @@ interface SecuredApi {
     @GET(DECISION_GROUP_LIST)
     suspend fun getDecisionGroupList(@Path("companyId") companyId: Int): Response<List<DecisionGroups>>
 
-    @GET(DECISION_GROUP_LIST)
+    @GET(DESIGNATION_LIST)
     suspend fun getDesignationList(@Path("companyId") companyId: Int): Response<List<Designations>>
 
 
@@ -79,6 +80,6 @@ interface SecuredApi {
 
     //DECISION
     @GET(DECISION_LIST)
-    fun getDecisionList(@Query("companyId") companyId: Int): Response<ResponseDecisionList>
+    suspend fun getDecisionList(@Query("companyId") companyId: Int): Response<ResponseDecisionList>
 
 }

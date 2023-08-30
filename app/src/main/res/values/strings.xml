@@ -113,5 +113,18 @@
     <string name="your_company">Your Company</string>
     <string name="my_company">My Company</string>
     <string name="others_company">Others Company</string>
+    <string name="job_title">Job Title</string>
+    <string name="enter_phone_number">Enter Phone number</string>
+    <string name="job_title_has_not_yet_been_added_by_the_admin">Job Title has not yet been added by the Admin</string>
+    <string name="department">Department</string>
+    <string name="department_has_not_yet_been_added_by_the_admin">Department has not yet been added by the Admin</string>
+    <string name="decisions_group">Decisions Group</string>
+    <string name="decision_has_not_yet_been_added_by_the_admin">Decision has not yet been added by the Admin</string>
+    <string name="change_password">Change Password</string>
+    <string name="decise_role">Decise Role</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="select_job">Select Job Title</string>
+    <string name="select_department">Select Department</string>
+    <string name="select_decision_group">Select Decision Group</string>
 
 </resources>

@@ -23,7 +23,7 @@ data class ResponseLogin(
     @SerializedName("participantToken")
     val participantToken: String?,
     @SerializedName("refreshToken")
-    val refreshToken: Any?,
+    val refreshToken: String?,
     @SerializedName("rights")
     val rights: List<String?>?,
     @SerializedName("roles")
