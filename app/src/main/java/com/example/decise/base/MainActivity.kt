@@ -118,7 +118,6 @@ class MainActivity : AppCompatActivity() {
         binObserver()
         binding.toolbar.notification.setOnClickListener {
             Toast.makeText(this, "test", Toast.LENGTH_SHORT).show()
-
         }
 
 
@@ -152,9 +151,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.homeFragment
-            ), drawerLayout
+            setOf(R.id.homeFragment), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
@@ -557,10 +554,14 @@ class MainActivity : AppCompatActivity() {
                             userProfilePicABHeader.text = nameAbbreviationGenerator(userName)
                             binding.toolbar.profilePicAB.text = nameAbbreviationGenerator(userName)
                             userProfilePicABHeader.show()
+                            userProfilePicHeader.hide()
+                            binding.toolbar.userProfilePic.hide()
                             binding.toolbar.profilePicAB.show()
                         } else {
                             userProfilePicABHeader.hide()
                             binding.toolbar.profilePicAB.hide()
+                            userProfilePicHeader.show()
+                            binding.toolbar.userProfilePic.show()
                             userProfilePicHeader.load(profile.profilePhoto)
                             binding.toolbar.userProfilePic.load(profile.profilePhoto)
                         }

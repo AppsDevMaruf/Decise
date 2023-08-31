@@ -40,21 +40,6 @@
             app:strokeWidth="1.5dp"
             tools:ignore="MissingConstraints" />
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/uploadProfilePicBtn"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginEnd="2dp"
-            android:layout_marginBottom="2dp"
-            android:background="@color/white"
-            android:padding="2dp"
-            android:src="@drawable/round_cloud_upload_24"
-            app:contentPadding="5dp"
-            app:layout_constraintBottom_toBottomOf="@id/userProfilePicHeader"
-            app:layout_constraintEnd_toEndOf="@id/userProfilePicHeader"
-            app:shapeAppearanceOverlay="@style/ShapeAppearance.Image.PILL"
-            app:strokeColor="@color/black"
-            app:strokeWidth="1dp" />
 
         <TextView
             android:id="@+id/profilePicABHeader"
@@ -107,6 +92,21 @@
             app:layout_constraintStart_toStartOf="@+id/imageView"
             app:layout_constraintTop_toBottomOf="@+id/userName" />
 
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/uploadProfilePicBtn"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="2dp"
+            android:layout_marginBottom="2dp"
+            android:background="@color/white"
+            android:padding="2dp"
+            android:src="@drawable/round_cloud_upload_24"
+            app:contentPadding="5dp"
+            app:layout_constraintBottom_toBottomOf="@id/userProfilePicHeader"
+            app:layout_constraintEnd_toEndOf="@id/userProfilePicHeader"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.Image.PILL"
+            app:strokeColor="@color/black"
+            app:strokeWidth="1dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
